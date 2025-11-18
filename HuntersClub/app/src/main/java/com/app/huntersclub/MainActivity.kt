@@ -2,7 +2,7 @@ package com.app.huntersclub
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.snackbar.Snackbar
+import android.view.MenuItem
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,6 +11,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.app.huntersclub.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //Loads saved preference of app theme
+        val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+        val themeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+
+        AppCompatDelegate.setDefaultNightMode(themeMode)
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -26,11 +33,6 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.appBarMain.toolbar)
 
-        binding.appBarMain.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .setAnchorView(R.id.fab).show()
-        }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -48,7 +50,46 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
+
+        val item = menu.findItem(R.id.action_settings)
+
+        //Change "Alternar tema" text depending on actual theme
+        val currentNightMode = resources.configuration.uiMode and
+                android.content.res.Configuration.UI_MODE_NIGHT_MASK
+
+        if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+            item.title = "Modo claro"
+        } else {
+            item.title = "Modo oscuro"
+        }
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        //Changes and saves the preference of app theme
+        return when (item.itemId) {
+            R.id.action_settings -> {
+                val currentNightMode = resources.configuration.uiMode and
+                        android.content.res.Configuration.UI_MODE_NIGHT_MASK
+
+                val prefs = getSharedPreferences("settings", MODE_PRIVATE)
+                val editor = prefs.edit()
+
+                if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+                    //Light mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_NO)
+                } else {
+                    //Dark mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    editor.putInt("theme_mode", AppCompatDelegate.MODE_NIGHT_YES)
+                }
+                editor.apply()
+                recreate()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

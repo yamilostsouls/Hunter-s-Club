@@ -3,11 +3,14 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Hunter\'s Club</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Ajustes</string>
+    <string name="theme_alter">Alternar tema</string>
 
     <string name="menu_home">Monstruos</string>
-    <string name="menu_gallery">Builds</string>
+    <string name="menu_gallery">Sets</string>
     <string name="menu_slideshow">Perfil</string>
+    <string name="monster_image" >Imagen de monstruo</string>
+    <string name="categoria">Categoría</string>
+    <string name="nombre">Nombre</string>
+    <string name="monster_searcher">Buscador de monstruos</string>
 </resources>
