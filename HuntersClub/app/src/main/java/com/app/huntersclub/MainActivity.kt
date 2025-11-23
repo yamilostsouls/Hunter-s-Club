@@ -1,6 +1,9 @@
 package com.app.huntersclub
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.navigation.NavigationView
@@ -36,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        //Passing each menu ID as a set of Ids because each
+        //menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
@@ -48,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        //Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.main, menu)
 
         val item = menu.findItem(R.id.action_settings)
@@ -59,8 +62,14 @@ class MainActivity : AppCompatActivity() {
 
         if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
             item.title = "Modo claro"
+            val spanString = SpannableString(item.title)
+            spanString.setSpan(ForegroundColorSpan(Color.WHITE), 0, spanString.length, 0)
+            item.title = spanString
         } else {
             item.title = "Modo oscuro"
+            val spanString = SpannableString(item.title)
+            spanString.setSpan(ForegroundColorSpan(Color.BLACK), 0, spanString.length, 0)
+            item.title = spanString
         }
         return true
     }

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp">
 
-    <!-- Image + cardview -->
+
     <androidx.cardview.widget.CardView
         android:id="@+id/monsterCard"
         android:layout_width="100dp"
@@ -25,7 +25,6 @@
             android:contentDescription="@string/monster_image" />
     </androidx.cardview.widget.CardView>
 
-    <!-- Monster name -->
 
     <TextView
         android:id="@+id/monsterName"
@@ -40,7 +39,7 @@
         app:layout_constraintStart_toEndOf="@id/monsterCard"
         app:layout_constraintTop_toTopOf="@id/monsterCard" />
 
-    <!-- Monster ecology -->
+
     <TextView
         android:id="@+id/monsterCategory"
         android:layout_width="0dp"

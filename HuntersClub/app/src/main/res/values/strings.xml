@@ -13,4 +13,7 @@
     <string name="categoria">Categoría</string>
     <string name="nombre">Nombre</string>
     <string name="monster_searcher">Buscador de monstruos</string>
+
+    <string name="element_icon">Icono de elemento</string>
+
 </resources>

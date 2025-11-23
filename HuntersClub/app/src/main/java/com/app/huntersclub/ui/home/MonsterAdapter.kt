@@ -5,17 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.app.huntersclub.databinding.ItemMonsterBinding
 import com.app.huntersclub.model.Monster
 
-class MonsterAdapter(private var monsters: List<Monster>) :
-    RecyclerView.Adapter<MonsterAdapter.MonsterViewHolder>(), Filterable {
+class MonsterAdapter(
+    private val onItemClickListener: ((Monster) -> Unit)? = null
+) : ListAdapter<Monster, MonsterAdapter.MonsterViewHolder>(MonsterDiffCallback()), Filterable {
 
-    private var monstersFiltered: List<Monster> = monsters
+
+    private var monsters: List<Monster> = emptyList()
 
     inner class MonsterViewHolder(val binding: ItemMonsterBinding) :
-        RecyclerView.ViewHolder(binding.root)
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MonsterViewHolder {
         val binding = ItemMonsterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,7 +26,8 @@ class MonsterAdapter(private var monsters: List<Monster>) :
     }
 
     override fun onBindViewHolder(holder: MonsterViewHolder, position: Int) {
-        val monster = monstersFiltered[position]
+        val monster = getItem(position)
+
         holder.binding.monsterName.text = monster.name
         holder.binding.monsterCategory.text = monster.monCategory
 
@@ -37,37 +41,46 @@ class MonsterAdapter(private var monsters: List<Monster>) :
             e.printStackTrace()
             holder.binding.monsterImage.setImageResource(android.R.drawable.ic_menu_report_image)
         }
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(monster)
+        }
     }
 
-    override fun getItemCount() = monstersFiltered.size
 
-    //Method to update list
-    fun updateData(newList: List<Monster>) {
-        monsters = newList
-        monstersFiltered = newList
-        notifyDataSetChanged()
+    fun setData(monsters: List<Monster>) {
+        this.monsters = monsters
+        submitList(monsters)
     }
 
     //Searcher implementation
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query = constraint?.toString()?.lowercase()?.trim()
+                val query = constraint?.toString()?.trim()
                 val filteredList = if (query.isNullOrEmpty()) {
                     monsters
                 } else {
                     monsters.filter {
-                        it.name.lowercase().contains(query) ||
-                                it.monCategory.lowercase().contains(query)
+                        it.name.contains(query, ignoreCase = true) ||
+                                it.monCategory.contains(query, ignoreCase = true)
                     }
                 }
                 return FilterResults().apply { values = filteredList }
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                monstersFiltered = results?.values as List<Monster>
-                notifyDataSetChanged()
+                val newList = (results?.values as? List<Monster>).orEmpty()
+                submitList(newList)
             }
         }
+    }
+
+    class MonsterDiffCallback : DiffUtil.ItemCallback<Monster>() {
+        override fun areItemsTheSame(oldItem: Monster, newItem: Monster): Boolean =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Monster, newItem: Monster): Boolean =
+            oldItem == newItem
     }
 }

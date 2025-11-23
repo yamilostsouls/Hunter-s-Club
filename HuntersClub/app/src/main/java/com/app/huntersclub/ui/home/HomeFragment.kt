@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.huntersclub.data.MonsterDAO
@@ -15,7 +16,6 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var adapter: MonsterAdapter
 
     override fun onCreateView(
@@ -27,19 +27,25 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
 
         //Initialize DB and DAO
         val dbHelper = MyDatabaseHelper(requireContext())
-        dbHelper.createDatabaseIfNeeded()
+        dbHelper.createDatabase()
         val dao = MonsterDAO(dbHelper)
 
         //Get monster list
         val monsters = dao.getAllMonsters()
 
         //Adapter configuration for monster list
-        adapter = MonsterAdapter(monsters)
+        adapter = MonsterAdapter { monster ->
+            val action = HomeFragmentDirections.actionNavHomeToMonsterDetailFragment(monster.id)
+            findNavController().navigate(action)
+        }
         binding.recyclerView.adapter = adapter
+        adapter.setData(monsters)
+
 
         //Separator line between list elements for clarity
         val dividerItemDecoration = DividerItemDecoration(

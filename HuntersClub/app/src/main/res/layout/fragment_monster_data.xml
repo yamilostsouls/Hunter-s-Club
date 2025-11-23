@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/activity_vertical_margin">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/monsterCard"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="6dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/monsterImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/monster_image" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/monsterName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/monsterCard"
+            app:layout_constraintTop_toTopOf="@id/monsterCard" />
+
+        <TextView
+            android:id="@+id/monsterEcology"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/nav_header_vertical_spacing"
+            android:paddingStart="@dimen/activity_horizontal_margin"
+            android:textSize="@dimen/text_subtitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/monsterCard"
+            app:layout_constraintTop_toBottomOf="@id/monsterName" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/divider"/>
+
+
+    <TextView
+        android:id="@+id/monsterDescription"
+        android:textSize="@dimen/text_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/nav_header_vertical_spacing"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/divider"/>
+
+    <TextView
+        android:id="@+id/weaknessTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        android:text="Debilidades"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:gravity=""
+        android:padding="@dimen/activity_horizontal_margin"
+        android:textSize="@dimen/text_subtitle"
+        android:layout_marginBottom="@dimen/nav_header_vertical_spacing"/>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/weaknessRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fab_margin"/>
+</LinearLayout>
