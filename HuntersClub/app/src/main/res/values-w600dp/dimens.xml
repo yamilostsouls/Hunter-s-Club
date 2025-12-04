@@ -3,4 +3,10 @@
     <dimen name="text_title">28sp</dimen>
     <dimen name="text_subtitle">22sp</dimen>
     <dimen name="text_body">18sp</dimen>
+    <dimen name="logo_size">200dp</dimen>
+    <dimen name="container_size">420dp</dimen>
+    <dimen name="input_width">420dp</dimen>
+    <dimen name="button_margin_top">220dp</dimen>
+    <dimen name="button_margin_left">20dp</dimen>
+    <dimen name="button_margin_right">20dp</dimen>
 </resources>

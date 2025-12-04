@@ -4,7 +4,7 @@ import com.app.huntersclub.model.Monster
 import com.app.huntersclub.model.MonsterData
 
 class MonsterDAO(private val dbHelper: MyDatabaseHelper) {
-
+    //SQL query to obtain all monsters
     fun getAllMonsters(): List<Monster> {
 
         val list = mutableListOf<Monster>()
@@ -48,7 +48,7 @@ class MonsterDAO(private val dbHelper: MyDatabaseHelper) {
 
         return list
     }
-
+    //SQL query to get the specific data of a monster
     fun getMonsterById(monsterId: Int): MonsterData? {
 
         val db = dbHelper.openDatabase()
@@ -68,6 +68,7 @@ class MonsterDAO(private val dbHelper: MyDatabaseHelper) {
                 monster.weakness_paralysis,
                 monster.weakness_blast,
                 monster.weakness_stun,
+                monster.has_alt_weakness,
                 monster.alt_weakness_fire,
                 monster.alt_weakness_water,
                 monster.alt_weakness_thunder,
@@ -107,16 +108,17 @@ class MonsterDAO(private val dbHelper: MyDatabaseHelper) {
                 weaknessParalysis = cursor.getInt(11),
                 weaknessBlast = cursor.getInt(12),
                 weaknessStun = cursor.getInt(13),
-                altWeaknessFire = cursor.getInt(14),
-                altWeaknessWater = cursor.getInt(15),
-                altWeaknessThunder = cursor.getInt(16),
-                altWeaknessIce = cursor.getInt(17),
-                altWeaknessDragon = cursor.getInt(18),
-                altWeaknessPoison = cursor.getInt(19),
-                altWeaknessSleep = cursor.getInt(20),
-                altWeaknessParalysis = cursor.getInt(21),
-                altWeaknessBlast = cursor.getInt(22),
-                altWeaknessStun = cursor.getInt(23))
+                hasAltWeakness = cursor.getInt(14) == 1,
+                altWeaknessFire = if (cursor.isNull(15)) null else cursor.getInt(15),
+                altWeaknessWater = if (cursor.isNull(16)) null else cursor.getInt(16),
+                altWeaknessThunder = if (cursor.isNull(17)) null else cursor.getInt(17),
+                altWeaknessIce = if (cursor.isNull(18)) null else cursor.getInt(18),
+                altWeaknessDragon = if (cursor.isNull(19)) null else cursor.getInt(19),
+                altWeaknessPoison = if (cursor.isNull(20)) null else cursor.getInt(20),
+                altWeaknessSleep = if (cursor.isNull(21)) null else cursor.getInt(21),
+                altWeaknessParalysis = if (cursor.isNull(22)) null else cursor.getInt(22),
+                altWeaknessBlast = if (cursor.isNull(23)) null else cursor.getInt(23),
+                altWeaknessStun = if (cursor.isNull(24)) null else cursor.getInt(24))
         }
 
         cursor.close()

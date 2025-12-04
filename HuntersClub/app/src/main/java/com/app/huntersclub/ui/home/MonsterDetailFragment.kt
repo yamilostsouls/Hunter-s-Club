@@ -1,6 +1,5 @@
 package com.app.huntersclub.ui.home
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +11,7 @@ import com.app.huntersclub.data.MonsterDAO
 import com.app.huntersclub.data.MyDatabaseHelper
 import com.app.huntersclub.databinding.FragmentMonsterDataBinding
 import com.app.huntersclub.model.MonsterData
+import com.bumptech.glide.Glide
 
 class MonsterDetailFragment : Fragment() {
 
@@ -37,7 +37,7 @@ class MonsterDetailFragment : Fragment() {
         val dbHelper = MyDatabaseHelper(requireContext())
         dbHelper.createDatabase()
         val dao = MonsterDAO(dbHelper)
-
+        //We get the specific monster data selected in the previous view
         val monster: MonsterData? = dao.getMonsterById(monsterId)
 
         monster?.let {
@@ -45,15 +45,12 @@ class MonsterDetailFragment : Fragment() {
             binding.monsterEcology.text = it.monCategory
             binding.monsterDescription.text = it.description
 
-            //Load image from app\src\main\assets\monsters
-            try {
-                val inputStream = requireContext().assets.open(it.imagenResId)
-                val drawable = Drawable.createFromStream(inputStream, null)
-                binding.monsterImage.setImageDrawable(drawable)
-                inputStream.close()
-            } catch (e: Exception) {
-                //We have images of all monsters
-            }
+            //Load image from app\src\main\assets\monsters using Glide to
+            val imagePath = "file:///android_asset/monsters/${it.id}.png"
+
+            Glide.with(requireContext())
+                .load(imagePath)
+                .into(binding.monsterImage)
 
             //Weaknesses and their alternative (not all monsters have alternative weakness)
             val weaknesses = listOf(
@@ -70,7 +67,7 @@ class MonsterDetailFragment : Fragment() {
             )
 
             binding.weaknessRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.weaknessRecyclerView.adapter = WeaknessAdapter(weaknesses)
+            binding.weaknessRecyclerView.adapter = WeaknessAdapter(weaknesses, it.hasAltWeakness)
         }
     }
 

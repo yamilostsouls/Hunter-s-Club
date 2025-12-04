@@ -20,18 +20,29 @@
         android:id="@+id/nav_gallery"
         android:name="com.app.huntersclub.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_nav_gallery_to_createSetFragment"
+            app:destination="@id/createSetFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.app.huntersclub.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_nav_slideshow_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_nav_slideshow_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/monsterDetailFragment"
         android:name="com.app.huntersclub.ui.home.MonsterDetailFragment"
-        android:label="Resumen"
+        android:label="@string/resumen"
         tools:layout="@layout/fragment_monster_data">
 
         <argument
@@ -40,5 +51,90 @@
         <action
             android:id="@+id/action_monsterDetailFragment_to_nav_home"
             app:destination="@id/nav_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createSetFragment"
+        android:name="com.app.huntersclub.ui.gallery.CreateSetFragment"
+        android:label="Nuevo set"
+        tools:layout="@layout/create_set">
+        <action
+            android:id="@+id/action_createSetFragment_to_nav_gallery"
+            app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_createSetFragment_to_selectArmorFragment"
+            app:destination="@id/selectArmorFragment" />
+        <action
+            android:id="@+id/action_createSetFragment_to_selectCharmFragment"
+            app:destination="@id/selectCharmFragment" />
+        <action
+            android:id="@+id/action_createSetFragment_to_selectWeaponFragment"
+            app:destination="@id/selectWeaponFragment" />
+        <action
+            android:id="@+id/action_createSetFragment_to_selectDecoFragment"
+            app:destination="@id/selectDecoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectArmorFragment"
+        android:name="com.app.huntersclub.ui.gallery.SelectArmorFragment"
+        android:label="Armadura"
+        tools:layout="@layout/select_armor">
+        <argument
+            android:name="armorType"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_selectArmorFragment_to_createSetFragment"
+            app:destination="@id/createSetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectCharmFragment"
+        android:name="com.app.huntersclub.ui.gallery.SelectCharmFragment"
+        android:label="Ciguas"
+        tools:layout="@layout/select_charm">
+        <action
+            android:id="@+id/action_selectCharmFragment_to_createSetFragment"
+            app:destination="@id/createSetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectWeaponFragment"
+        android:name="com.app.huntersclub.ui.gallery.SelectWeaponFragment"
+        android:label="Armas"
+        tools:layout="@layout/select_weapon">
+        <action
+            android:id="@+id/action_selectWeaponFragment_to_createSetFragment"
+            app:destination="@id/createSetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/selectDecoFragment"
+        android:name="com.app.huntersclub.ui.gallery.SelectDecoFragment"
+        android:label="SelectDecoFragment"
+        tools:layout="@layout/select_decoration">
+        <action
+            android:id="@+id/action_selectDecoFragment_to_createSetFragment"
+            app:destination="@id/createSetFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.app.huntersclub.ui.slideshow.RegisterFragment"
+        android:label="Registrarse"
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.app.huntersclub.ui.slideshow.ProfileFragment"
+        android:label="Perfil"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
     </fragment>
 </navigation>

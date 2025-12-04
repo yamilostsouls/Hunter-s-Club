@@ -1,13 +1,19 @@
 package com.app.huntersclub.ui.gallery
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.huntersclub.data.SetRepository
+import com.app.huntersclub.model.Set
 
-class GalleryViewModel : ViewModel() {
+class GalleryViewModel(
+    private val setRepository: SetRepository
+) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "Sets"
+    //LiveData that retrieves the Set list from Firebase
+    val sets: LiveData<List<Set>> = setRepository.sets
+
+    //Function that starts the real time listening
+    fun listenToSets() {
+        setRepository.listenToSets()
     }
-    val text: LiveData<String> = _text
 }

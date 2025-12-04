@@ -15,5 +15,23 @@
     <string name="monster_searcher">Buscador de monstruos</string>
 
     <string name="element_icon">Icono de elemento</string>
+    <string name="armor_image" />
+    <string name="charm_image" />
+    <string name="weapon_image" />
+    <string name="decoration_image" />
+    <string name="todo">TODO</string>
+    <string name="welcome">Bienvenido/a/e a Hunter\'s Club</string>
+    <string name="user_email">Email</string>
+    <string name="pwd">Contraseña</string>
+    <string name="pwd_forgor">¿Olvidaste tu contraseña?</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="log_in">Log in</string>
+    <string name="name">Nombre de usuario</string>
+    <string name="confirm_pwd">Confirmar contraseña</string>
+    <string name="back_login">Volver a Log in</string>
+    <string name="edit_profile">Personalizar perfil</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="profile_image" />
+    <string name="resumen">Resumen</string>
 
 </resources>

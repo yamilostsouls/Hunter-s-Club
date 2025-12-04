@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <Button
+            android:id="@+id/btnSelectedWeapon"
+            android:text="Seleccionar Arma"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:id="@+id/txtSelectedWeapon"
+            android:text="Ninguna"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+
+        <Button
+            android:id="@+id/btnSelectedHead"
+            android:text="Seleccionar Cabeza"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:id="@+id/txtSelectedHead"
+            android:text="Ninguna"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+
+        <Button
+            android:id="@+id/btnSelectedChest"
+            android:text="Seleccionar torso"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:id="@+id/txtSelectedChest"
+            android:text="Ninguna"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+
+        <Button
+            android:id="@+id/btnSelectedArms"
+            android:text="Seleccionar Brazos"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:id="@+id/txtSelectedArms"
+            android:text="Ninguna"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+
+        <Button
+            android:id="@+id/btnSelectedWaist"
+            android:text="Seleccionar Cintura"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:id="@+id/txtSelectedWaist"
+            android:text="Ninguna"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+
+        <Button
+            android:id="@+id/btnSelectedLegs"
+            android:text="Seleccionar Piernas"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:id="@+id/txtSelectedLegs"
+            android:text="Ninguna"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+
+
+        <Button
+            android:id="@+id/btnSelectedCharm"
+            android:text="Seleccionar Cigua"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        <TextView
+            android:id="@+id/txtSelectedCharm"
+            android:text="Ninguna"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+        
+
+        <Button
+            android:id="@+id/btnSaveSet"
+            android:text="Guardar Set"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"/>
+    </LinearLayout>
+</ScrollView>

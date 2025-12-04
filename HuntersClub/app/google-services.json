@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "179712690288",
+    "firebase_url": "https://hunter-s-club-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "hunter-s-club",
+    "storage_bucket": "hunter-s-club.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:179712690288:android:b15285b581bed1bd174cb5",
+        "android_client_info": {
+          "package_name": "com.app.huntersclub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHKkkIh6iU4llkGjDPGv-I-xLbyEaEwuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

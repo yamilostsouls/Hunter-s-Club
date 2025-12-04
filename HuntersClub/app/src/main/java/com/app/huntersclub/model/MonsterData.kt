@@ -16,16 +16,16 @@ data class MonsterData (
     val weaknessParalysis: Int,
     val weaknessBlast: Int,
     val weaknessStun: Int,
-    val altWeaknessFire: Int,
-    val altWeaknessWater: Int,
-    val altWeaknessThunder: Int,
-    val altWeaknessIce: Int,
-    val altWeaknessDragon: Int,
-    val altWeaknessPoison: Int,
-    val altWeaknessSleep: Int,
-    val altWeaknessParalysis: Int,
-    val altWeaknessBlast: Int,
-    val altWeaknessStun: Int
-
+    val hasAltWeakness: Boolean,
+    val altWeaknessFire: Int?,
+    val altWeaknessWater: Int?,
+    val altWeaknessThunder: Int?,
+    val altWeaknessIce: Int?,
+    val altWeaknessDragon: Int?,
+    val altWeaknessPoison: Int?,
+    val altWeaknessSleep: Int?,
+    val altWeaknessParalysis: Int?,
+    val altWeaknessBlast: Int?,
+    val altWeaknessStun: Int?
 )
 

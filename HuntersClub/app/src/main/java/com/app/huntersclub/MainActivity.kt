@@ -1,5 +1,6 @@
 package com.app.huntersclub
 
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableString
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.app.huntersclub.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -28,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         val themeMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
         AppCompatDelegate.setDefaultNightMode(themeMode)
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         super.onCreate(savedInstanceState)
 
@@ -43,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         //menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.profileFragment
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

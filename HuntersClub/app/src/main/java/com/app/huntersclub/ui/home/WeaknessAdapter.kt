@@ -1,16 +1,18 @@
 package com.app.huntersclub.ui.home
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.huntersclub.R
+import com.bumptech.glide.Glide
 
-class WeaknessAdapter(private val weaknesses: List<Triple<String, Int, Int>>) :
-    RecyclerView.Adapter<WeaknessAdapter.WeaknessViewHolder>() {
+
+class WeaknessAdapter(
+    private val weaknesses: List<Triple<String, Int, Int?>>,
+    private val hasAltWeakness: Boolean
+) : RecyclerView.Adapter<WeaknessAdapter.WeaknessViewHolder>() {
 
     inner class WeaknessViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.weaknessIcon)
@@ -20,6 +22,7 @@ class WeaknessAdapter(private val weaknesses: List<Triple<String, Int, Int>>) :
         val altStar1: ImageView = itemView.findViewById(R.id.altStar1)
         val altStar2: ImageView = itemView.findViewById(R.id.altStar2)
         val altStar3: ImageView = itemView.findViewById(R.id.altStar3)
+        val altContainer: View = itemView.findViewById(R.id.altContainer)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeaknessViewHolder {
@@ -30,38 +33,42 @@ class WeaknessAdapter(private val weaknesses: List<Triple<String, Int, Int>>) :
 
     override fun onBindViewHolder(holder: WeaknessViewHolder, position: Int) {
         val (iconName, normalValue, altValue) = weaknesses[position]
-
-        //Loading element icon
-        try {
-            val inputStream = holder.itemView.context.assets.open("elements/$iconName.png")
-            val drawable = Drawable.createFromStream(inputStream, null)
-            holder.icon.setImageDrawable(drawable)
-            inputStream.close()
-        } catch (e: Exception) {
-            holder.icon.setImageResource(android.R.drawable.ic_menu_report_image)
-        }
-        //Loading stars
         val context = holder.itemView.context
-        val starOn = Drawable.createFromStream(context.assets.open("elements/star.png"), null)
-        val starOff = Drawable.createFromStream(context.assets.open("elements/staroff.png"), null)
+
+        //Load image from app\src\main\assets\monsters using Glide to obtain better performance
+        //Using the standard loading from assets has a heavy impact on performance
+        //By using Glide, performance increases and we don't have small stutters/lag on application
+        val iconPath = "file:///android_asset/elements/$iconName.png"
+        Glide.with(context)
+            .load(iconPath)
+            .into(holder.icon)
+
+        val starOn = "file:///android_asset/elements/star.png"
+        val starOff = "file:///android_asset/elements/staroff.png"
 
         //Stars for monster weaknesses
         val stars = listOf(holder.star1, holder.star2, holder.star3)
         for (i in stars.indices) {
-            if (i < normalValue) stars[i].setImageDrawable(starOn)
-            else stars[i].setImageDrawable(starOff)
+            val starPath = if (i < normalValue) starOn else starOff
+            Glide.with(context)
+                .load(starPath)
+                .into(stars[i])
         }
 
         //Alternative stars for weaknesses
-        val altStars = listOf(holder.altStar1, holder.altStar2, holder.altStar3)
-        for (i in altStars.indices) {
-            if (i < altValue) altStars[i].setImageDrawable(starOn)
-            else altStars[i].setImageDrawable(starOff)
+        if (hasAltWeakness && altValue != null) {
+            holder.altContainer.visibility = View.VISIBLE
+            val altStars = listOf(holder.altStar1, holder.altStar2, holder.altStar3)
+            for (i in altStars.indices) {
+                val starPath = if (i < altValue) starOn else starOff
+                Glide.with(context)
+                    .load(starPath)
+                    .into(altStars[i])
+            }
+        } else {
+            holder.altContainer.visibility = View.GONE
         }
     }
 
     override fun getItemCount() = weaknesses.size
 }
-
-
-

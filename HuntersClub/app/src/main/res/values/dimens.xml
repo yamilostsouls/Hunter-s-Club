@@ -10,4 +10,10 @@
     <dimen name="text_subtitle">18sp</dimen>
     <dimen name="text_body">14sp</dimen>
     <dimen name="text_small">12sp</dimen>
+    <dimen name="logo_size">150dp</dimen>
+    <dimen name="container_size">250dp</dimen>
+    <dimen name="input_width">200dp</dimen>
+    <dimen name="button_margin_top">170dp</dimen>
+    <dimen name="button_margin_left">5dp</dimen>
+    <dimen name="button_margin_right">5dp</dimen>
 </resources>
