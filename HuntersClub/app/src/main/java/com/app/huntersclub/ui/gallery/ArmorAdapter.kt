@@ -1,46 +1,41 @@
 package com.app.huntersclub.ui.gallery
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.app.huntersclub.R
+import android.widget.Filter
+import android.widget.Filterable
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import com.app.huntersclub.databinding.ItemArmorBinding
 import com.app.huntersclub.model.Armor
 import com.bumptech.glide.Glide
 
 class ArmorAdapter(
-    private val armorList: List<Armor>,
     private val onItemClick: (Armor) -> Unit
-) : RecyclerView.Adapter<ArmorAdapter.ArmorViewHolder>() {
+) : ListAdapter<Armor, ArmorAdapter.ArmorViewHolder>(ArmorDiffCallback()), Filterable {
 
-    inner class ArmorViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val armorImage: ImageView = itemView.findViewById(R.id.imageArmor)
-        val armorName: TextView = itemView.findViewById(R.id.txtArmorName)
-        val armorRarity: TextView = itemView.findViewById(R.id.txtArmorRarity)
-        val armorDefense: TextView = itemView.findViewById(R.id.txtArmorDefense)
-    }
+    private var armorList: List<Armor> = emptyList()
+
+    inner class ArmorViewHolder(val binding: ItemArmorBinding) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArmorViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_armor, parent, false)
-        return ArmorViewHolder(view)
+        val binding = ItemArmorBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ArmorViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ArmorViewHolder, position: Int) {
-        val armor = armorList[position]
+        val armor = getItem(position)
 
-        holder.armorName.text = armor.name
-        holder.armorRarity.text = buildString {
+        holder.binding.txtArmorName.text = armor.name
+        holder.binding.txtArmorRarity.text = buildString {
         append("Rareza: ")
         append(armor.rarity)
     }
-        holder.armorDefense.text = buildString {
+        holder.binding.txtArmorDefense.text = buildString {
         append("Defensa: ")
         append(armor.defense)
     }
-
 
         val fileName = when (armor.armorType) {
             "head" -> "head_${armor.rarity}.png"
@@ -51,17 +46,43 @@ class ArmorAdapter(
             else -> "default.png"
         }
 
-
         val path = "file:///android_asset/armor/$fileName"
         Glide.with(holder.itemView.context)
             .load(path)
-            .into(holder.armorImage)
+            .into(holder.binding.imageArmor)
 
+        holder.itemView.setOnClickListener { onItemClick(armor) }
+    }
 
-        holder.itemView.setOnClickListener {
-            onItemClick(armor)
+    fun setData(list: List<Armor>) {
+        armorList = list
+        submitList(list)
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.trim()?.lowercase() ?: ""
+                val filteredList = if (query.isEmpty()) {
+                    armorList
+                } else {
+                    armorList.filter { it.name.lowercase().contains(query) }
+                }
+                return FilterResults().apply { values = filteredList }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                val newList = (results?.values as? List<Armor>).orEmpty()
+                submitList(newList)
+            }
         }
     }
 
-    override fun getItemCount(): Int = armorList.size
+    class ArmorDiffCallback : DiffUtil.ItemCallback<Armor>() {
+        override fun areItemsTheSame(oldItem: Armor, newItem: Armor): Boolean =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Armor, newItem: Armor): Boolean =
+            oldItem == newItem
+    }
 }

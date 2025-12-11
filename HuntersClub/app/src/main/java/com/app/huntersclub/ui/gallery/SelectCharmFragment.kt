@@ -5,44 +5,65 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.fragment.app.setFragmentResult
-import com.app.huntersclub.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.huntersclub.data.CharmDAO
 import com.app.huntersclub.data.MyDatabaseHelper
+import com.app.huntersclub.databinding.SelectCharmBinding
+import androidx.appcompat.widget.SearchView
 
 class SelectCharmFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var charmDao: CharmDAO
+    private var _binding: SelectCharmBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var adapter: CharmAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.select_charm, container, false)
+        _binding = SelectCharmBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        recyclerView = view.findViewById(R.id.recyclerViewCharm)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        charmDao = CharmDAO(MyDatabaseHelper(requireContext()))
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val allCharms = charmDao.getAllCharms()
 
-        val adapter = CharmAdapter(allCharms) { selectedCharm ->
+        val dbHelper = MyDatabaseHelper(requireContext())
+        dbHelper.createDatabase()
+        val charmDao = CharmDAO(dbHelper)
+        val charms = charmDao.getAllCharms()
+
+
+        adapter = CharmAdapter { selectedCharm ->
             val result = Bundle().apply {
                 putParcelable("selectedCharm", selectedCharm)
             }
             setFragmentResult("charmSelection", result)
             parentFragmentManager.popBackStack()
         }
+        binding.recyclerViewCharm.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewCharm.adapter = adapter
+        adapter.setData(charms)
 
-        recyclerView.adapter = adapter
 
-        return view
+        binding.searchCharm.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.filter.filter(query)
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
-
-
-

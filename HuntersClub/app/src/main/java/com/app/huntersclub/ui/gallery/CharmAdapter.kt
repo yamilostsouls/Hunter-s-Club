@@ -1,54 +1,85 @@
 package com.app.huntersclub.ui.gallery
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
-import com.app.huntersclub.R
+import android.widget.Filter
+import android.widget.Filterable
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.DiffUtil
+import com.app.huntersclub.databinding.ItemCharmBinding
 import com.app.huntersclub.model.Charm
 import com.bumptech.glide.Glide
 
 class CharmAdapter(
-    private val charms: List<Charm>,
-    private val onItemClick: (Charm) -> Unit
-) : RecyclerView.Adapter<CharmAdapter.CharmViewHolder>() {
+    private val onItemClickListener: ((Charm) -> Unit)? = null
+) : ListAdapter<Charm, CharmAdapter.CharmViewHolder>(CharmDiffCallback()), Filterable {
 
-    inner class CharmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageCharm: ImageView = itemView.findViewById(R.id.imageCharm)
-        val textName: TextView = itemView.findViewById(R.id.txtCharmName)
-        val textRarity: TextView = itemView.findViewById(R.id.txtCharmRarity)
-        val textSkill: TextView = itemView.findViewById(R.id.txtCharmSkill)
-    }
+    private var charms: List<Charm> = emptyList()
+
+    inner class CharmViewHolder(val binding: ItemCharmBinding) :
+        androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharmViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_charm, parent, false)
-        return CharmViewHolder(view)
+        val binding = ItemCharmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return CharmViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: CharmViewHolder, position: Int) {
-        val charm = charms[position]
-        holder.textName.text = charm.name
-        holder.textRarity.text = buildString {
+        val charm = getItem(position)
+
+        holder.binding.txtCharmName.text = charm.name
+        holder.binding.txtCharmRarity.text = buildString {
         append("Rareza: ")
         append(charm.rarity)
     }
-        holder.textSkill.text = buildString {
-        append(charm.skillTreeName)
-        append(" Lv.")
-        append(charm.skillLevel)
+        val skillsText = charm.skills.joinToString(separator = "\n") { skill ->
+            "${skill.name} Lv.${skill.level}"
+        }
+        holder.binding.txtCharmSkill.text = skillsText
+
+        val context = holder.itemView.context
+        val imagePath = "file:///android_asset/charms/${charm.rarity}.png"
+
+        Glide.with(context)
+            .load(imagePath)
+            .into(holder.binding.imageCharm)
+
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.invoke(charm)
+        }
     }
 
-        //Commented code since we don't have the charms icons.
-        //Once we have them, we uncomment this
-        //val path = "file:///android_asset/charms/${charm.rarity}"
-        //Glide.with(holder.itemView.context).load(path).into(holder.imageCharm)
-
-        holder.itemView.setOnClickListener { onItemClick(charm) }
+    fun setData(charms: List<Charm>) {
+        this.charms = charms
+        submitList(charms)
     }
 
-    override fun getItemCount(): Int = charms.size
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val query = constraint?.toString()?.trim()
+                val filteredList = if (query.isNullOrEmpty()) {
+                    charms
+                } else {
+                    charms.filter {
+                        it.name.contains(query, ignoreCase = true)
+                    }
+                }
+                return FilterResults().apply { values = filteredList }
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                val newList = (results?.values as? List<Charm>).orEmpty()
+                submitList(newList)
+            }
+        }
+    }
+
+    class CharmDiffCallback : DiffUtil.ItemCallback<Charm>() {
+        override fun areItemsTheSame(oldItem: Charm, newItem: Charm): Boolean =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Charm, newItem: Charm): Boolean =
+            oldItem == newItem
+    }
 }
-

@@ -6,10 +6,13 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel (
+    private val auth: FirebaseAuth,
+    private val db: FirebaseFirestore
+): ViewModel() {
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    //private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    //private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val _registerResult = MutableLiveData<Boolean>()
     val registerResult: LiveData<Boolean> = _registerResult

@@ -11,7 +11,7 @@ import com.app.huntersclub.model.Monster
 import com.bumptech.glide.Glide
 
 class MonsterAdapter(
-    private val onItemClickListener: ((Monster) -> Unit)? = null
+    val onItemClickListener: ((Monster) -> Unit)? = null
 ) : ListAdapter<Monster, MonsterAdapter.MonsterViewHolder>(MonsterDiffCallback()), Filterable {
 
 

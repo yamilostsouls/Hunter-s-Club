@@ -18,7 +18,7 @@ class ProfileViewModel : ViewModel() {
     val profileImage: LiveData<String> = _profileImage
 
     private val _updateResult = MutableLiveData<Boolean>()
-    val updateResult: LiveData<Boolean> = _updateResult
+    val updateResult: MutableLiveData<Boolean> = _updateResult
 
     private val _logoutResult = MutableLiveData<Boolean>()
     val logoutResult: LiveData<Boolean> = _logoutResult
@@ -76,9 +76,9 @@ class ProfileViewModel : ViewModel() {
         }
     }
 
-
     fun logout() {
         auth.signOut()
         _logoutResult.value = true
     }
+
 }

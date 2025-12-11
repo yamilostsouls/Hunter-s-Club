@@ -4,8 +4,157 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchCharm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:queryHint="Buscar por nombre"/>
+
+
+    <GridLayout
+        android:id="@+id/layoutWeaponFilters"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="7"
+        android:rowCount="2"
+        android:padding="8dp"
+        android:alignmentMode="alignMargins"
+        android:useDefaultMargins="true">
+
+
+        <ImageButton
+            android:id="@+id/btnFilterGS"
+            android:src="@drawable/gs"
+            android:contentDescription="Great Sword"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterLS"
+            android:src="@drawable/ls"
+            android:contentDescription="Long Sword"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterSAS"
+            android:src="@drawable/sas"
+            android:contentDescription="Sword and Shield"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterDB"
+            android:src="@drawable/db"
+            android:contentDescription="Dual Blades"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterHammer"
+            android:src="@drawable/hammer"
+            android:contentDescription="Hammer"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterHH"
+            android:src="@drawable/hh"
+            android:contentDescription="Hunting Horn"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterLance"
+            android:src="@drawable/lance"
+            android:contentDescription="Lance"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+
+        <ImageButton
+            android:id="@+id/btnFilterGL"
+            android:src="@drawable/gl"
+            android:contentDescription="Gunlance"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterSA"
+            android:src="@drawable/sa"
+            android:contentDescription="Switch Axe"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterCB"
+            android:src="@drawable/cb"
+            android:contentDescription="Charge Blade"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterIG"
+            android:src="@drawable/ig"
+            android:contentDescription="Insect Glaive"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterLB"
+            android:src="@drawable/lb"
+            android:contentDescription="Light Bowgun"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterHB"
+            android:src="@drawable/hb"
+            android:contentDescription="Heavy Bowgun"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+
+        <ImageButton
+            android:id="@+id/btnFilterBow"
+            android:src="@drawable/bow"
+            android:contentDescription="Bow"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:scaleType="centerCrop"/>
+    </GridLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWeapon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>
+

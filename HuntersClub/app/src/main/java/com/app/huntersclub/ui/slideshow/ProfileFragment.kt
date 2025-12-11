@@ -120,8 +120,10 @@ class ProfileFragment : Fragment() {
         viewModel.updateResult.observe(viewLifecycleOwner) { success ->
             if (success) {
                 Toast.makeText(context, "Perfil actualizado.", Toast.LENGTH_SHORT).show()
+
             } else {
                 Toast.makeText(context, "Error al actualizar el perfil.", Toast.LENGTH_SHORT).show()
+
             }
         }
     }

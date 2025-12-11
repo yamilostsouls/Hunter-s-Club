@@ -20,6 +20,5 @@ data class Armor (
     val thunder: Int,
     val ice: Int,
     val dragon: Int,
-    val skillName: String,
-    val skillLevel: Int
+    val skills: List<Skill> //Armors can have more than 1 skill
 ):Parcelable
