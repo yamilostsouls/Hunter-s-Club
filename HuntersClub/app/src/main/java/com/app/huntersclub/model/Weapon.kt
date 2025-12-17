@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 data class Weapon (
     val id: Int,
     val name: String,
-    val imageCharm: String,
+    val imageWeapon: String,
     val rarity: Int,
     val weaponType: String,
     val atk: Int,

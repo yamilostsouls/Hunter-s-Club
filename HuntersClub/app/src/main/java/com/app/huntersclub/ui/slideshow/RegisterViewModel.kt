@@ -11,9 +11,6 @@ class RegisterViewModel (
     private val db: FirebaseFirestore
 ): ViewModel() {
 
-    //private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    //private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
-
     private val _registerResult = MutableLiveData<Boolean>()
     val registerResult: LiveData<Boolean> = _registerResult
 

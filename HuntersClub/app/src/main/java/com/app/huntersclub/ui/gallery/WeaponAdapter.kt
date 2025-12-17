@@ -34,7 +34,7 @@ class WeaponAdapter(
         append("Daño: ")
         append(weapon.atk)
     }
-
+        //We obtain the image codification for weapons
         val fileName = when (weapon.weaponType) {
             "great-sword" -> "gs_${weapon.rarity}.png"
             "long-sword" -> "ls_${weapon.rarity}.png"

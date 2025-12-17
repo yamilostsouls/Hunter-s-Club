@@ -115,8 +115,7 @@ class ProfileFragment : Fragment() {
                 .setNegativeButton("Cancelar", null)
                 .show()
         }
-        //We have to check a small bug where updating profile, going to monster/set section
-        //And returning to profile shows again the message of profile updated.
+        //Fixed bug using SingleLiveEvent on the updater on ProfileViewModel
         viewModel.updateResult.observe(viewLifecycleOwner) { success ->
             if (success) {
                 Toast.makeText(context, "Perfil actualizado.", Toast.LENGTH_SHORT).show()

@@ -1,8 +1,10 @@
 package com.app.huntersclub.ui.slideshow
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.huntersclub.utils.SingleLiveEvent
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -17,14 +19,14 @@ class ProfileViewModel : ViewModel() {
     private val _profileImage = MutableLiveData<String>()
     val profileImage: LiveData<String> = _profileImage
 
-    private val _updateResult = MutableLiveData<Boolean>()
-    val updateResult: MutableLiveData<Boolean> = _updateResult
+    private val _updateResult = SingleLiveEvent<Boolean>()
+    val updateResult: LiveData<Boolean> = _updateResult
 
     private val _logoutResult = MutableLiveData<Boolean>()
     val logoutResult: LiveData<Boolean> = _logoutResult
 
     private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> = _errorMessage
+    //val errorMessage: LiveData<String?> = _errorMessage
 
     fun loadUserData() {
         val userId = auth.currentUser?.uid

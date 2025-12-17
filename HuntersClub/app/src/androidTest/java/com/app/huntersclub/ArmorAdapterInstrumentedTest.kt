@@ -1,6 +1,5 @@
 package com.app.huntersclub
 
-import android.widget.Filter
 import android.widget.FrameLayout
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
@@ -88,10 +87,10 @@ class ArmorAdapterInstrumentedTest {
         adapter.setData(armors)
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            adapter.filter.filter("", Filter.FilterListener {
-                assertEquals(3, adapter.itemCount)
-            })
+            adapter.filter.filter("")
         }
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+        assertEquals(3, adapter.currentList.size)
     }
 
     @Test
@@ -100,11 +99,17 @@ class ArmorAdapterInstrumentedTest {
         adapter.setData(armors)
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            adapter.filter.filter("escadora", Filter.FilterListener {
-                assertEquals(1, adapter.itemCount)
-                assertTrue(adapter.currentList.all { it.name.lowercase().contains("escadora") })
-            })
+            adapter.filter.filter("escadora")
         }
+
+        var attempts = 0
+        while (adapter.currentList.size != 1 && attempts < 10) {
+            Thread.sleep(50)
+            attempts++
+        }
+
+        assertEquals(1, adapter.currentList.size)
+        assertEquals("Escama de Escadora β+", adapter.currentList[0].name)
     }
 
     @Test
@@ -113,10 +118,16 @@ class ArmorAdapterInstrumentedTest {
         adapter.setData(armors)
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            adapter.filter.filter("Torso cresta Safi β+", Filter.FilterListener {
-                assertEquals(0, adapter.itemCount)
-            })
+            adapter.filter.filter("Torso cresta Safi β+")
         }
+
+        var attempts = 0
+        while (adapter.currentList.size != 0 && attempts < 10) {
+            Thread.sleep(50)
+            attempts++
+        }
+
+        assertEquals(0, adapter.currentList.size)
     }
 
     @Test

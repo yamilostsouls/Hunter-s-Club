@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_nav_slideshow_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_nav_slideshow_to_passwordFragment"
+            app:destination="@id/passwordFragment" />
     </fragment>
 
     <fragment
@@ -135,6 +138,16 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_profileFragment_to_nav_slideshow"
+            app:destination="@id/nav_slideshow" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/passwordFragment"
+        android:name="com.app.huntersclub.ui.slideshow.PasswordFragment"
+        android:label="Gestión de contraseña"
+        tools:layout="@layout/fragment_password">
+        <action
+            android:id="@+id/action_passwordFragment_to_nav_slideshow"
             app:destination="@id/nav_slideshow" />
     </fragment>
 </navigation>

@@ -1,6 +1,5 @@
 package com.app.huntersclub
 
-import android.widget.Filter
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.app.huntersclub.model.Monster
@@ -23,7 +22,7 @@ class MonsterAdapterInstrumentedTest {
         val adapter = MonsterAdapter()
         adapter.setData(monsters)
 
-        assertEquals(3, adapter.itemCount)
+        assertEquals(3, adapter.currentList.size)
         assertEquals("Alatreon", adapter.currentList[0].name)
     }
 
@@ -33,23 +32,10 @@ class MonsterAdapterInstrumentedTest {
         adapter.setData(monsters)
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            adapter.filter.filter("", Filter.FilterListener {
-                assertEquals(3, adapter.itemCount)
-            })
+            adapter.filter.filter("")
         }
-    }
-
-    @Test
-    fun filterPartialNameReturnsMatchingMonster() {
-        val adapter = MonsterAdapter()
-        adapter.setData(monsters)
-
-        InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            adapter.filter.filter("ala", Filter.FilterListener {
-                assertEquals(1, adapter.itemCount)
-                assertEquals("Alatreon", adapter.currentList[0].name)
-            })
-        }
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+        assertEquals(3, adapter.currentList.size)
     }
 
     @Test
@@ -58,11 +44,37 @@ class MonsterAdapterInstrumentedTest {
         adapter.setData(monsters)
 
         InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            adapter.filter.filter("phoenix", Filter.FilterListener {
-                assertEquals(0, adapter.itemCount)
-            })
+            adapter.filter.filter("Fatalis")
         }
+
+        var attempts = 0
+        while (adapter.currentList.size != 0 && attempts < 10) {
+            Thread.sleep(50)
+            attempts++
+        }
+
+        assertEquals(0, adapter.currentList.size)
     }
+
+    @Test
+    fun filterPartialNameReturnsMatchingMonster() {
+        val adapter = MonsterAdapter()
+        adapter.setData(monsters)
+
+        InstrumentationRegistry.getInstrumentation().runOnMainSync {
+            adapter.filter.filter("ala")
+        }
+
+        var attempts = 0
+        while (adapter.currentList.size != 1 && attempts < 10) {
+            Thread.sleep(50)
+            attempts++
+        }
+
+        assertEquals(1, adapter.currentList.size)
+        assertEquals("Alatreon", adapter.currentList[0].name)
+    }
+
 
     @Test
     fun clickListenerIsInvokedWithCorrectMonster() {

@@ -70,7 +70,7 @@ class WeaponDAO(private val dbHelper: MyDatabaseHelper) {
                 val weapon = Weapon(
                     id = id,
                     name = name,
-                    imageCharm = "weapons/$id.png",
+                    imageWeapon = "weapons/$id.png",
                     rarity = rarity,
                     weaponType = weaponType,
                     atk = atk,
@@ -166,7 +166,7 @@ class WeaponDAO(private val dbHelper: MyDatabaseHelper) {
             weapon = Weapon(
                 id = id,
                 name = name,
-                imageCharm = "weapons/$id.png",
+                imageWeapon = "weapons/$id.png",
                 rarity = rarity,
                 weaponType = weaponType,
                 atk = atk,

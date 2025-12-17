@@ -105,42 +105,42 @@ class ArmorDAO(private val dbHelper: MyDatabaseHelper) {
     //SQL query to get a specific piece of armor
     fun getArmorById(armorId: Int): Armor? {
         val db = dbHelper.openDatabase()
-        val skills = mutableListOf<Skill>()
-        var armor: Armor? = null
+        val armorSkillsMap = mutableMapOf<Int, MutableList<Skill>>()
+        val armorInfoMap = mutableMapOf<Int, Armor>()
 
         val query = """
-            SELECT
-                armor.id,
-                armor.rarity,
-                armor.rank,
-                armor.armor_type,
-                armor_text.name,
-                armor.slot_1,
-                armor.slot_2,
-                armor.slot_3,
-                armor.defense_base,
-                armor.fire,
-                armor.water,
-                armor.thunder,
-                armor.ice,
-                armor.dragon,
-                skilltree_text.name,
-                armor_skill.level
-            FROM armor
-            JOIN armor_text
-                ON armor_text.id = armor.id
-            JOIN armor_skill
-                ON armor_skill.armor_id = armor.id
-            JOIN skilltree_text
-                ON armor_skill.skilltree_id = skilltree_text.id
-            WHERE
-                armor.id = ?
-                AND armor_text.lang_id = 'es'
-                AND skilltree_text.lang_id = 'es'
-        """.trimIndent()
+        SELECT
+            armor.id,
+            armor.rarity,
+            armor.rank,
+            armor.armor_type,
+            armor_text.name,
+            armor.slot_1,
+            armor.slot_2,
+            armor.slot_3,
+            armor.defense_base,
+            armor.fire,
+            armor.water,
+            armor.thunder,
+            armor.ice,
+            armor.dragon,
+            skilltree_text.name,
+            armor_skill.level
+        FROM armor
+        JOIN armor_text
+            ON armor_text.id = armor.id
+        LEFT JOIN armor_skill
+            ON armor_skill.armor_id = armor.id
+        LEFT JOIN skilltree_text
+            ON armor_skill.skilltree_id = skilltree_text.id
+            AND skilltree_text.lang_id = 'es'
+        WHERE
+            armor.id = ?
+            AND armor_text.lang_id = 'es'
+    """.trimIndent()
 
         val cursor = db.rawQuery(query, arrayOf(armorId.toString()))
-
+        //Similar armor mapping as getAllArmor()
         if (cursor.moveToFirst()) {
             do {
                 val id = cursor.getInt(0)
@@ -160,33 +160,41 @@ class ArmorDAO(private val dbHelper: MyDatabaseHelper) {
                 val skillName = cursor.getString(14)
                 val skillLevel = cursor.getInt(15)
 
-                skills.add(Skill(skillName, skillLevel))
+                if (!armorInfoMap.containsKey(id)) {
+                    armorInfoMap[id] = Armor(
+                        id = id,
+                        name = name,
+                        imageArmor = "armor/$id.png",
+                        rarity = rarity,
+                        rank = rank,
+                        armorType = armorType,
+                        slot1 = slot1,
+                        slot2 = slot2,
+                        slot3 = slot3,
+                        defense = defense,
+                        fire = fire,
+                        water = water,
+                        thunder = thunder,
+                        ice = ice,
+                        dragon = dragon,
+                        skills = emptyList()
+                    )
+                }
 
-                armor = Armor(
-                    id = id,
-                    name = name,
-                    imageArmor = "armor/$id.png",
-                    rarity = rarity,
-                    rank = rank,
-                    armorType = armorType,
-                    slot1 = slot1,
-                    slot2 = slot2,
-                    slot3 = slot3,
-                    defense = defense,
-                    fire = fire,
-                    water = water,
-                    thunder = thunder,
-                    ice = ice,
-                    dragon = dragon,
-                    skills = skills
-                )
+                if (skillName != null) {
+                    val skill = Skill(skillName, skillLevel)
+                    armorSkillsMap.getOrPut(id) { mutableListOf() }.add(skill)
+                }
+
             } while (cursor.moveToNext())
         }
 
         cursor.close()
         db.close()
-
-        return armor
+        //We return the armor with the matching id required
+        //Fixing the ids 2-5 and 7-10 from database
+        return armorInfoMap[armorId]?.copy(skills = armorSkillsMap[armorId] ?: emptyList())
     }
+
 }
 

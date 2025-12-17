@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -41,9 +42,15 @@ class SlideshowFragment : Fragment() {
         val edUserName = view.findViewById<EditText>(R.id.edUserName)
         val edPasswd = view.findViewById<EditText>(R.id.edPasswd)
         val btnRegister = view.findViewById<Button>(R.id.btnRegister)
+        val forgotPassword = view.findViewById<TextView>(R.id.forgotPassword)
+
         //Button for the user to register in case it doesn't have an account
         btnRegister.setOnClickListener {
             findNavController().navigate(R.id.action_nav_slideshow_to_registerFragment)
+        }
+        //Clickable text to recover password
+        forgotPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_nav_slideshow_to_passwordFragment)
         }
         //Login check handled in SlideshowViewModel
         btnLogin.setOnClickListener {

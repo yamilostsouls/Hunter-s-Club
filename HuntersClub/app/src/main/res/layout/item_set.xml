@@ -5,56 +5,156 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/txtWeapon"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Weapon"
-        android:textStyle="bold"
-        android:textSize="16sp"
-        android:paddingBottom="4dp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingBottom="4dp">
 
-    <TextView
-        android:id="@+id/txtHead"
+        <ImageView
+            android:id="@+id/imgWeapon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/gs" />
+
+        <TextView
+            android:id="@+id/txtWeapon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Weapon"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Head"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/txtTorso"
+        <ImageView
+            android:id="@+id/imgHead"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/head" />
+
+        <TextView
+            android:id="@+id/txtHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Head"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Torso"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/txtArms"
+        <ImageView
+            android:id="@+id/imgChest"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/chest" />
+
+        <TextView
+            android:id="@+id/txtChest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Torso"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Arms"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/txtWaist"
+        <ImageView
+            android:id="@+id/imgArms"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arms" />
+
+        <TextView
+            android:id="@+id/txtArms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Arms"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Waist"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/txtLegs"
+        <ImageView
+            android:id="@+id/imgWaist"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/waist" />
+
+        <TextView
+            android:id="@+id/txtWaist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Waist"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Legs"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/txtCharm"
+        <ImageView
+            android:id="@+id/imgLegs"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/legs" />
+
+        <TextView
+            android:id="@+id/txtLegs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Legs"/>
+    </LinearLayout>
+
+    <!-- Charm -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Charm"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
+        <ImageView
+            android:id="@+id/imgCharm"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/charm" />
+
+        <TextView
+            android:id="@+id/txtCharm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Charm"/>
+    </LinearLayout>
+
+    <!-- User -->
     <TextView
         android:id="@+id/txtUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set creado por: "
+        android:text="Set creado por:"
         android:textStyle="italic"
         android:paddingTop="4dp"/>
 </LinearLayout>

@@ -33,5 +33,7 @@
     <string name="logout">Cerrar sesión</string>
     <string name="profile_image" />
     <string name="resumen">Resumen</string>
+    <string name="clave">Recuperación de contraseña</string>
+    <string name="mail">Enviar correo</string>
 
 </resources>
