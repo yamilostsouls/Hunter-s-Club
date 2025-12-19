@@ -10,102 +10,225 @@
         android:layout_height="wrap_content">
 
 
-        <Button
+        <LinearLayout
             android:id="@+id/btnSelectedWeapon"
-            android:text="Seleccionar Arma"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/txtSelectedWeapon"
-            android:text="Ninguna"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/blue_button"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgWeapon"
+                android:src="@drawable/gs"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+
+                android:contentDescription="Icono arma"/>
+
+            <TextView
+                android:id="@+id/txtWeapon"
+                android:text="Seleccionar Arma"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
-        <Button
+        <LinearLayout
             android:id="@+id/btnSelectedHead"
-            android:text="Seleccionar Cabeza"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/txtSelectedHead"
-            android:text="Ninguna"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/blue_button"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgHead"
+                android:src="@drawable/head"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+
+                android:contentDescription="Icono cabeza"/>
+
+            <TextView
+                android:id="@+id/txtHead"
+                android:text="Seleccionar Cabeza"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
-        <Button
+        <LinearLayout
             android:id="@+id/btnSelectedChest"
-            android:text="Seleccionar torso"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/txtSelectedChest"
-            android:text="Ninguna"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/blue_button"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgChest"
+                android:src="@drawable/chest"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Icono torso"/>
+
+            <TextView
+                android:id="@+id/txtChest"
+                android:text="Seleccionar Torso"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
-        <Button
+        <LinearLayout
             android:id="@+id/btnSelectedArms"
-            android:text="Seleccionar Brazos"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/txtSelectedArms"
-            android:text="Ninguna"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/blue_button"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgArms"
+                android:src="@drawable/arms"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Icono brazos"/>
+
+            <TextView
+                android:id="@+id/txtArms"
+                android:text="Seleccionar Brazos"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
-        <Button
+        <LinearLayout
             android:id="@+id/btnSelectedWaist"
-            android:text="Seleccionar Cintura"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/txtSelectedWaist"
-            android:text="Ninguna"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/blue_button"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgWaist"
+                android:src="@drawable/waist"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Icono cintura"/>
+
+            <TextView
+                android:id="@+id/txtWaist"
+                android:text="Seleccionar Cintura"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
-        <Button
+        <LinearLayout
             android:id="@+id/btnSelectedLegs"
-            android:text="Seleccionar Piernas"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/txtSelectedLegs"
-            android:text="Ninguna"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/blue_button"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imgLegs"
+                android:src="@drawable/legs"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Icono piernas"/>
+
+            <TextView
+                android:id="@+id/txtLegs"
+                android:text="Seleccionar Piernas"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
 
-        <Button
+        <LinearLayout
             android:id="@+id/btnSelectedCharm"
-            android:text="Seleccionar Cigua"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        <TextView
-            android:id="@+id/txtSelectedCharm"
-            android:text="Ninguna"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-        
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/blue_button"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/btnSaveSet"
-            android:text="Guardar Set"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"/>
-    </LinearLayout>
-</ScrollView>
+            <ImageView
+                android:id="@+id/imgCharm"
+                android:src="@drawable/charm"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="Icono talismán"/>
+
+            <TextView
+                android:id="@+id/txtCharm"
+                android:text="Seleccionar Talismán"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btnSaveSet"
+                android:text="Guardar Set"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/blue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+

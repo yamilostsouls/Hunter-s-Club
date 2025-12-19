@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.huntersclub.R
 import com.app.huntersclub.model.Set
+import com.app.huntersclub.utils.ImageLoad.getAssetPath
 import com.bumptech.glide.Glide
 
 class SetAdapter(private val sets: List<Set>) :
@@ -52,72 +53,27 @@ class SetAdapter(private val sets: List<Set>) :
         }
         //Now we load images for better clarity
         Glide.with(holder.itemView.context)
-            .load(getRarityAssetPath("weapons", set.weaponRarity, set.weaponType))
+            .load(getAssetPath("weapons", set.weaponRarity, set.weaponType))
             .into(holder.imageWeapon)
         Glide.with(holder.itemView.context)
-            .load(getRarityAssetPath("armor", set.armorHeadRarity, set.armorHeadType))
+            .load(getAssetPath("armor", set.armorHeadRarity, set.armorHeadType))
             .into(holder.imageHead)
         Glide.with(holder.itemView.context)
-            .load(getRarityAssetPath("armor", set.armorChestRarity, set.armorChestType))
+            .load(getAssetPath("armor", set.armorChestRarity, set.armorChestType))
             .into(holder.imageChest)
         Glide.with(holder.itemView.context)
-            .load(getRarityAssetPath("armor", set.armorArmsRarity, set.armorArmsType))
+            .load(getAssetPath("armor", set.armorArmsRarity, set.armorArmsType))
             .into(holder.imageArms)
         Glide.with(holder.itemView.context)
-            .load(getRarityAssetPath("armor", set.armorWaistRarity, set.armorWaistType))
+            .load(getAssetPath("armor", set.armorWaistRarity, set.armorWaistType))
             .into(holder.imageWaist)
         Glide.with(holder.itemView.context)
-            .load(getRarityAssetPath("armor", set.armorLegsRarity, set.armorLegsType))
+            .load(getAssetPath("armor", set.armorLegsRarity, set.armorLegsType))
             .into(holder.imageLegs)
         Glide.with(holder.itemView.context)
-            .load(getRarityAssetPath("charms", set.charmRarity))
+            .load(getAssetPath("charms", set.charmRarity))
             .into(holder.imageCharm)
 
-    }
-
-    //Function to obtain the images from assets and load them on the GalleryFragment
-    //(the set section shared by users)
-    private fun getRarityAssetPath(type: String, rarity: Int, subtype: String? = null): String {
-
-        return when (type) {
-
-            "charms" -> {
-                //assets/charms/5.png
-                "file:///android_asset/charms/$rarity.png"
-            }
-
-            "weapons" -> {
-                //Internal conversion for weapon types
-                //Same as on WeaponAdapter
-                val prefix = when (subtype) {
-                    "great-sword" -> "gs"
-                    "long-sword" -> "ls"
-                    "sword-and-shield" -> "sas"
-                    "dual-blades" -> "db"
-                    "hammer" -> "hammer"
-                    "hunting-horn" -> "hh"
-                    "lance" -> "lance"
-                    "gunlance" -> "gl"
-                    "switch-axe" -> "sa"
-                    "charge-blade" -> "cb"
-                    "insect-glaive" -> "ig"
-                    "light-bowgun" -> "lb"
-                    "heavy-bowgun" -> "hb"
-                    "bow" -> "bow"
-                    else -> "default"
-                }
-                //assets/weapons/gs_12
-                "file:///android_asset/weapons/${prefix}_${rarity}.png"
-            }
-
-            "armor" -> {
-                //assets/armor/head_4.png
-                val armorType = subtype ?: "unknown"
-                "file:///android_asset/armor/${armorType}_${rarity}.png"
-            }
-
-            else -> "file:///android_asset/default.png"
-        }
     }
 
     override fun getItemCount() = sets.size

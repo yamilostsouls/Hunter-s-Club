@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.app.huntersclub.databinding.ItemWeaponBinding
 import com.app.huntersclub.model.Weapon
+import com.app.huntersclub.utils.ImageLoad
 import com.bumptech.glide.Glide
 
 class WeaponAdapter(
@@ -34,26 +35,9 @@ class WeaponAdapter(
         append("Daño: ")
         append(weapon.atk)
     }
-        //We obtain the image codification for weapons
-        val fileName = when (weapon.weaponType) {
-            "great-sword" -> "gs_${weapon.rarity}.png"
-            "long-sword" -> "ls_${weapon.rarity}.png"
-            "sword-and-shield" -> "sas_${weapon.rarity}.png"
-            "dual-blades" -> "db_${weapon.rarity}.png"
-            "hammer" -> "hammer_${weapon.rarity}.png"
-            "hunting-horn" -> "hh_${weapon.rarity}.png"
-            "lance" -> "lance_${weapon.rarity}.png"
-            "gunlance" -> "gl_${weapon.rarity}.png"
-            "switch-axe" -> "sa_${weapon.rarity}.png"
-            "charge-blade" -> "cb_${weapon.rarity}.png"
-            "insect-glaive" -> "ig_${weapon.rarity}.png"
-            "light-bowgun" -> "lb_${weapon.rarity}.png"
-            "heavy-bowgun" -> "hb_${weapon.rarity}.png"
-            "bow" -> "bow_${weapon.rarity}.png"
-            else -> "default.png"
-        }
 
-        val path = "file:///android_asset/weapons/$fileName"
+        val path = ImageLoad.getAssetPath("weapons", weapon.rarity, weapon.weaponType)
+
         Glide.with(holder.itemView.context).load(path).into(holder.binding.imageWeapon)
 
         holder.itemView.setOnClickListener { onItemClick(weapon) }

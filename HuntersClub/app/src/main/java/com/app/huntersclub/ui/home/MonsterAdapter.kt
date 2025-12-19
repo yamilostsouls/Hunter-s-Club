@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.app.huntersclub.databinding.ItemMonsterBinding
 import com.app.huntersclub.model.Monster
+import com.app.huntersclub.utils.ImageLoad
 import com.bumptech.glide.Glide
 
 class MonsterAdapter(
@@ -35,10 +36,10 @@ class MonsterAdapter(
         //Using the standard loading from assets has a heavy impact on performance
         //By using Glide, performance increases and we don't have small stutters/lag on application
         val context = holder.itemView.context
-        val imagePath = "file:///android_asset/monsters/${monster.id}.png"
+        val path = ImageLoad.getAssetPath("monsters", id = monster.id)
 
         Glide.with(context)
-            .load(imagePath)
+            .load(path)
             .into(holder.binding.monsterImage)
 
         holder.itemView.setOnClickListener {

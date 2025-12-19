@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.app.huntersclub.databinding.ItemCharmBinding
 import com.app.huntersclub.model.Charm
+import com.app.huntersclub.utils.ImageLoad
 import com.bumptech.glide.Glide
 
 class CharmAdapter(
@@ -31,17 +32,17 @@ class CharmAdapter(
         holder.binding.txtCharmRarity.text = buildString {
         append("Rareza: ")
         append(charm.rarity)
-    }
-        val skillsText = charm.skills.joinToString(separator = "\n") { skill ->
-            "${skill.name} Lv.${skill.level}"
         }
+        //Since skills now is in a list to not have duplicated pieces
+        //We need to change how it's showed
+        val skillsText = charm.skills.joinToString("\n") { skill ->
+            "${skill.name} Lv.${skill.level}" }
         holder.binding.txtCharmSkill.text = skillsText
 
-        val context = holder.itemView.context
-        val imagePath = "file:///android_asset/charms/${charm.rarity}.png"
+        val path = ImageLoad.getAssetPath("charms", charm.rarity)
 
-        Glide.with(context)
-            .load(imagePath)
+        Glide.with(holder.itemView.context)
+            .load(path)
             .into(holder.binding.imageCharm)
 
         holder.itemView.setOnClickListener {

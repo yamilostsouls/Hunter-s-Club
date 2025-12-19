@@ -13,8 +13,9 @@ import com.app.huntersclub.R
 import com.app.huntersclub.databinding.CreateSetBinding
 import com.app.huntersclub.model.Armor
 import com.app.huntersclub.model.Charm
-import com.app.huntersclub.model.Decoration
 import com.app.huntersclub.model.Weapon
+import com.app.huntersclub.utils.ImageLoad
+import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -36,14 +37,62 @@ class CreateSetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Initializing the texts as before adding the images
+        //To have persistency after selecting one piece of the set
+        //And the images not returning to default after selecting another
+        //Piece of the set
+        viewModel.selectedWeapon?.let {
+            binding.txtWeapon.text = viewModel.selectedWeapon?.name
+            Glide.with(this)
+                .load(ImageLoad.getAssetPath("weapons", it.rarity, it.weaponType))
+                .placeholder(R.drawable.gs)
+                .into(binding.imgWeapon)
+        } ?: run { binding.txtWeapon.text = "Seleccionar Arma" }
 
-        binding.txtSelectedWeapon.text= viewModel.selectedWeapon?.name
-        binding.txtSelectedHead.text = viewModel.selectedHead?.name
-        binding.txtSelectedChest.text = viewModel.selectedChest?.name
-        binding.txtSelectedArms.text = viewModel.selectedArms?.name
-        binding.txtSelectedWaist.text = viewModel.selectedWaist?.name
-        binding.txtSelectedLegs.text = viewModel.selectedLegs?.name
-        binding.txtSelectedCharm.text = viewModel.selectedCharm?.name
+        viewModel.selectedHead?.let {
+            binding.txtHead.text = viewModel.selectedHead?.name
+            Glide.with(this)
+                .load(ImageLoad.getAssetPath("armor", it.rarity, "head"))
+                .placeholder(R.drawable.head)
+                .into(binding.imgHead)
+        } ?: run { binding.txtHead.text = "Seleccionar Cabeza" }
+
+        viewModel.selectedChest?.let {
+            binding.txtChest.text = viewModel.selectedChest?.name
+            Glide.with(this)
+                .load(ImageLoad.getAssetPath("armor", it.rarity, "chest"))
+                .placeholder(R.drawable.chest)
+                .into(binding.imgChest)
+        } ?: run { binding.txtChest.text = "Seleccionar Torso" }
+
+        viewModel.selectedArms?.let {
+            binding.txtArms.text = viewModel.selectedArms?.name
+            Glide.with(this)
+                .load(ImageLoad.getAssetPath("armor", it.rarity, "arms"))
+                .placeholder(R.drawable.arms)
+                .into(binding.imgArms)
+        } ?: run { binding.txtArms.text = "Seleccionar Brazos" }
+
+        viewModel.selectedWaist?.let {
+            binding.txtWaist.text = viewModel.selectedWaist?.name
+            Glide.with(this)
+                .load(ImageLoad.getAssetPath("armor", it.rarity, "waist"))
+                .placeholder(R.drawable.waist) .into(binding.imgWaist)
+        } ?: run { binding.txtWaist.text = "Seleccionar Cintura" }
+
+        viewModel.selectedLegs?.let {
+            binding.txtLegs.text = viewModel.selectedLegs?.name
+            Glide.with(this)
+                .load(ImageLoad.getAssetPath("armor", it.rarity, "legs"))
+                .placeholder(R.drawable.legs) .into(binding.imgLegs)
+        } ?: run { binding.txtLegs.text = "Seleccionar Piernas" }
+
+        viewModel.selectedCharm?.let {
+            binding.txtCharm.text = viewModel.selectedCharm?.name
+            Glide.with(this)
+                .load(ImageLoad.getAssetPath("charms", it.rarity))
+                .placeholder(R.drawable.charm) .into(binding.imgCharm)
+        } ?: run { binding.txtCharm.text = "Seleccionar Talismán" }
 
         //getParcelable is depreciated but we need it since minimum API is 23.
         //Originally, minimum API was 21 but we increase it to 23
@@ -51,7 +100,13 @@ class CreateSetFragment : Fragment() {
         setFragmentResultListener("weaponSelection") { _, bundle ->
             val weapon: Weapon? = bundle.getParcelable("selectedWeapon")
             viewModel.selectedWeapon = weapon
-            binding.txtSelectedWeapon.text = weapon?.name
+            binding.txtWeapon.text = weapon?.name ?: "Seleccionar Arma"
+
+            weapon?.let {
+                Glide.with(this)
+                    .load(ImageLoad.getAssetPath("weapons", it.rarity, it.weaponType))
+                    .placeholder(R.drawable.gs)
+                    .into(binding.imgWeapon) }
         }
 
         setFragmentResultListener("armorSelection") { _, bundle ->
@@ -61,30 +116,61 @@ class CreateSetFragment : Fragment() {
             when (armorType) {
                 "head" -> {
                     viewModel.selectedHead = armor
-                    binding.txtSelectedHead.text = armor?.name
+                    binding.txtHead.text = armor?.name ?: "Seleccionar Cabeza"
+                    armor?.let {
+                        Glide.with(this)
+                            .load(ImageLoad.getAssetPath("armor", it.rarity, "head"))
+                            .placeholder(R.drawable.head)
+                            .into(binding.imgHead) }
                 }
                 "chest" -> {
                     viewModel.selectedChest = armor
-                    binding.txtSelectedChest.text = armor?.name
+                    binding.txtChest.text = armor?.name ?: "Seleccionar Torso"
+                    armor?.let {
+                        Glide.with(this)
+                            .load(ImageLoad.getAssetPath("armor", it.rarity, "chest"))
+                            .placeholder(R.drawable.chest)
+                            .into(binding.imgChest) }
                 }
                 "arms" -> {
                     viewModel.selectedArms = armor
-                    binding.txtSelectedArms.text = armor?.name
+                    binding.txtArms.text = armor?.name ?: "Seleccionar Brazos"
+                    armor?.let {
+                        Glide.with(this)
+                            .load(ImageLoad.getAssetPath("armor", it.rarity, "arms"))
+                            .placeholder(R.drawable.arms)
+                            .into(binding.imgArms) }
                 }
                 "waist" -> {
                     viewModel.selectedWaist = armor
-                    binding.txtSelectedWaist.text = armor?.name
+                    binding.txtWaist.text = armor?.name ?: "Seleccionar Cintura"
+                    armor?.let {
+                        Glide.with(this)
+                            .load(ImageLoad.getAssetPath("armor", it.rarity, "waist"))
+                            .placeholder(R.drawable.waist)
+                            .into(binding.imgWaist) }
                 }
                 "legs" -> {
                     viewModel.selectedLegs = armor
-                    binding.txtSelectedLegs.text = armor?.name
+                    binding.txtLegs.text = armor?.name ?: "Seleccionar Piernas"
+                    armor?.let {
+                        Glide.with(this)
+                            .load(ImageLoad.getAssetPath("armor", it.rarity, "legs"))
+                            .placeholder(R.drawable.legs)
+                            .into(binding.imgLegs) }
                 }
             }
         }
         setFragmentResultListener("charmSelection") { _, bundle ->
             val charm: Charm? = bundle.getParcelable("selectedCharm")
             viewModel.selectedCharm = charm
-            binding.txtSelectedCharm.text = charm?.name
+            binding.txtCharm.text = charm?.name ?: "Seleccionar Talismán"
+            charm?.let {
+                Glide.with(this)
+                    .load(ImageLoad.getAssetPath("charms", it.rarity))
+                    .placeholder(R.drawable.charm)
+                    .into(binding.imgCharm)
+            }
         }
 
         //Buttons for the set

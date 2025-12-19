@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.huntersclub.R
+import com.app.huntersclub.utils.ImageLoad
 import com.bumptech.glide.Glide
 
 
@@ -33,24 +34,23 @@ class WeaknessAdapter(
 
     override fun onBindViewHolder(holder: WeaknessViewHolder, position: Int) {
         val (iconName, normalValue, altValue) = weaknesses[position]
-        val context = holder.itemView.context
 
         //Load image from app\src\main\assets\monsters using Glide to obtain better performance
         //Using the standard loading from assets has a heavy impact on performance
         //By using Glide, performance increases and we don't have small stutters/lag on application
-        val iconPath = "file:///android_asset/elements/$iconName.png"
-        Glide.with(context)
-            .load(iconPath)
+        val path = ImageLoad.getAssetPath("elements", name = iconName)
+        Glide.with(holder.itemView.context)
+            .load(path)
             .into(holder.icon)
 
-        val starOn = "file:///android_asset/elements/star.png"
-        val starOff = "file:///android_asset/elements/staroff.png"
+        val starOn = ImageLoad.getAssetPath("elements", name = "star")
+        val starOff = ImageLoad.getAssetPath("elements", name = "staroff")
 
         //Stars for monster weaknesses
         val stars = listOf(holder.star1, holder.star2, holder.star3)
         for (i in stars.indices) {
             val starPath = if (i < normalValue) starOn else starOff
-            Glide.with(context)
+            Glide.with(holder.itemView.context)
                 .load(starPath)
                 .into(stars[i])
         }
@@ -61,7 +61,7 @@ class WeaknessAdapter(
             val altStars = listOf(holder.altStar1, holder.altStar2, holder.altStar3)
             for (i in altStars.indices) {
                 val starPath = if (i < altValue) starOn else starOff
-                Glide.with(context)
+                Glide.with(holder.itemView.context)
                     .load(starPath)
                     .into(altStars[i])
             }

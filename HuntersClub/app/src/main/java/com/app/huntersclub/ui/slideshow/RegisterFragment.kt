@@ -11,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.huntersclub.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class RegisterFragment : Fragment() {
@@ -27,8 +29,14 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //Since RegisterViewModel has a constructor, we need a ModelFactory
+        //To fix the register error we encountered after changing the ViewModel constructor
+        val factory = RegisterViewModelFactory(
+            FirebaseAuth.getInstance(),
+            FirebaseFirestore.getInstance()
+        )
 
-        viewModel = ViewModelProvider(this)[RegisterViewModel::class.java]
+        viewModel = ViewModelProvider(this, factory)[RegisterViewModel::class.java]
 
         val edName = view.findViewById<EditText>(R.id.edName)
         val edEmail = view.findViewById<EditText>(R.id.edEmail)

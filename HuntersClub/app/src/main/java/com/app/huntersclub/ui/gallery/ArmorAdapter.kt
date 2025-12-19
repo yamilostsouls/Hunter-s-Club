@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.app.huntersclub.databinding.ItemArmorBinding
 import com.app.huntersclub.model.Armor
+import com.app.huntersclub.utils.ImageLoad
 import com.bumptech.glide.Glide
 
 class ArmorAdapter(
@@ -36,17 +37,8 @@ class ArmorAdapter(
         append("Defensa: ")
         append(armor.defense)
     }
+        val path = ImageLoad.getAssetPath("armor", armor.rarity, armor.armorType)
 
-        val fileName = when (armor.armorType) {
-            "head" -> "head_${armor.rarity}.png"
-            "chest" -> "chest_${armor.rarity}.png"
-            "arms" -> "arms_${armor.rarity}.png"
-            "waist" -> "waist_${armor.rarity}.png"
-            "legs" -> "legs_${armor.rarity}.png"
-            else -> "default.png"
-        }
-
-        val path = "file:///android_asset/armor/$fileName"
         Glide.with(holder.itemView.context)
             .load(path)
             .into(holder.binding.imageArmor)
