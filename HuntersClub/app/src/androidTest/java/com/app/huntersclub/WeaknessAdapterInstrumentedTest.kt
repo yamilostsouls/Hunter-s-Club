@@ -4,7 +4,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.app.huntersclub.ui.home.WeaknessAdapter
+import com.app.huntersclub.ui.monster.WeaknessAdapter
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith

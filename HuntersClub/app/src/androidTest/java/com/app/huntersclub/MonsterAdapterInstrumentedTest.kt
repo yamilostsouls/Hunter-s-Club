@@ -3,7 +3,7 @@ package com.app.huntersclub
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.app.huntersclub.model.Monster
-import com.app.huntersclub.ui.home.MonsterAdapter
+import com.app.huntersclub.ui.monster.MonsterAdapter
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith

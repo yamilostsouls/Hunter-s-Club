@@ -5,7 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.app.huntersclub.model.Armor
 import com.app.huntersclub.model.Skill
-import com.app.huntersclub.ui.gallery.ArmorAdapter
+import com.app.huntersclub.ui.sets.ArmorAdapter
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith

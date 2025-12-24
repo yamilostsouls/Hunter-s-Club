@@ -16,8 +16,7 @@ class SetRepository(
     private val _sets = MutableLiveData<List<Set>>()
     val sets: LiveData<List<Set>> get() = _sets
 
-    //Listens the sets collection on Firebase to load them in GalleryFragment section
-    //GalleryFragment in this project is the starting screen for the Sets section
+    //Listens the sets collection on Firebase to load them in SetsFragment section
     //Refactored so it orders by username, then by weapon rarity
     fun listenToSets() {
         db.collection("sets")

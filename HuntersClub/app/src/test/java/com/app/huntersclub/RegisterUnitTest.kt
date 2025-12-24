@@ -1,7 +1,7 @@
 package com.app.huntersclub
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.app.huntersclub.ui.slideshow.RegisterViewModel
+import com.app.huntersclub.ui.profile.RegisterViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
