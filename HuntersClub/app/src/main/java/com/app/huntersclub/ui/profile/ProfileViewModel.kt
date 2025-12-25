@@ -1,6 +1,5 @@
 package com.app.huntersclub.ui.profile
 
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,13 +9,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileViewModel : ViewModel() {
 
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
-    private val _userName = MutableLiveData<String>()
+    private val _userName = MutableLiveData("Cargando...")
     val userName: LiveData<String> = _userName
 
-    private val _profileImage = MutableLiveData<String>()
+    private val _profileImage = MutableLiveData("")
     val profileImage: LiveData<String> = _profileImage
 
     private val _updateResult = SingleLiveEvent<Boolean>()
@@ -26,21 +25,26 @@ class ProfileViewModel : ViewModel() {
     val logoutResult: LiveData<Boolean> = _logoutResult
 
     private val _errorMessage = MutableLiveData<String?>()
-    //val errorMessage: LiveData<String?> = _errorMessage
 
-    fun loadUserData() {
-        val userId = auth.currentUser?.uid
-        if (userId != null) {
-            db.collection("users").document(userId)
-                .get()
-                .addOnSuccessListener { document ->
-                    if (document.exists()) {
-                        _userName.value = document.getString("name") ?: "Usuario"
-                        _profileImage.value = document.getString("profileImage") ?: ""
-                    }
-                }
-        }
+    init {
+        loadUserData()
     }
+    //We moved the user data load to ViewModel
+    //to increase performance since loading profile
+    //after logging in or after loading the app
+    //when it was closed for long time.
+    private fun loadUserData() {
+        val userId = auth.currentUser?.uid ?: return
+
+        db.collection("users").document(userId)
+            .addSnapshotListener { snapshot, _ ->
+                if (snapshot != null && snapshot.exists()) {
+                    _userName.value = snapshot.getString("name") ?: "Usuario"
+                    _profileImage.value = snapshot.getString("profileImage") ?: ""
+                }
+            }
+    }
+
     //Update profile with 2 conditions:
     //1. Name can't be empty
     //2. User has to choose one of the avatars provided
@@ -53,22 +57,21 @@ class ProfileViewModel : ViewModel() {
             return
         }
 
-        if(avatarFileName.isBlank()){
+        if (avatarFileName.isBlank()) {
             _updateResult.value = false
             _errorMessage.value = "Selecciona una imagen."
             return
         }
 
         if (userId != null) {
-            val updates = hashMapOf<String, Any>(
+            val updates = mapOf(
                 "name" to newName,
                 "profileImage" to avatarFileName
             )
+
             db.collection("users").document(userId)
                 .update(updates)
                 .addOnSuccessListener {
-                    _userName.value = newName
-                    _profileImage.value = avatarFileName
                     _updateResult.value = true
                 }
                 .addOnFailureListener {
@@ -82,5 +85,4 @@ class ProfileViewModel : ViewModel() {
         auth.signOut()
         _logoutResult.value = true
     }
-
 }

@@ -10,12 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
 import com.app.huntersclub.R
 import com.app.huntersclub.databinding.FragmentSetsBinding
-import com.app.huntersclub.data.ArmorDAO
-import com.app.huntersclub.data.WeaponDAO
-import com.app.huntersclub.data.CharmDAO
-import com.app.huntersclub.data.DecoDAO
-import com.app.huntersclub.data.MyDatabaseHelper
-import com.app.huntersclub.data.SetRepository
+import com.app.huntersclub.data.dao.ArmorDAO
+import com.app.huntersclub.data.dao.WeaponDAO
+import com.app.huntersclub.data.dao.CharmDAO
+import com.app.huntersclub.data.database.MyDatabaseHelper
+import com.app.huntersclub.data.repository.SetRepository
 import com.google.firebase.auth.FirebaseAuth
 
 class SetsFragment : Fragment() {
@@ -55,7 +54,7 @@ class SetsFragment : Fragment() {
         binding.recyclerSets.layoutManager = LinearLayoutManager(requireContext())
 
         setsViewModel.sets.observe(viewLifecycleOwner) { setsList ->
-            binding.recyclerSets.adapter = SetAdapter(setsList)
+            binding.recyclerSets.adapter = SetsAdapter(setsList)
         }
 
         //Real time listener

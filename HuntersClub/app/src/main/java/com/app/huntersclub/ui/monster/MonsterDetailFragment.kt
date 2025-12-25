@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.navArgs
-import com.app.huntersclub.data.MonsterDAO
-import com.app.huntersclub.data.MyDatabaseHelper
+import com.app.huntersclub.data.dao.MonsterDAO
+import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.FragmentMonsterDataBinding
 import com.app.huntersclub.model.MonsterData
 import com.bumptech.glide.Glide
@@ -67,7 +67,7 @@ class MonsterDetailFragment : Fragment() {
             )
 
             binding.weaknessRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.weaknessRecyclerView.adapter = WeaknessAdapter(weaknesses, it.hasAltWeakness)
+            binding.weaknessRecyclerView.adapter = MonsterDetailAdapter(weaknesses, it.hasAltWeakness)
         }
     }
 

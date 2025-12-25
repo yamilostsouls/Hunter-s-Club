@@ -8,8 +8,8 @@ import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.huntersclub.data.MyDatabaseHelper
-import com.app.huntersclub.data.WeaponDAO
+import com.app.huntersclub.data.database.MyDatabaseHelper
+import com.app.huntersclub.data.dao.WeaponDAO
 import com.app.huntersclub.databinding.SelectWeaponBinding
 import androidx.appcompat.widget.SearchView
 

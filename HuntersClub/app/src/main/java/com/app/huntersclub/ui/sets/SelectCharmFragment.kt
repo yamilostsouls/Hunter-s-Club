@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.huntersclub.data.CharmDAO
-import com.app.huntersclub.data.MyDatabaseHelper
+import com.app.huntersclub.data.dao.CharmDAO
+import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.SelectCharmBinding
 import androidx.appcompat.widget.SearchView
 

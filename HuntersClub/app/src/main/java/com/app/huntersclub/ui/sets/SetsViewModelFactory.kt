@@ -2,7 +2,7 @@ package com.app.huntersclub.ui.sets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.app.huntersclub.data.SetRepository
+import com.app.huntersclub.data.repository.SetRepository
 //"Custom construct" for the Sets
 class SetsViewModelFactory(
     private val setRepository: SetRepository

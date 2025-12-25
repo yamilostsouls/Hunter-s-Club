@@ -2,7 +2,7 @@ package com.app.huntersclub.ui.sets
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.app.huntersclub.data.SetRepository
+import com.app.huntersclub.data.repository.SetRepository
 import com.app.huntersclub.model.Set
 
 class SetsViewModel(

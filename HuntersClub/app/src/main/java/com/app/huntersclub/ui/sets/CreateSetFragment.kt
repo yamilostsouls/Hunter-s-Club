@@ -78,21 +78,24 @@ class CreateSetFragment : Fragment() {
             binding.txtWaist.text = viewModel.selectedWaist?.name
             Glide.with(this)
                 .load(ImagePath.getAssetPath("armor", it.rarity, "waist"))
-                .placeholder(R.drawable.waist) .into(binding.imgWaist)
+                .placeholder(R.drawable.waist)
+                .into(binding.imgWaist)
         } ?: run { binding.txtWaist.text = "Seleccionar Cintura" }
 
         viewModel.selectedLegs?.let {
             binding.txtLegs.text = viewModel.selectedLegs?.name
             Glide.with(this)
                 .load(ImagePath.getAssetPath("armor", it.rarity, "legs"))
-                .placeholder(R.drawable.legs) .into(binding.imgLegs)
+                .placeholder(R.drawable.legs)
+                .into(binding.imgLegs)
         } ?: run { binding.txtLegs.text = "Seleccionar Piernas" }
 
         viewModel.selectedCharm?.let {
             binding.txtCharm.text = viewModel.selectedCharm?.name
             Glide.with(this)
                 .load(ImagePath.getAssetPath("charms", it.rarity))
-                .placeholder(R.drawable.charm) .into(binding.imgCharm)
+                .placeholder(R.drawable.charm)
+                .into(binding.imgCharm)
         } ?: run { binding.txtCharm.text = "Seleccionar Cigua" }
 
         //getParcelable is depreciated but we need it since minimum API is 23.
@@ -162,6 +165,7 @@ class CreateSetFragment : Fragment() {
                 }
             }
         }
+
         setFragmentResultListener("charmSelection") { _, bundle ->
             val charm: Charm? = bundle.getParcelable("selectedCharm")
             viewModel.selectedCharm = charm
@@ -222,7 +226,6 @@ class CreateSetFragment : Fragment() {
         binding.btnSaveSet.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
             val userId = FirebaseAuth.getInstance().currentUser!!.uid
-
 
             //Create Set as HashMap, saving the userId on the set
             val newSet = hashMapOf(

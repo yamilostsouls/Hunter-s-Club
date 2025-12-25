@@ -221,7 +221,6 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-
             <Button
                 android:id="@+id/btnSaveSet"
                 android:text="Guardar Set"

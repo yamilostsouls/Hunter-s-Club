@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.huntersclub.data.DecoDAO
-import com.app.huntersclub.data.MyDatabaseHelper
+import com.app.huntersclub.data.dao.DecoDAO
+import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.SelectDecorationBinding
 import androidx.appcompat.widget.SearchView
 
