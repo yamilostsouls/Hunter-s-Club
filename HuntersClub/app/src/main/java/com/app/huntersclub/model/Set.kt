@@ -21,6 +21,6 @@ data class Set(
     val armorLegsType: String = "",
     val charm: String = "",
     val charmRarity: Int,
-    val decorations: List<String> = emptyList(),
+    val decorations: Map<String, List<String>> = emptyMap(),
     val createdBy: String = ""
 )

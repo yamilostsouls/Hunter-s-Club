@@ -40,7 +40,12 @@ class ProfileViewModel : ViewModel() {
             .addSnapshotListener { snapshot, _ ->
                 if (snapshot != null && snapshot.exists()) {
                     _userName.value = snapshot.getString("name") ?: "Usuario"
-                    _profileImage.value = snapshot.getString("profileImage") ?: ""
+                    val normalized = when (val rawValue = snapshot.get("profileImage")) {
+                        null -> ""
+                        is Number -> rawValue.toInt().toString()
+                        else -> ""
+                    }
+                    _profileImage.value = normalized
                 }
             }
     }
@@ -64,9 +69,11 @@ class ProfileViewModel : ViewModel() {
         }
 
         if (userId != null) {
+            val avatarId = avatarFileName.toInt()
+
             val updates = mapOf(
                 "name" to newName,
-                "profileImage" to avatarFileName
+                "profileImage" to avatarId
             )
 
             db.collection("users").document(userId)

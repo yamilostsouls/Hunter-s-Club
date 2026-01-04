@@ -128,7 +128,6 @@
             android:text="Legs"/>
     </LinearLayout>
 
-    <!-- Charm -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -149,7 +148,6 @@
             android:text="Charm"/>
     </LinearLayout>
 
-    <!-- User -->
     <TextView
         android:id="@+id/txtUser"
         android:layout_width="match_parent"

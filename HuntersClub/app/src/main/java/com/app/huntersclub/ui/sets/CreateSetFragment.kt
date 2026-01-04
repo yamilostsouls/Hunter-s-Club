@@ -229,13 +229,13 @@ class CreateSetFragment : Fragment() {
 
             //Create Set as HashMap, saving the userId on the set
             val newSet = hashMapOf(
-                "weapon" to (viewModel.selectedWeapon?.id ?: ""),
-                "head" to (viewModel.selectedHead?.id ?: ""),
-                "torso" to (viewModel.selectedChest?.id ?: ""),
-                "arms" to (viewModel.selectedArms?.id ?: ""),
-                "waist" to (viewModel.selectedWaist?.id ?: ""),
-                "legs" to (viewModel.selectedLegs?.id ?: ""),
-                "charm" to (viewModel.selectedCharm?.id ?: ""),
+                "weapon" to viewModel.selectedWeapon?.id,
+                "head" to viewModel.selectedHead?.id,
+                "torso" to viewModel.selectedChest?.id,
+                "arms" to viewModel.selectedArms?.id,
+                "waist" to viewModel.selectedWaist?.id,
+                "legs" to viewModel.selectedLegs?.id,
+                "charm" to viewModel.selectedCharm?.id,
                 "userId" to userId
             )
 

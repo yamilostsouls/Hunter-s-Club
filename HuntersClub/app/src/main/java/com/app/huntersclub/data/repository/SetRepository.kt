@@ -57,7 +57,7 @@ class SetRepository(
                 var pending = snapshots.size()
 
                 for (doc in snapshots) {
-                    val setDoc = doc.data.mapValues { it.value.toString() }
+                    val setDoc = doc.data.mapValues { it.value?.toString() ?: "" }
                     val userId = setDoc["userId"]
 
                     val onResolved: (String) -> Unit = { userName ->
@@ -130,7 +130,7 @@ class SetRepository(
             armorLegsType = legs?.armorType ?: "legs",
             charm = charm?.name ?: "Sin cigua",
             charmRarity = charm?.rarity ?: 0,
-            decorations = emptyList(),
+            decorations = emptyMap(),
             createdBy = userName
         )
     }

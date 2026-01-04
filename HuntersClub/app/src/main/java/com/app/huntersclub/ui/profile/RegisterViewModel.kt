@@ -40,7 +40,7 @@ class RegisterViewModel (
                         "id" to userId,
                         "email" to email,
                         "name" to name,
-                        "profileImage" to ""
+                        "profileImage" to null
                     )
                     db.collection("users").document(userId!!)
                         .set(userMap)

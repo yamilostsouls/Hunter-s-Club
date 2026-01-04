@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.huntersclub.R
+import com.app.huntersclub.utils.ImagePath
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
@@ -46,11 +47,14 @@ class ProfileFragment : Fragment() {
 
         viewModel.profileImage.observe(viewLifecycleOwner) { fileName ->
             if (!fileName.isNullOrEmpty()) {
-                val assetPath = "file:///android_asset/pfp/$fileName"
-                Glide.with(this)
-                    .load(assetPath)
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(profileImage)
+                val avatarId = fileName.toIntOrNull()
+                if (avatarId != null){
+                    val assetPath = ImagePath.getAssetPath("profile", id = avatarId)
+                    Glide.with(this)
+                        .load(assetPath)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(profileImage)
+                }
             }
         }
 
@@ -85,25 +89,27 @@ class ProfileFragment : Fragment() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_profile, null)
         val edNewName = dialogView.findViewById<EditText>(R.id.edNewName)
 
-        val avatarIds = listOf(
-            R.id.avatar1 to "1.png",
-            R.id.avatar2 to "2.png",
-            R.id.avatar3 to "3.png",
-            R.id.avatar4 to "4.png",
-            R.id.avatar5 to "5.png"
+        val avatarViews = listOf(
+            dialogView.findViewById<ImageView>(R.id.avatar1),
+            dialogView.findViewById<ImageView>(R.id.avatar2),
+            dialogView.findViewById<ImageView>(R.id.avatar3),
+            dialogView.findViewById<ImageView>(R.id.avatar4),
+            dialogView.findViewById<ImageView>(R.id.avatar5)
         )
 
-        var selectedAvatarKey: String? = null
+        var selectedAvatarKey: Int? = null
 
-        avatarIds.forEach { (viewId, fileName) ->
-            val img = dialogView.findViewById<ImageView>(viewId)
+        ImagePath.profileAvatars.forEachIndexed { index, avatarId ->
+            val img = avatarViews[index]
+            val avatarPath = ImagePath.getAssetPath("profile", id = avatarId)
+
             Glide.with(this)
-                .load("file:///android_asset/pfp/$fileName")
+                .load(avatarPath)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(img)
 
             img.setOnClickListener {
-                selectedAvatarKey = fileName
+                selectedAvatarKey = avatarId
                 Toast.makeText(context, "Avatar seleccionado.", Toast.LENGTH_SHORT).show()
             }
         }
@@ -113,7 +119,7 @@ class ProfileFragment : Fragment() {
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
                 val newName = edNewName.text.toString()
-                val avatar = selectedAvatarKey ?: viewModel.profileImage.value ?: ""
+                val avatar = selectedAvatarKey?.toString() ?: viewModel.profileImage.value ?: ""
                 viewModel.updateProfile(newName, avatar)
             }
             .setNegativeButton("Cancelar", null)
