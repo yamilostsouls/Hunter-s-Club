@@ -13,6 +13,7 @@ import com.app.huntersclub.databinding.FragmentSetsBinding
 import com.app.huntersclub.data.dao.ArmorDAO
 import com.app.huntersclub.data.dao.WeaponDAO
 import com.app.huntersclub.data.dao.CharmDAO
+import com.app.huntersclub.data.dao.DecoDAO
 import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.data.repository.SetRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -35,7 +36,8 @@ class SetsFragment : Fragment() {
         val weaponDao = WeaponDAO(dbHelper)
         val armorDao = ArmorDAO(dbHelper)
         val charmDao = CharmDAO(dbHelper)
-        val setRepository = SetRepository(weaponDao, armorDao, charmDao)
+        val decoDao = DecoDAO(dbHelper)
+        val setRepository = SetRepository(weaponDao, armorDao, charmDao, decoDao)
 
         //ViewModel creation of the set repo
         val setsViewModel = ViewModelProvider(

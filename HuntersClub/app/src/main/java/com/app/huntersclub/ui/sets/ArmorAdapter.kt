@@ -52,7 +52,9 @@ class ArmorAdapter(
             .load(path)
             .into(holder.binding.imageArmor)
 
-        holder.itemView.setOnClickListener { onItemClick(armor) }
+        holder.itemView.setOnClickListener {
+            onItemClick(armor)
+        }
     }
 
     fun setData(list: List<Armor>) {

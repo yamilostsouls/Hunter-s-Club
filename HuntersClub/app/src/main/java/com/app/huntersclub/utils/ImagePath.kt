@@ -1,10 +1,9 @@
 package com.app.huntersclub.utils
 
 object ImagePath {
-
     val profileAvatars = listOf(1, 2, 3, 4, 5)
     //Function to obtain the image path from assets and load them
-    fun getAssetPath(type: String, rarity: Int? = null, subtype: String? = null, id: Int? = null, name: String? = null): String {
+    fun getAssetPath(type: String, rarity: Int? = null, subtype: String? = null, id: Int? = null, name: String? = null, slot: Int? = null): String {
 
         return when (type) {
             "charms" -> {
@@ -42,6 +41,14 @@ object ImagePath {
             }
             "profile" -> {
                 "file:///android_asset/pfp/$id.png"
+            }
+            "decorations" -> {
+                val s = when {
+                    slot == null -> 1
+                    slot <= 0 -> 1
+                    else -> slot
+                }
+                "file:///android_asset/decorations/$s.png"
             }
             else -> "file:///android_asset/default.png"
         }

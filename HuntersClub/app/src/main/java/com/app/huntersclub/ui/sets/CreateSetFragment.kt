@@ -38,6 +38,7 @@ class CreateSetFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        hideAllDecoButtons()
         //Initializing the texts as before adding the images
         //To have persistency after selecting one piece of the set
         //And the images not returning to default after selecting another
@@ -101,8 +102,10 @@ class CreateSetFragment : Fragment() {
         //getParcelable is depreciated but we need it since minimum API is 23.
         //Originally, minimum API was 21 but we increase it to 23
         //To work properly with Firebase
+        //Now we manage the buttons of the decorations in the listeners
         setFragmentResultListener("weaponSelection") { _, bundle ->
             val weapon: Weapon? = bundle.getParcelable("selectedWeapon")
+            viewModel.clearDecorationsForPiece("weapon")
             viewModel.selectedWeapon = weapon
             binding.txtWeapon.text = weapon?.name ?: "Seleccionar Arma"
 
@@ -110,7 +113,9 @@ class CreateSetFragment : Fragment() {
                 Glide.with(this)
                     .load(ImagePath.getAssetPath("weapons", it.rarity, it.weaponType))
                     .placeholder(R.drawable.gs)
-                    .into(binding.imgWeapon) }
+                    .into(binding.imgWeapon)
+                updateWeaponSlotsUI(it)
+            }
         }
 
         setFragmentResultListener("armorSelection") { _, bundle ->
@@ -119,49 +124,64 @@ class CreateSetFragment : Fragment() {
 
             when (armorType) {
                 "head" -> {
+                    viewModel.clearDecorationsForPiece("head")
                     viewModel.selectedHead = armor
                     binding.txtHead.text = armor?.name ?: "Seleccionar Cabeza"
                     armor?.let {
                         Glide.with(this)
                             .load(ImagePath.getAssetPath("armor", it.rarity, "head"))
                             .placeholder(R.drawable.head)
-                            .into(binding.imgHead) }
+                            .into(binding.imgHead)
+                        updateArmorSlotsUI(it, "head")
+                    }
                 }
                 "chest" -> {
+                    viewModel.clearDecorationsForPiece("chest")
                     viewModel.selectedChest = armor
                     binding.txtChest.text = armor?.name ?: "Seleccionar Torso"
                     armor?.let {
                         Glide.with(this)
                             .load(ImagePath.getAssetPath("armor", it.rarity, "chest"))
                             .placeholder(R.drawable.chest)
-                            .into(binding.imgChest) }
+                            .into(binding.imgChest)
+                        updateArmorSlotsUI(it, "chest")
+                    }
                 }
                 "arms" -> {
+                    viewModel.clearDecorationsForPiece("arms")
                     viewModel.selectedArms = armor
                     binding.txtArms.text = armor?.name ?: "Seleccionar Brazos"
                     armor?.let {
                         Glide.with(this)
                             .load(ImagePath.getAssetPath("armor", it.rarity, "arms"))
                             .placeholder(R.drawable.arms)
-                            .into(binding.imgArms) }
+                            .into(binding.imgArms)
+                        updateArmorSlotsUI(it, "arms")
+                    }
                 }
                 "waist" -> {
+                    viewModel.clearDecorationsForPiece("waist")
                     viewModel.selectedWaist = armor
                     binding.txtWaist.text = armor?.name ?: "Seleccionar Cintura"
                     armor?.let {
                         Glide.with(this)
                             .load(ImagePath.getAssetPath("armor", it.rarity, "waist"))
                             .placeholder(R.drawable.waist)
-                            .into(binding.imgWaist) }
+                            .into(binding.imgWaist)
+                        updateArmorSlotsUI(it, "waist")
+                    }
                 }
                 "legs" -> {
+                    viewModel.clearDecorationsForPiece("legs")
                     viewModel.selectedLegs = armor
                     binding.txtLegs.text = armor?.name ?: "Seleccionar Piernas"
                     armor?.let {
                         Glide.with(this)
                             .load(ImagePath.getAssetPath("armor", it.rarity, "legs"))
                             .placeholder(R.drawable.legs)
-                            .into(binding.imgLegs) }
+                            .into(binding.imgLegs)
+                        updateArmorSlotsUI(it, "legs")
+                    }
                 }
             }
         }
@@ -178,8 +198,14 @@ class CreateSetFragment : Fragment() {
             }
         }
 
+        setFragmentResultListener("decoSelection") { _, bundle ->
+            val deco: Decoration? = bundle.getParcelable("selectedDeco")
+            val piece = bundle.getString("piece")!!
+            val slotIndex = bundle.getInt("slotIndex")
+            viewModel.setDecoration(piece, slotIndex, deco)
+        }
+
         //Buttons for the set
-        //Later we will implement the decorations, we have the logic but not implemented
         binding.btnSelectedWeapon.setOnClickListener {
             val action = CreateSetFragmentDirections
                 .actionCreateSetFragmentToSelectWeaponFragment()
@@ -236,6 +262,8 @@ class CreateSetFragment : Fragment() {
                 "waist" to viewModel.selectedWaist?.id,
                 "legs" to viewModel.selectedLegs?.id,
                 "charm" to viewModel.selectedCharm?.id,
+                "decorations" to viewModel.selectedDecorations.mapValues {
+                    it.value?.id },
                 "userId" to userId
             )
 
@@ -249,6 +277,25 @@ class CreateSetFragment : Fragment() {
                     Toast.makeText(requireContext(), "Error al guardar el set", Toast.LENGTH_SHORT).show()
                 }
         }
+
+        viewModel.selectedWeapon?.let {
+            updateWeaponSlotsUI(it)
+        }
+        viewModel.selectedHead?.let {
+            updateArmorSlotsUI(it, "head")
+        }
+        viewModel.selectedChest?.let {
+            updateArmorSlotsUI(it, "chest")
+        }
+        viewModel.selectedArms?.let {
+            updateArmorSlotsUI(it, "arms")
+        }
+        viewModel.selectedWaist?.let {
+            updateArmorSlotsUI(it, "waist")
+        }
+        viewModel.selectedLegs?.let {
+            updateArmorSlotsUI(it, "legs")
+        }
     }
 
     override fun onDestroyView() {
@@ -260,6 +307,92 @@ class CreateSetFragment : Fragment() {
 
         if (currentDestination == R.id.nav_gallery) {
             viewModel.resetSelections()
+        }
+    }
+    //Aux functions to work with the buttons
+    private fun hideAllDecoButtons() {
+        val allButtons = listOf(
+            binding.btnWeapon1, binding.btnWeapon2,
+            binding.btnHead1, binding.btnHead2, binding.btnHead3,
+            binding.btnChest1, binding.btnChest2, binding.btnChest3,
+            binding.btnArms1, binding.btnArms2, binding.btnArms3,
+            binding.btnWaist1, binding.btnWaist2, binding.btnWaist3,
+            binding.btnLegs1, binding.btnLegs2, binding.btnLegs3
+        )
+        allButtons.forEach {
+            it.visibility = View.GONE
+        }
+    }
+
+    private fun setupDecoButton(
+        button: View,
+        piece: String,
+        slotIndex: Int,
+        slotSize: Int
+    ) {
+        button.setOnClickListener {
+            val action = CreateSetFragmentDirections
+                .actionCreateSetFragmentToSelectDecoFragment(
+                    slotSize = slotSize,
+                    piece = piece,
+                    slotIndex = slotIndex
+                )
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun updateWeaponSlotsUI(weapon: Weapon) {
+        val buttons = listOf(binding.btnWeapon1, binding.btnWeapon2)
+        val slots = listOf(weapon.slot1, weapon.slot2, weapon.slot3)
+        buttons.forEach {
+            it.visibility = View.GONE
+        }
+        slots.forEachIndexed { index, slotSize ->
+            if (slotSize > 0) {
+                val button = buttons[index]
+                button.visibility = View.VISIBLE
+
+                val path = ImagePath.getAssetPath(
+                    type = "decorations",
+                    slot = slotSize
+                )
+                Glide.with(this)
+                    .load(path)
+                    .into(button)
+
+                setupDecoButton(button, "weapon", index + 1, slotSize)
+            }
+        }
+    }
+
+    private fun updateArmorSlotsUI(armor: Armor, piece: String) {
+        val buttons = when(piece) {
+            "head" -> listOf(binding.btnHead1, binding.btnHead2, binding.btnHead3)
+            "chest" -> listOf(binding.btnChest1, binding.btnChest2, binding.btnChest3)
+            "arms" -> listOf(binding.btnArms1, binding.btnArms2, binding.btnArms3)
+            "waist" -> listOf(binding.btnWaist1, binding.btnWaist2, binding.btnWaist3)
+            "legs" -> listOf(binding.btnLegs1, binding.btnLegs2, binding.btnLegs3)
+            else -> return
+        }
+        val slots = listOf(armor.slot1, armor.slot2, armor.slot3)
+        buttons.forEach {
+            it.visibility = View.GONE
+        }
+        slots.forEachIndexed { index, slotSize ->
+            if (slotSize > 0) {
+                val button = buttons[index]
+                button.visibility = View.VISIBLE
+
+                val path = ImagePath.getAssetPath(
+                    type = "decorations",
+                    slot = slotSize
+                )
+
+                Glide.with(this)
+                    .load(path)
+                    .into(button)
+                setupDecoButton(button, piece, index + 1, slotSize)
+            }
         }
     }
 }

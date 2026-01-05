@@ -114,8 +114,20 @@
     <fragment
         android:id="@+id/selectDecoFragment"
         android:name="com.app.huntersclub.ui.sets.SelectDecoFragment"
-        android:label="SelectDecoFragment"
+        android:label="Joyas"
         tools:layout="@layout/select_decoration">
+
+        <argument
+            android:name="slotSize"
+            app:argType="integer"
+            android:defaultValue="1" />
+        <argument
+            android:name="piece"
+            app:argType="string" />
+        <argument
+            android:name="slotIndex"
+            app:argType="integer" />
+
         <action
             android:id="@+id/action_selectDecoFragment_to_createSetFragment"
             app:destination="@id/createSetFragment" />

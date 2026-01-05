@@ -26,6 +26,17 @@
             android:text="Weapon"
             android:textStyle="bold"
             android:textSize="16sp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/layoutWeaponDecos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -46,6 +57,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Head"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/layoutHeadDecos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -66,6 +87,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Torso"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/layoutChestDecos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -86,6 +117,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Arms"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/layoutArmsDecos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -106,6 +147,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Waist"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/layoutWaistDecos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
     <LinearLayout
@@ -126,6 +177,16 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Legs"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/layoutLegsDecos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
     </LinearLayout>
 
     <LinearLayout

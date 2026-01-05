@@ -54,9 +54,13 @@ class WeaponAdapter(
         }
         val path = ImagePath.getAssetPath("weapons", weapon.rarity, weapon.weaponType)
 
-        Glide.with(holder.itemView.context).load(path).into(holder.binding.imageWeapon)
+        Glide.with(holder.itemView.context)
+            .load(path)
+            .into(holder.binding.imageWeapon)
 
-        holder.itemView.setOnClickListener { onItemClick(weapon) }
+        holder.itemView.setOnClickListener {
+            onItemClick(weapon)
+        }
     }
 
     fun setData(list: List<Weapon>) {

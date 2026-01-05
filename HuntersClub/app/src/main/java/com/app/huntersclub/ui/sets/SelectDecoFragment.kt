@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.SearchView
 import com.app.huntersclub.data.dao.DecoDAO
 import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.SelectDecorationBinding
-import androidx.appcompat.widget.SearchView
 
 class SelectDecoFragment : Fragment() {
 
@@ -20,7 +21,7 @@ class SelectDecoFragment : Fragment() {
     private lateinit var adapter: DecoAdapter
     private lateinit var decoDao: DecoDAO
 
-    private var currentQuery: String? = null
+    private val args: SelectDecoFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,22 +35,25 @@ class SelectDecoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val dbHelper = MyDatabaseHelper(requireContext())
         dbHelper.createDatabase()
         decoDao = DecoDAO(dbHelper)
 
+
         val allDecorations = decoDao.getAllDecorations()
-
-        val slotSize = arguments?.getInt("slotSize") ?: 4
-
+        val slotSize = args.slotSize
         val filteredBySlot = allDecorations.filter { it.slot <= slotSize }
 
         adapter = DecoAdapter { selectedDeco ->
             val result = Bundle().apply {
                 putParcelable("selectedDeco", selectedDeco)
+                putString("piece", args.piece)
+                putInt("slotIndex", args.slotIndex)
                 putInt("slotSize", slotSize)
             }
             setFragmentResult("decoSelection", result)
+
             parentFragmentManager.popBackStack()
         }
 
@@ -60,13 +64,11 @@ class SelectDecoFragment : Fragment() {
 
         binding.searchDeco.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                currentQuery = query
                 adapter.filter.filter(query)
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                currentQuery = newText
                 adapter.filter.filter(newText)
                 return true
             }

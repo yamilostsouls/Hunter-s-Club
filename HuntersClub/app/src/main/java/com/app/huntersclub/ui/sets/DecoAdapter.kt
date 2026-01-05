@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.app.huntersclub.databinding.ItemDecorationBinding
 import com.app.huntersclub.model.Decoration
+import com.app.huntersclub.utils.ImagePath
+import com.bumptech.glide.Glide
 
 class DecoAdapter(
     private val onItemClick: (Decoration) -> Unit
@@ -37,15 +39,19 @@ class DecoAdapter(
         }
         holder.binding.txtDecoSkill.text = skillsText
 
-        //We have to check the logic of loading deco images since
+        //We are using empty decoration images as a placeholder
         //Decorations can share the same image with other decorations.
         //We will use Glide + ImagePath.getAssetPath once we figure out
         //The logic of decoration images
-        /*Glide.with(holder.itemView.context)
-            .load(deco.imageDeco)
-            .into(holder.imageDeco)*/
+        val path = ImagePath.getAssetPath("decorations", slot = deco.slot)
 
-        holder.itemView.setOnClickListener { onItemClick(deco) }
+        Glide.with(holder.itemView.context)
+            .load(path)
+            .into(holder.binding.imageDeco)
+
+        holder.itemView.setOnClickListener {
+            onItemClick(deco)
+        }
     }
 
     fun setData(list: List<Decoration>) {
