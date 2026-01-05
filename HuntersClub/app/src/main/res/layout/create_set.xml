@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -38,6 +39,28 @@
                 android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnWeapon1"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnWeapon2"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -69,6 +92,34 @@
                 android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnHead1"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnHead2"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnHead3"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -99,6 +150,34 @@
                 android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnChest1"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnChest2"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnChest3"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -129,6 +208,34 @@
                 android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnArms1"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnArms2"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnArms3"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -159,6 +266,34 @@
                 android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnWaist1"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnWaist2"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnWaist3"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -189,6 +324,34 @@
                 android:layout_marginStart="12dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/btnLegs1"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnLegs2"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+
+                <ImageView
+                    android:id="@+id/btnLegs3"
+                    android:src="@drawable/empty1"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"/>
+            </LinearLayout>
         </LinearLayout>
 
 
@@ -209,11 +372,11 @@
                 android:src="@drawable/charm"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:contentDescription="Icono talismán"/>
+                android:contentDescription="Icono cigua"/>
 
             <TextView
                 android:id="@+id/txtCharm"
-                android:text="Seleccionar Talismán"
+                android:text="Seleccionar Cigua"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:layout_marginStart="12dp"
@@ -221,12 +384,11 @@
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
-
             <Button
                 android:id="@+id/btnSaveSet"
                 android:text="Guardar Set"
                 android:textColor="@color/white"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="@color/dark_blue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

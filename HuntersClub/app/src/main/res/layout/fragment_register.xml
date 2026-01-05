@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.slideshow.RegisterFragment">
+    tools:context=".ui.profile.RegisterFragment">
 
     <ImageView
         android:id="@+id/imageView"
@@ -63,7 +63,9 @@
         app:layout_constraintTop_toTopOf="@id/registerCard"
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:singleLine="true"
+        android:ellipsize="end"/>
 
     <EditText
         android:id="@+id/edEmail"
@@ -75,7 +77,9 @@
         app:layout_constraintTop_toTopOf="@id/registerCard"
         android:layout_marginTop="90dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:singleLine="true"
+        android:ellipsize="end"/>
 
     <EditText
         android:id="@+id/edPassword"
@@ -87,7 +91,9 @@
         app:layout_constraintTop_toTopOf="@id/registerCard"
         android:layout_marginTop="140dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:singleLine="true"
+        android:ellipsize="end"/>
 
     <EditText
         android:id="@+id/edConfirmPassword"
@@ -99,7 +105,9 @@
         app:layout_constraintTop_toTopOf="@id/registerCard"
         android:layout_marginTop="190dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        android:singleLine="true"
+        android:ellipsize="end"/>
 
 
     <Button
