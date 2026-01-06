@@ -16,6 +16,7 @@ import com.app.huntersclub.data.dao.CharmDAO
 import com.app.huntersclub.data.dao.DecoDAO
 import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.data.repository.SetRepository
+import com.app.huntersclub.utils.ItemDecoration
 import com.google.firebase.auth.FirebaseAuth
 
 class SetsFragment : Fragment() {
@@ -54,6 +55,9 @@ class SetsFragment : Fragment() {
         }
 
         binding.recyclerSets.layoutManager = LinearLayoutManager(requireContext())
+        //Spacing for the sets so the border doesn't touch another border of other sets
+        val space = (8 * resources.displayMetrics.density).toInt()
+        binding.recyclerSets.addItemDecoration(ItemDecoration(space))
 
         setsViewModel.sets.observe(viewLifecycleOwner) { setsList ->
             binding.recyclerSets.adapter = SetsAdapter(setsList)
