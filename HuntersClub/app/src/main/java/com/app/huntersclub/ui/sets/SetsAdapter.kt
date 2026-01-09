@@ -106,7 +106,6 @@ class SetsAdapter(private val sets: List<Set>) :
                 text = deco.name
                 setPadding(8, 0, 0, 0)
                 textSize = 12f
-                setTextColor(holder.itemView.context.getColor(R.color.white))
             }
             row.addView(img)
             row.addView(txt)
@@ -133,7 +132,6 @@ class SetsAdapter(private val sets: List<Set>) :
                 text = deco.name
                 setPadding(8, 0, 0, 0)
                 textSize = 12f
-                setTextColor(holder.itemView.context.getColor(R.color.white))
             }
             row.addView(img)
             row.addView(txt)
@@ -160,7 +158,6 @@ class SetsAdapter(private val sets: List<Set>) :
                 text = deco.name
                 setPadding(8, 0, 0, 0)
                 textSize = 12f
-                setTextColor(holder.itemView.context.getColor(R.color.white))
             }
             row.addView(img)
             row.addView(txt)
@@ -187,7 +184,6 @@ class SetsAdapter(private val sets: List<Set>) :
                 text = deco.name
                 setPadding(8, 0, 0, 0)
                 textSize = 12f
-                setTextColor(holder.itemView.context.getColor(R.color.white))
             }
             row.addView(img)
             row.addView(txt)
@@ -214,7 +210,6 @@ class SetsAdapter(private val sets: List<Set>) :
                 text = deco.name
                 setPadding(8, 0, 0, 0)
                 textSize = 12f
-                setTextColor(holder.itemView.context.getColor(R.color.white))
             }
             row.addView(img)
             row.addView(txt)
@@ -241,7 +236,6 @@ class SetsAdapter(private val sets: List<Set>) :
                 text = deco.name
                 setPadding(8, 0, 0, 0)
                 textSize = 12f
-                setTextColor(holder.itemView.context.getColor(R.color.white))
             }
             row.addView(img)
             row.addView(txt)
