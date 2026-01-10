@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -49,7 +50,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("weapons", it.rarity, it.weaponType))
                 .placeholder(R.drawable.gs)
                 .into(binding.imgWeapon)
-        } ?: run { binding.txtWeapon.text = "Seleccionar Arma" }
+        } ?: run { binding.txtWeapon.text = getString(R.string.seleccionar_arma) }
 
         viewModel.selectedHead?.let {
             binding.txtHead.text = viewModel.selectedHead?.name
@@ -57,7 +58,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "head"))
                 .placeholder(R.drawable.head)
                 .into(binding.imgHead)
-        } ?: run { binding.txtHead.text = "Seleccionar Cabeza" }
+        } ?: run { binding.txtHead.text = getString(R.string.seleccionar_cabeza) }
 
         viewModel.selectedChest?.let {
             binding.txtChest.text = viewModel.selectedChest?.name
@@ -65,7 +66,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "chest"))
                 .placeholder(R.drawable.chest)
                 .into(binding.imgChest)
-        } ?: run { binding.txtChest.text = "Seleccionar Torso" }
+        } ?: run { binding.txtChest.text = getString(R.string.seleccionar_torso) }
 
         viewModel.selectedArms?.let {
             binding.txtArms.text = viewModel.selectedArms?.name
@@ -73,7 +74,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "arms"))
                 .placeholder(R.drawable.arms)
                 .into(binding.imgArms)
-        } ?: run { binding.txtArms.text = "Seleccionar Brazos" }
+        } ?: run { binding.txtArms.text = getString(R.string.seleccionar_brazos) }
 
         viewModel.selectedWaist?.let {
             binding.txtWaist.text = viewModel.selectedWaist?.name
@@ -81,7 +82,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "waist"))
                 .placeholder(R.drawable.waist)
                 .into(binding.imgWaist)
-        } ?: run { binding.txtWaist.text = "Seleccionar Cintura" }
+        } ?: run { binding.txtWaist.text = getString(R.string.seleccionar_cintura) }
 
         viewModel.selectedLegs?.let {
             binding.txtLegs.text = viewModel.selectedLegs?.name
@@ -89,7 +90,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "legs"))
                 .placeholder(R.drawable.legs)
                 .into(binding.imgLegs)
-        } ?: run { binding.txtLegs.text = "Seleccionar Piernas" }
+        } ?: run { binding.txtLegs.text = getString(R.string.seleccionar_piernas) }
 
         viewModel.selectedCharm?.let {
             binding.txtCharm.text = viewModel.selectedCharm?.name
@@ -97,14 +98,14 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("charms", it.rarity))
                 .placeholder(R.drawable.charm)
                 .into(binding.imgCharm)
-        } ?: run { binding.txtCharm.text = "Seleccionar Cigua" }
+        } ?: run { binding.txtCharm.text = getString(R.string.seleccionar_cigua) }
 
         //getParcelable is depreciated but we need it since minimum API is 23.
         //Originally, minimum API was 21 but we increase it to 23
         //To work properly with Firebase
         //Now we manage the buttons of the decorations in the listeners
         setFragmentResultListener("weaponSelection") { _, bundle ->
-            val weapon: Weapon? = bundle.getParcelable("selectedWeapon")
+            val weapon = BundleCompat.getParcelable(bundle, "selectedWeapon", Weapon::class.java)
             viewModel.clearDecorationsForPiece("weapon")
             viewModel.selectedWeapon = weapon
             binding.txtWeapon.text = weapon?.name ?: "Seleccionar Arma"
@@ -120,7 +121,7 @@ class CreateSetFragment : Fragment() {
 
         setFragmentResultListener("armorSelection") { _, bundle ->
             val armorType = bundle.getString("armorType")
-            val armor: Armor? = bundle.getParcelable("selectedArmor")
+            val armor = BundleCompat.getParcelable(bundle, "selectedArmor", Armor::class.java)
 
             when (armorType) {
                 "head" -> {
@@ -187,7 +188,7 @@ class CreateSetFragment : Fragment() {
         }
 
         setFragmentResultListener("charmSelection") { _, bundle ->
-            val charm: Charm? = bundle.getParcelable("selectedCharm")
+            val charm = BundleCompat.getParcelable(bundle, "selectedCharm", Charm::class.java)
             viewModel.selectedCharm = charm
             binding.txtCharm.text = charm?.name ?: "Seleccionar Cigua"
             charm?.let {
@@ -199,7 +200,7 @@ class CreateSetFragment : Fragment() {
         }
 
         setFragmentResultListener("decoSelection") { _, bundle ->
-            val deco: Decoration? = bundle.getParcelable("selectedDeco")
+            val deco = BundleCompat.getParcelable(bundle, "selectedDeco", Decoration::class.java)
             val piece = bundle.getString("piece")!!
             val slotIndex = bundle.getInt("slotIndex")
             viewModel.setDecoration(piece, slotIndex, deco)

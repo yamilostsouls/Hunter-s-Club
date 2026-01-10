@@ -110,16 +110,16 @@ class MonsterDAO(private val dbHelper: MyDatabaseHelper) {
                 weaknessBlast = cursor.getInt(12),
                 weaknessStun = cursor.getInt(13),
                 hasAltWeakness = cursor.getInt(14) == 1,
-                altWeaknessFire = if (cursor.isNull(15)) null else cursor.getInt(15),
-                altWeaknessWater = if (cursor.isNull(16)) null else cursor.getInt(16),
-                altWeaknessThunder = if (cursor.isNull(17)) null else cursor.getInt(17),
-                altWeaknessIce = if (cursor.isNull(18)) null else cursor.getInt(18),
-                altWeaknessDragon = if (cursor.isNull(19)) null else cursor.getInt(19),
-                altWeaknessPoison = if (cursor.isNull(20)) null else cursor.getInt(20),
-                altWeaknessSleep = if (cursor.isNull(21)) null else cursor.getInt(21),
-                altWeaknessParalysis = if (cursor.isNull(22)) null else cursor.getInt(22),
-                altWeaknessBlast = if (cursor.isNull(23)) null else cursor.getInt(23),
-                altWeaknessStun = if (cursor.isNull(24)) null else cursor.getInt(24))
+                altWeaknessFire = cursor.getInt(15),
+                altWeaknessWater = cursor.getInt(16),
+                altWeaknessThunder = cursor.getInt(17),
+                altWeaknessIce = cursor.getInt(18),
+                altWeaknessDragon = cursor.getInt(19),
+                altWeaknessPoison = cursor.getInt(20),
+                altWeaknessSleep = cursor.getInt(21),
+                altWeaknessParalysis = cursor.getInt(22),
+                altWeaknessBlast = cursor.getInt(23),
+                altWeaknessStun = cursor.getInt(24))
         }
 
         cursor.close()

@@ -59,14 +59,14 @@ class WeaponDAO(private val dbHelper: MyDatabaseHelper) {
                 val slot3 = cursor.getInt(9)
                 val elementHidden = cursor.getInt(10) == 1
                 val element1 = cursor.getString(11)
-                val element1Dmg = if (cursor.isNull(12)) null else cursor.getInt(12)
+                val element1Dmg = cursor.getInt(12)
                 val element2 = cursor.getString(13)
-                val element2Dmg = if (cursor.isNull(14)) null else cursor.getInt(14)
+                val element2Dmg = cursor.getInt(14)
                 val elderSeal = cursor.getString(15)
-                val sharpness = if (cursor.isNull(16)) null else cursor.getString(16)
-                val armorSetBonusId = if (cursor.isNull(17)) null else cursor.getInt(17)
+                val sharpness = cursor.getString(16)
+                val armorSetBonusId = cursor.getInt(17)
                 val skillName = cursor.getString(18)
-                val skillLevel = if (cursor.isNull(19)) null else cursor.getInt(19)
+                val skillLevel = cursor.getInt(19)
 
                 val weapon = Weapon(
                     id = id,

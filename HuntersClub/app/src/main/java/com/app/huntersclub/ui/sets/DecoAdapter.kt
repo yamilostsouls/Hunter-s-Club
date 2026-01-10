@@ -75,7 +75,8 @@ class DecoAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val newList = results?.values as? List<Decoration> ?: emptyList()
+                val newList = (results?.values as? List<*>)
+                    ?.filterIsInstance<Decoration>() .orEmpty()
                 submitList(newList)
             }
         }
@@ -89,6 +90,4 @@ class DecoAdapter(
             oldItem == newItem
     }
 }
-
-
 

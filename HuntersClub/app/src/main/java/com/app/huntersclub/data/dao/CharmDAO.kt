@@ -10,8 +10,6 @@ class CharmDAO(private val dbHelper: MyDatabaseHelper) {
     //The "duplicated" charms we have to map them
     fun getAllCharms(): List<Charm> {
         val db = dbHelper.openDatabase()
-        val charmsMap = mutableMapOf<Int, MutableList<Skill>>()
-        val charmInfoMap = mutableMapOf<Int, Pair<String, Int>>()
 
         val query = """
             SELECT
@@ -33,6 +31,7 @@ class CharmDAO(private val dbHelper: MyDatabaseHelper) {
         """.trimIndent()
 
         val cursor = db.rawQuery(query, null)
+        val charms = mutableMapOf<Int, Charm>()
 
         if (cursor.moveToFirst()) {
             do {
@@ -42,27 +41,28 @@ class CharmDAO(private val dbHelper: MyDatabaseHelper) {
                 val name = cursor.getString(3)
                 val skillTreeName = cursor.getString(4)
 
-                charmInfoMap[id] = Pair(name, rarity)
+                val newSkill = Skill(skillTreeName, skillLevel)
 
-                val skill = Skill(skillTreeName, skillLevel)
-                charmsMap.getOrPut(id) { mutableListOf() }.add(skill)
+                val updatedCharm = charms[id]?.let { existing ->
+                    existing.copy(
+                        skills = existing.skills + newSkill
+                    )
+                } ?: Charm(
+                    id = id,
+                    name = name,
+                    imageCharm = "charms/$id.png",
+                    rarity = rarity,
+                    skills = listOf(newSkill)
+                )
 
-            } while (cursor.moveToNext())
-        }
+                charms[id] = updatedCharm
+
+            } while (cursor.moveToNext()) }
 
         cursor.close()
         db.close()
 
-        return charmsMap.map { (id, skills) ->
-            val (name, rarity) = charmInfoMap[id]!!
-            Charm(
-                id = id,
-                name = name,
-                imageCharm = "charms/$id.png",
-                rarity = rarity,
-                skills = skills
-            )
-        }
+        return charms.values.toList()
     }
 
     //SQL query to get a specific charm

@@ -40,7 +40,7 @@ class ProfileViewModel : ViewModel() {
             .addSnapshotListener { snapshot, _ ->
                 if (snapshot != null && snapshot.exists()) {
                     _userName.value = snapshot.getString("name") ?: "Usuario"
-                    val normalized = when (val rawValue = snapshot.get("profileImage")) {
+                    val normalized = when (val rawValue = snapshot["profileImage"]) {
                         null -> ""
                         is Number -> rawValue.toInt().toString()
                         else -> ""

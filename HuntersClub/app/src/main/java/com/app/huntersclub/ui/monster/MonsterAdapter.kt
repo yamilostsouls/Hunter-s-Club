@@ -69,7 +69,8 @@ class MonsterAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val newList = (results?.values as? List<Monster>).orEmpty()
+                val newList = (results?.values as? List<*>)
+                    ?.filterIsInstance<Monster>() .orEmpty()
                 submitList(newList)
             }
         }
