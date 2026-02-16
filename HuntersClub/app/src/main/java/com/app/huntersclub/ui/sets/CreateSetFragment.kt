@@ -100,9 +100,7 @@ class CreateSetFragment : Fragment() {
                 .into(binding.imgCharm)
         } ?: run { binding.txtCharm.text = getString(R.string.seleccionar_cigua) }
 
-        //getParcelable is depreciated but we need it since minimum API is 23.
-        //Originally, minimum API was 21 but we increase it to 23
-        //To work properly with Firebase
+
         //Now we manage the buttons of the decorations in the listeners
         setFragmentResultListener("weaponSelection") { _, bundle ->
             val weapon = BundleCompat.getParcelable(bundle, "selectedWeapon", Weapon::class.java)
@@ -250,33 +248,44 @@ class CreateSetFragment : Fragment() {
         }
 
         //Save button
+        //We add a condition to prevent names like
+        //" "
+        //" a"
+        //" a "
+        //"a "
         binding.btnSaveSet.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
             val userId = FirebaseAuth.getInstance().currentUser!!.uid
-
-            //Create Set as HashMap, saving the userId on the set
-            val newSet = hashMapOf(
-                "weapon" to viewModel.selectedWeapon?.id,
-                "head" to viewModel.selectedHead?.id,
-                "torso" to viewModel.selectedChest?.id,
-                "arms" to viewModel.selectedArms?.id,
-                "waist" to viewModel.selectedWaist?.id,
-                "legs" to viewModel.selectedLegs?.id,
-                "charm" to viewModel.selectedCharm?.id,
-                "decorations" to viewModel.selectedDecorations.mapValues {
-                    it.value?.id },
-                "userId" to userId
-            )
-
-            //Save and store the set in sets collection of Firebase
-            db.collection("sets")
-                .add(newSet)
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Set guardado correctamente", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al guardar el set", Toast.LENGTH_SHORT).show()
-                }
+            viewModel.setName = binding.txtName.text.toString()
+            val name = viewModel.setName.trim()
+            //Now sets will have a name
+            if (name.isEmpty()){
+                Toast.makeText(context, "El set debe tener un nombre.", Toast.LENGTH_SHORT).show()
+            }else{
+                //Create Set as HashMap, saving the userId on the set
+                val newSet = hashMapOf(
+                    "name" to viewModel.setName,
+                    "weapon" to viewModel.selectedWeapon?.id,
+                    "head" to viewModel.selectedHead?.id,
+                    "torso" to viewModel.selectedChest?.id,
+                    "arms" to viewModel.selectedArms?.id,
+                    "waist" to viewModel.selectedWaist?.id,
+                    "legs" to viewModel.selectedLegs?.id,
+                    "charm" to viewModel.selectedCharm?.id,
+                    "decorations" to viewModel.selectedDecorations.mapValues {
+                        it.value?.id },
+                    "userId" to userId
+                )
+                //Save and store the set in sets collection of Firebase
+                db.collection("sets")
+                    .add(newSet)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Set guardado correctamente", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Error al guardar el set", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
 
         viewModel.selectedWeapon?.let {

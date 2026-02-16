@@ -1,6 +1,7 @@
 package com.app.huntersclub.model
 
 data class Set(
+    val setName: String = "",
     val weaponName: String = "",
     val weaponRarity: Int,
     val weaponType: String = "",

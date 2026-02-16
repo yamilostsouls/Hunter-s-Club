@@ -6,6 +6,19 @@
     android:layout_height="wrap_content"
     android:background="@drawable/border">
 
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:paddingTop="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/horizontal_divider"
+        android:layout_marginVertical="1dp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,9 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Weapon"
-            android:textStyle="bold"
-            android:textSize="16sp"/>
+            android:text="Weapon" />
 
         <View
             android:layout_width="0dp"
@@ -43,7 +54,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider"
+        android:background="@drawable/horizontal_divider"
         android:layout_marginVertical="1dp"/>
 
     <LinearLayout
@@ -79,7 +90,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider"
+        android:background="@drawable/horizontal_divider"
         android:layout_marginVertical="1dp"/>
 
     <LinearLayout
@@ -115,7 +126,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider"
+        android:background="@drawable/horizontal_divider"
         android:layout_marginVertical="1dp"/>
 
     <LinearLayout
@@ -151,7 +162,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider"
+        android:background="@drawable/horizontal_divider"
         android:layout_marginVertical="1dp"/>
 
     <LinearLayout
@@ -187,7 +198,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider"
+        android:background="@drawable/horizontal_divider"
         android:layout_marginVertical="1dp"/>
 
     <LinearLayout
@@ -223,7 +234,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider"
+        android:background="@drawable/horizontal_divider"
         android:layout_marginVertical="1dp"/>
 
     <LinearLayout
@@ -249,7 +260,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@drawable/divider"
+        android:background="@drawable/horizontal_divider"
         android:layout_marginVertical="1dp"/>
 
     <TextView

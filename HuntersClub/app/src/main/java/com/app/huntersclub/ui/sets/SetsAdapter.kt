@@ -16,6 +16,7 @@ class SetsAdapter(private val sets: List<Set>) :
     RecyclerView.Adapter<SetsAdapter.SetViewHolder>() {
 
     class SetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textName: TextView = view.findViewById(R.id.txtName)
         val textWeapon: TextView = view.findViewById(R.id.txtWeapon)
         val imageWeapon: ImageView = view.findViewById(R.id.imgWeapon)
         val textHead: TextView = view.findViewById(R.id.txtHead)
@@ -47,6 +48,7 @@ class SetsAdapter(private val sets: List<Set>) :
 
     override fun onBindViewHolder(holder: SetViewHolder, position: Int) {
         val set = sets[position]
+        holder.textName.text = set.setName
         holder.textWeapon.text = set.weaponName
         holder.textHead.text = set.armorHead
         holder.textChest.text = set.armorChest

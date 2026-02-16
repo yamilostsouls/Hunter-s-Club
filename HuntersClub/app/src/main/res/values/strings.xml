@@ -42,5 +42,6 @@
     <string name="seleccionar_cintura">Seleccionar Cintura</string>
     <string name="seleccionar_piernas">Seleccionar Piernas</string>
     <string name="seleccionar_cigua">Seleccionar Cigua</string>
+    <string name="set_name">Nombre del set</string>
 
 </resources>

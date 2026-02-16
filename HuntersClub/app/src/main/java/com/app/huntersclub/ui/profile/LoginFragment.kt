@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
         forgotPassword.setOnClickListener {
             findNavController().navigate(R.id.action_nav_slideshow_to_passwordFragment)
         }
-        //Login check handled in SlideshowViewModel
+        //Login check handled in ProfileViewModel
         btnLogin.setOnClickListener {
             val email = edUserName.text.toString().trim()
             val password = edPasswd.text.toString().trim()

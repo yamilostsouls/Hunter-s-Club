@@ -98,7 +98,7 @@ class SetRepository(
     //So in a future we can increase it with more data like damage, defense, rarity, skills, decorations...
     //Refactor to read the decorations and not break the sets
     private fun resolveSet(doc: DocumentSnapshot, userName: String): Set {
-
+        val name = doc.getString("name")
         val weapon = doc.getLong("weapon")?.toInt()?.let { weaponsCache[it] }
         val head = doc.getLong("head")?.toInt()?.let { armorCache[it] }
         val chest = doc.getLong("torso")?.toInt()?.let { armorCache[it] }
@@ -121,6 +121,7 @@ class SetRepository(
         }.toMap()
 
         return Set(
+            setName = name?: "Set genérico",
             weaponName = weapon?.name ?: "Sin arma",
             weaponRarity = weapon?.rarity ?: 0,
             weaponType = weapon?.weaponType ?: "gs",

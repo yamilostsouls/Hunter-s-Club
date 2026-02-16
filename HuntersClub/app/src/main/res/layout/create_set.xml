@@ -10,6 +10,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <EditText
+            android:id="@+id/txtName"
+            android:hint="@string/set_name"
+            android:padding="12dp"
+            android:layout_marginBottom="12dp"
+            android:textColorHint="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <LinearLayout
             android:id="@+id/btnSelectedWeapon"
