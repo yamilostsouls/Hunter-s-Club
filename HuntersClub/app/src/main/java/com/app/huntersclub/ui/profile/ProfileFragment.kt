@@ -39,6 +39,7 @@ class ProfileFragment : Fragment() {
         val profileImage = view.findViewById<ImageView>(R.id.profileImage)
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
         val btnEditProfile = view.findViewById<Button>(R.id.btnEditProfile)
+        val btnSets = view.findViewById<Button>(R.id.btnSets)
 
         // Observers
         viewModel.userName.observe(viewLifecycleOwner) { name ->
@@ -81,6 +82,10 @@ class ProfileFragment : Fragment() {
                 if (success) "Perfil actualizado." else "Error al actualizar el perfil.",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+        //Administrate sets of the logged user
+        btnSets.setOnClickListener{
+            findNavController().navigate(R.id.action_profileFragment_to_profileSetsFragment)
         }
     }
 

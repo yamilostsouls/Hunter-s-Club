@@ -98,6 +98,7 @@ class SetRepository(
     //So in a future we can increase it with more data like damage, defense, rarity, skills, decorations...
     //Refactor to read the decorations and not break the sets
     private fun resolveSet(doc: DocumentSnapshot, userName: String): Set {
+        val id = doc.id
         val name = doc.getString("name")
         val weapon = doc.getLong("weapon")?.toInt()?.let { weaponsCache[it] }
         val head = doc.getLong("head")?.toInt()?.let { armorCache[it] }
@@ -106,6 +107,7 @@ class SetRepository(
         val waist = doc.getLong("waist")?.toInt()?.let { armorCache[it] }
         val legs = doc.getLong("legs")?.toInt()?.let { armorCache[it] }
         val charm = doc.getLong("charm")?.toInt()?.let { charmsCache[it] }
+        val userId = doc.getString("userId")
 
         val decorationsRaw = (doc["decorations"] as? Map<*, *>)
             ?.mapNotNull { (k, v) ->
@@ -121,6 +123,7 @@ class SetRepository(
         }.toMap()
 
         return Set(
+            id = id,
             setName = name?: "Set genérico",
             weaponName = weapon?.name ?: "Sin arma",
             weaponRarity = weapon?.rarity ?: 0,
@@ -143,7 +146,14 @@ class SetRepository(
             charm = charm?.name ?: "Sin cigua",
             charmRarity = charm?.rarity ?: 0,
             decorations = decorations,
-            createdBy = userName
+            createdBy = userName,
+            createdById = userId?:""
         )
+    }
+    //Function to delete a set selected of the logged user
+    fun deleteSet(set: Set) {
+        db.collection("sets")
+            .document(set.id)
+            .delete()
     }
 }

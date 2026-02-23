@@ -151,6 +151,9 @@
         <action
             android:id="@+id/action_profileFragment_to_nav_slideshow"
             app:destination="@id/nav_slideshow" />
+        <action
+            android:id="@+id/action_profileFragment_to_profileSetsFragment"
+            app:destination="@id/profileSetsFragment" />
     </fragment>
 
     <fragment
@@ -161,5 +164,15 @@
         <action
             android:id="@+id/action_passwordFragment_to_nav_slideshow"
             app:destination="@id/nav_slideshow" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileSetsFragment"
+        android:name="com.app.huntersclub.ui.profile.ProfileSetsFragment"
+        android:label="Gestión de sets"
+        tools:layout="@layout/fragment_profilesets">
+        <action
+            android:id="@+id/action_profileSetsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

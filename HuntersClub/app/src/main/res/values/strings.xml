@@ -43,5 +43,7 @@
     <string name="seleccionar_piernas">Seleccionar Piernas</string>
     <string name="seleccionar_cigua">Seleccionar Cigua</string>
     <string name="set_name">Nombre del set</string>
+    <string name="administrar_sets">Administrar sets</string>
+    <string name="borrar">Borrar</string>
 
 </resources>
