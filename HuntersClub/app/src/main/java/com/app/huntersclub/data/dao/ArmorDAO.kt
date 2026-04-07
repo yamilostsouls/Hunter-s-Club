@@ -3,9 +3,16 @@ package com.app.huntersclub.data.dao
 import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.model.Armor
 import com.app.huntersclub.model.Skill
-
+/**
+ * Data Access Object Class to retrieve armor data
+ * with its skills and slots from the Monster Hunter: World database
+ *
+ */
 class ArmorDAO(private val dbHelper: MyDatabaseHelper) {
-    //SQL query to obtain all armor pieces
+    /**
+     * SQL query to obtain all armor pieces
+     * with its skills and slots
+     */
     fun getAllArmor(): List<Armor> {
         val db = dbHelper.openDatabase()
         val armorSkillsMap = mutableMapOf<Int, MutableList<Skill>>()
@@ -101,10 +108,12 @@ class ArmorDAO(private val dbHelper: MyDatabaseHelper) {
             armor.copy(skills = armorSkillsMap[id] ?: emptyList())
         }
     }
-
-    //SQL query to get a specific piece of armor
-    //We keep the method in case we ONLY need to load an individual
-    //piece of armor. For repetitive or massive loads, memory cache is the way
+    /**
+     * SQL query to get a specific piece of armor
+     * We keep the method in case we ONLY need to load an individual
+     * piece of armor. For repetitive or massive loads, memory cache is the way
+     *
+     */
     fun getArmorById(armorId: Int): Armor? {
         val db = dbHelper.openDatabase()
         val armorSkillsMap = mutableMapOf<Int, MutableList<Skill>>()

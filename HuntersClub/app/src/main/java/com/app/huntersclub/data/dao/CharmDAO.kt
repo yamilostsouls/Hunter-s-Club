@@ -4,10 +4,20 @@ import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.model.Charm
 import com.app.huntersclub.model.Skill
 
+/**
+ * Data Access Object Class to retrieve charm data
+ * with its skills from the Monster Hunter: World database
+ *
+ */
+
 class CharmDAO(private val dbHelper: MyDatabaseHelper) {
-    //SQL query to obtain all charms
-    //Some charms have more than 1 skill, if we want to remove
-    //The "duplicated" charms we have to map them
+    /**
+     * SQL query to obtain all charms
+     * Some charms have more than 1 skill, if we want to remove
+     * The "duplicated" charms we have to map them
+     *
+     */
+
     fun getAllCharms(): List<Charm> {
         val db = dbHelper.openDatabase()
 
@@ -64,10 +74,12 @@ class CharmDAO(private val dbHelper: MyDatabaseHelper) {
 
         return charms.values.toList()
     }
-
-    //SQL query to get a specific charm
-    //We keep the method in case we ONLY need to load an individual
-    //charm. For repetitive or massive loads, memory cache is the way
+    /**
+     * SQL query to get a specific charm
+     * We keep the method in case we ONLY need to load an individual
+     * charm. For repetitive or massive loads, memory cache is the way
+     *
+     */
     fun getCharmById(charmId: Int): Charm? {
         val db = dbHelper.openDatabase()
         val skills = mutableListOf<Skill>()

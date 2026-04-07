@@ -10,6 +10,11 @@ import com.app.huntersclub.model.Set
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 
+/**
+ * Class to manage reading the data from Firebase database
+ * and manage some functions related to Firebase database
+ *
+ */
 class SetRepository(
     private val weaponDao: WeaponDAO,
     private val armorDao: ArmorDAO,
@@ -21,8 +26,11 @@ class SetRepository(
 
     private val _sets = MutableLiveData<List<Set>>()
     val sets: LiveData<List<Set>> get() = _sets
-    //Cache preload so the first time loading the list
-    //of sets is not that slow as using getXById
+    /**
+     * Cache preload so the first time loading the list
+     * of sets is not that slow as using getXById
+     *
+     */
     private val weaponsCache by lazy {
         weaponDao.getAllWeapons().associateBy { it.id }
     }
@@ -37,8 +45,11 @@ class SetRepository(
     }
 
     private val userCache = mutableMapOf<String, String>()
-    //Listens the sets collection on Firebase to load them in SetsFragment section
-    //listenToSets() just listens to the Firebase data and hops onto processSnapshots()
+    /**
+     * Listens the sets collection on Firebase to load them in SetsFragment section
+     * listenToSets() just listens to the Firebase data and hops onto processSnapshots()
+     *
+     */
     fun listenToSets() {
         db.collection("sets")
             .addSnapshotListener { snapshots, e ->
@@ -50,8 +61,11 @@ class SetRepository(
                 processSnapshots(snapshots)
             }
     }
-    //Separated functions to refactor listenToSets and lower its complexity
-    //Function that manages the sets of our database and hops on resolveUsername() and sortSets()
+    /**
+     * Separated functions to refactor listenToSets and lower its complexity
+     * Function that manages the sets of our database and hops on resolveUsername() and sortSets()
+     *
+     */
     private fun processSnapshots(snapshots: Iterable<DocumentSnapshot>) {
         val setsList = mutableListOf<Set>()
         var pending = snapshots.count()
@@ -66,7 +80,10 @@ class SetRepository(
             }
         }
     }
-    //Function to encapsulate the logic for the users (the Set created by)
+    /**
+     * Function to encapsulate the logic for the users (the Set created by)
+     *
+     */
     private fun resolveUsername(doc: DocumentSnapshot, callback: (String) -> Unit) {
         val userId = doc.getString("userId")
         if (userId.isNullOrBlank()) {
@@ -87,16 +104,22 @@ class SetRepository(
                 callback("Desconocido")
             }
     }
-    //Function to sort the sets by username and weapon rarity
+    /**
+     * Function to sort the sets by username and weapon rarity
+     *
+     */
     private fun sortSets(list: List<Set>): List<Set> =
         list.sortedWith(
             compareBy<Set> { it.createdBy.lowercase() }
                 .thenByDescending { it.weaponRarity }
         )
 
-    //This converts the saved ids on Firebase into a set with names using existing Set model and adapter
-    //So in a future we can increase it with more data like damage, defense, rarity, skills, decorations...
-    //Refactor to read the decorations and not break the sets
+    /**
+     * This converts the saved ids on Firebase into a set with names using existing Set model and adapter
+     * So in a future we can increase it with more data like damage, defense, rarity, skills, decorations...
+     * Refactor to read the decorations and not break the sets
+     *
+     */
     private fun resolveSet(doc: DocumentSnapshot, userName: String): Set {
         val id = doc.id
         val name = doc.getString("name")
@@ -150,7 +173,10 @@ class SetRepository(
             createdById = userId?:""
         )
     }
-    //Function to delete a set selected of the logged user
+    /**
+     * Function to delete a set selected of the logged user
+     *
+     */
     fun deleteSet(set: Set) {
         db.collection("sets")
             .document(set.id)

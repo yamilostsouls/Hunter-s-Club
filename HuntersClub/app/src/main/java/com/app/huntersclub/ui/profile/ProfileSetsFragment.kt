@@ -1,11 +1,10 @@
 package com.app.huntersclub.ui.profile
 
 import android.os.Bundle
-import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +15,6 @@ import com.app.huntersclub.data.dao.WeaponDAO
 import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.data.repository.SetRepository
 import com.app.huntersclub.databinding.FragmentProfilesetsBinding
-import com.app.huntersclub.databinding.FragmentSetsBinding
 import com.app.huntersclub.model.Set
 import com.app.huntersclub.utils.ItemDecoration
 
@@ -54,7 +52,6 @@ class ProfileSetsFragment : Fragment() {
                 viewModel.deleteSet(set)
             }
         }
-
 
         //Spacing for the sets so the border doesn't touch another border of other sets
         binding.recyclerSets.layoutManager = LinearLayoutManager(requireContext())

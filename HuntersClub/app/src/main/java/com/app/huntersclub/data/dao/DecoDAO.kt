@@ -4,8 +4,17 @@ import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.model.Decoration
 import com.app.huntersclub.model.Skill
 
+/**
+ * Data Access Object Class to retrieve decoration data
+ * with its skills from the Monster Hunter: World database
+ *
+ */
+
 class DecoDAO(private val dbHelper: MyDatabaseHelper) {
-    //SQL query to obtain all decorations
+    /**
+     * SQL query to obtain all decorations
+     *
+     */
     fun getAllDecorations(): List<Decoration> {
         val db = dbHelper.openDatabase()
 
@@ -18,7 +27,8 @@ class DecoDAO(private val dbHelper: MyDatabaseHelper) {
             decoration.skilltree2_level,
             decoration_text.name,
             skilltree_text_first.name,
-            skilltree_text_second.name
+            skilltree_text_second.name,
+            decoration.icon_color
         FROM decoration
         JOIN decoration_text
             ON decoration_text.id = decoration.id
@@ -45,6 +55,8 @@ class DecoDAO(private val dbHelper: MyDatabaseHelper) {
                 val decorationName = cursor.getString(5)
                 val skillName1 = cursor.getString(6)
                 val skillName2 = cursor.getString(7)
+                val colour = cursor.getString(8)
+
 
                 val skills = mutableListOf<Skill>()
                 skills.add(Skill(skillName1, skillLevel1))
@@ -59,7 +71,8 @@ class DecoDAO(private val dbHelper: MyDatabaseHelper) {
                         imageDeco = "decorations/$id.png",
                         slot = slot,
                         rarity = rarity,
-                        skills = skills
+                        skills = skills,
+                        colour = colour
                     )
                 )
             } while (cursor.moveToNext())
@@ -69,11 +82,12 @@ class DecoDAO(private val dbHelper: MyDatabaseHelper) {
         db.close()
         return decorations
     }
-
-
-    //SQL query to get a specific decoration
-    //We keep the method in case we ONLY need to load an individual
-    //decoration. For repetitive or massive loads, memory cache is the way
+    /**
+     * SQL query to get a specific decoration
+     * We keep the method in case we ONLY need to load an individual
+     * decoration. For repetitive or massive loads, memory cache is the way
+     *
+     */
     fun getDecorationById(decorationId: Int): Decoration? {
         val db = dbHelper.openDatabase()
 
@@ -86,7 +100,8 @@ class DecoDAO(private val dbHelper: MyDatabaseHelper) {
             decoration.skilltree2_level,
             decoration_text.name,
             skilltree_text_first.name,
-            skilltree_text_second.name
+            skilltree_text_second.name,
+            decoration.icon_color
         FROM decoration
         JOIN decoration_text 
             ON decoration.id = decoration_text.id
@@ -114,6 +129,7 @@ class DecoDAO(private val dbHelper: MyDatabaseHelper) {
             val decorationName = cursor.getString(5)
             val skillName1 = cursor.getString(6)
             val skillName2 = cursor.getString(7)
+            val colour = cursor.getString(8)
 
             val skills = mutableListOf<Skill>()
             skills.add(Skill(skillName1, skillLevel1))
@@ -128,7 +144,8 @@ class DecoDAO(private val dbHelper: MyDatabaseHelper) {
                 imageDeco = "decorations/$id.png",
                 slot = slot,
                 rarity = rarity,
-                skills = skills
+                skills = skills,
+                colour = colour
             )
         }
 

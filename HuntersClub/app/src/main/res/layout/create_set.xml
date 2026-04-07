@@ -57,14 +57,12 @@
 
                 <ImageView
                     android:id="@+id/btnWeapon1"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnWeapon2"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
@@ -109,21 +107,18 @@
 
                 <ImageView
                     android:id="@+id/btnHead1"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnHead2"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnHead3"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
@@ -167,21 +162,18 @@
 
                 <ImageView
                     android:id="@+id/btnChest1"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnChest2"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnChest3"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
@@ -225,21 +217,18 @@
 
                 <ImageView
                     android:id="@+id/btnArms1"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnArms2"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnArms3"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
@@ -283,21 +272,18 @@
 
                 <ImageView
                     android:id="@+id/btnWaist1"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnWaist2"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnWaist3"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
@@ -341,21 +327,18 @@
 
                 <ImageView
                     android:id="@+id/btnLegs1"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnLegs2"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>
 
                 <ImageView
                     android:id="@+id/btnLegs3"
-                    android:src="@drawable/empty1"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:layout_marginStart="8dp"/>

@@ -4,8 +4,16 @@ import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.model.Monster
 import com.app.huntersclub.model.MonsterData
 
+/**
+* Data Access Object Class to retrieve monster data
+* with its weaknesses from the Monster Hunter: World database
+*
+*/
+
 class MonsterDAO(private val dbHelper: MyDatabaseHelper) {
-    //SQL query to obtain all monsters
+    /**
+     * SQL query to obtain all monsters
+     */
     fun getAllMonsters(): List<Monster> {
 
         val list = mutableListOf<Monster>()
@@ -49,7 +57,11 @@ class MonsterDAO(private val dbHelper: MyDatabaseHelper) {
 
         return list
     }
-    //SQL query to get the specific data of a monster
+    /**
+     * SQL query to get the specific data of a monster
+     * with its weaknesses
+     *
+     */
     fun getMonsterById(monsterId: Int): MonsterData? {
 
         val db = dbHelper.openDatabase()

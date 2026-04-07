@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("org.jetbrains.dokka") version "2.1.0"
 }
 
 android {

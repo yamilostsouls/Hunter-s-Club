@@ -16,6 +16,7 @@ import com.app.huntersclub.model.Armor
 import com.app.huntersclub.model.Charm
 import com.app.huntersclub.model.Weapon
 import com.app.huntersclub.model.Decoration
+import com.app.huntersclub.utils.DecoDrawableCache.loadDecorationDrawable
 import com.app.huntersclub.utils.ImagePath
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -201,8 +202,26 @@ class CreateSetFragment : Fragment() {
             val deco = BundleCompat.getParcelable(bundle, "selectedDeco", Decoration::class.java)
             val piece = bundle.getString("piece")!!
             val slotIndex = bundle.getInt("slotIndex")
+
             viewModel.setDecoration(piece, slotIndex, deco)
+
+            // Update ONLY this slot
+            if (piece == "weapon") {
+                updateWeaponSlotsUI(viewModel.selectedWeapon!!)
+            } else {
+                val armor = when(piece) {
+                    "head" -> viewModel.selectedHead
+                    "chest" -> viewModel.selectedChest
+                    "arms" -> viewModel.selectedArms
+                    "waist" -> viewModel.selectedWaist
+                    "legs" -> viewModel.selectedLegs
+                    else -> null
+                }
+                armor?.let { updateArmorSlotsUI(it, piece) }
+            }
         }
+
+
 
         //Buttons for the set
         binding.btnSelectedWeapon.setOnClickListener {
@@ -354,21 +373,23 @@ class CreateSetFragment : Fragment() {
     private fun updateWeaponSlotsUI(weapon: Weapon) {
         val buttons = listOf(binding.btnWeapon1, binding.btnWeapon2)
         val slots = listOf(weapon.slot1, weapon.slot2, weapon.slot3)
-        buttons.forEach {
-            it.visibility = View.GONE
-        }
+
+        buttons.forEach { it.visibility = View.GONE }
+
         slots.forEachIndexed { index, slotSize ->
             if (slotSize > 0) {
                 val button = buttons[index]
                 button.visibility = View.VISIBLE
 
-                val path = ImagePath.getAssetPath(
-                    type = "decorations",
-                    slot = slotSize
-                )
-                Glide.with(this)
-                    .load(path)
-                    .into(button)
+                val deco = viewModel.getDecoration("weapon", index +1)
+
+                val drawable =
+                    if (deco != null)
+                        loadDecorationDrawable(requireContext(), deco.slot, deco.colour)
+                    else
+                        loadDecorationDrawable(requireContext(), slotSize, "black")
+
+                button.setImageDrawable(drawable)
 
                 setupDecoButton(button, "weapon", index + 1, slotSize)
             }
@@ -384,25 +405,29 @@ class CreateSetFragment : Fragment() {
             "legs" -> listOf(binding.btnLegs1, binding.btnLegs2, binding.btnLegs3)
             else -> return
         }
+
         val slots = listOf(armor.slot1, armor.slot2, armor.slot3)
-        buttons.forEach {
-            it.visibility = View.GONE
-        }
+
+        buttons.forEach { it.visibility = View.GONE }
+
         slots.forEachIndexed { index, slotSize ->
             if (slotSize > 0) {
                 val button = buttons[index]
                 button.visibility = View.VISIBLE
 
-                val path = ImagePath.getAssetPath(
-                    type = "decorations",
-                    slot = slotSize
-                )
+                val deco = viewModel.getDecoration(piece, index +1)
 
-                Glide.with(this)
-                    .load(path)
-                    .into(button)
+                val drawable =
+                    if (deco != null)
+                        loadDecorationDrawable(requireContext(), deco.slot, deco.colour)
+                    else
+                        loadDecorationDrawable(requireContext(), slotSize, "black")
+
+                button.setImageDrawable(drawable)
+
                 setupDecoButton(button, piece, index + 1, slotSize)
             }
         }
     }
+
 }

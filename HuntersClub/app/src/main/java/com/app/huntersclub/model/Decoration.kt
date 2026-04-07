@@ -10,5 +10,6 @@ data class Decoration (
     val imageDeco: String,
     val slot: Int,
     val rarity: Int,
-    val skills: List<Skill> //Decorations have at least 1 skill up to 2 skills
+    val skills: List<Skill>, //Decorations have at least 1 skill up to 2 skills
+    val colour: String
 ):Parcelable

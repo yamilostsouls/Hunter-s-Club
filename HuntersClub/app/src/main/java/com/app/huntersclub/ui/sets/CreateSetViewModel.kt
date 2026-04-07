@@ -19,12 +19,12 @@ class CreateSetViewModel : ViewModel() {
     val selectedDecorations: MutableMap<String, Decoration?> = mutableMapOf()
 
     fun setDecoration(piece: String, slotIndex: Int, decoration: Decoration?) {
-        val key = "${piece}_slot$slotIndex"
+        val key = "$piece$slotIndex"
         selectedDecorations[key] = decoration
     }
 
     fun getDecoration(piece: String, slotIndex: Int): Decoration? {
-        val key = "${piece}_slot$slotIndex"
+        val key = "$piece$slotIndex"
         return selectedDecorations[key]
     }
     //Function to reset the selected pieces of a set
@@ -42,9 +42,9 @@ class CreateSetViewModel : ViewModel() {
     }
 
     fun clearDecorationsForPiece(piece: String) {
-        selectedDecorations.remove("${piece}_slot1")
-        selectedDecorations.remove("${piece}_slot2")
-        selectedDecorations.remove("${piece}_slot3")
+        selectedDecorations.remove("${piece}1")
+        selectedDecorations.remove("${piece}2")
+        selectedDecorations.remove("${piece}3")
     }
 
 }

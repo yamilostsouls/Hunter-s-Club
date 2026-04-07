@@ -1,5 +1,6 @@
 package com.app.huntersclub.ui.profile
 
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.app.huntersclub.R
 import com.app.huntersclub.model.Set
+import com.app.huntersclub.utils.DecoDrawableCache.loadDecorationDrawable
 import com.app.huntersclub.utils.ImagePath.getAssetPath
 import com.bumptech.glide.Glide
 
@@ -126,8 +128,11 @@ class ProfileSetsAdapter(
         fun loadDecos(container: LinearLayout, prefix: String) {
             container.removeAllViews()
             val decos = set.decorations.filterKeys { it.startsWith(prefix) }
+
+            val context = holder.itemView.context
+
             decos.forEach { (_, deco) ->
-                val row = LinearLayout(holder.itemView.context).apply {
+                val row = LinearLayout(context).apply {
                     orientation = LinearLayout.HORIZONTAL
                     layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -135,15 +140,15 @@ class ProfileSetsAdapter(
                     ).apply { bottomMargin = 4 }
                 }
 
-                val img = ImageView(holder.itemView.context)
+                val img = ImageView(context)
                 val size = holder.textWeapon.textSize.toInt()
                 img.layoutParams = LinearLayout.LayoutParams(size, size)
 
-                Glide.with(holder.itemView)
-                    .load(getAssetPath("decorations", slot = deco.slot))
-                    .into(img)
+                img.setImageDrawable(
+                    loadDecorationDrawable(context, deco.slot, deco.colour)
+                )
 
-                val txt = TextView(holder.itemView.context).apply {
+                val txt = TextView(context).apply {
                     text = deco.name
                     setPadding(8, 0, 0, 0)
                     textSize = 12f
@@ -155,6 +160,7 @@ class ProfileSetsAdapter(
             }
         }
 
+
         loadDecos(holder.layoutWeaponDecos, "weapon")
         loadDecos(holder.layoutHeadDecos, "head")
         loadDecos(holder.layoutChestDecos, "chest")
@@ -162,4 +168,5 @@ class ProfileSetsAdapter(
         loadDecos(holder.layoutWaistDecos, "waist")
         loadDecos(holder.layoutLegsDecos, "legs")
     }
+
 }

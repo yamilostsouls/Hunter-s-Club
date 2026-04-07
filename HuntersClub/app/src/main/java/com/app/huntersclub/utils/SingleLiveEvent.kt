@@ -4,9 +4,11 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
-
+/**
+ * Class to reproduce an event one time (update a profile for example)
+ *
+ */
 class SingleLiveEvent<T> : MutableLiveData<T>() {
-//Class to reproduce an event one time (update a profile for example)
     private val pending = AtomicBoolean(false)
 
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {

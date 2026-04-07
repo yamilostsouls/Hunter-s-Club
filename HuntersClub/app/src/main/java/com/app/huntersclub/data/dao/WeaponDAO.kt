@@ -3,8 +3,17 @@ package com.app.huntersclub.data.dao
 import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.model.Weapon
 
+/**
+ * Data Access Object Class to retrieve weapon data
+ * with its skills and slots from the Monster Hunter: World database
+ *
+ */
+
 class WeaponDAO(private val dbHelper: MyDatabaseHelper) {
-    //SQL query to get a list of all weapons
+    /**
+     * SQL query to get a list of all weapons
+     * with its skills and slots
+     */
     fun getAllWeapons(): List<Weapon> {
         val db = dbHelper.openDatabase()
         val weapons = mutableListOf<Weapon>()
@@ -101,9 +110,13 @@ class WeaponDAO(private val dbHelper: MyDatabaseHelper) {
         return weapons
     }
 
-    //SQL query to get a specific weapon
-    //We keep the method in case we ONLY need to load an individual
-    //weapon. For repetitive or massive loads, memory cache is the way
+    /**
+     * SQL query to get a specific weapon
+     * We keep the method in case we ONLY need to load an individual
+     * weapon. For repetitive or massive loads, memory cache is the way
+     *
+     *
+     */
     fun getWeaponById(weaponId: Int): Weapon? {
         val db = dbHelper.openDatabase()
 

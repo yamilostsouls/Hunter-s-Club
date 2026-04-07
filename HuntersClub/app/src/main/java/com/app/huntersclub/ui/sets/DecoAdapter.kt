@@ -1,15 +1,20 @@
 package com.app.huntersclub.ui.sets
 
+
+import android.graphics.drawable.LayerDrawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.app.huntersclub.databinding.ItemDecorationBinding
 import com.app.huntersclub.model.Decoration
-import com.app.huntersclub.utils.ImagePath
-import com.bumptech.glide.Glide
+import com.app.huntersclub.utils.DecoColorMapper
+import com.app.huntersclub.utils.DecoImages
+
 
 class DecoAdapter(
     private val onItemClick: (Decoration) -> Unit
@@ -39,15 +44,27 @@ class DecoAdapter(
         }
         holder.binding.txtDecoSkill.text = skillsText
 
-        //We are using empty decoration images as a placeholder
-        //Decorations can share the same image with other decorations.
-        //We will use Glide + ImagePath.getAssetPath once we figure out
-        //The logic of decoration images
-        val path = ImagePath.getAssetPath("decorations", slot = deco.slot)
 
-        Glide.with(holder.itemView.context)
-            .load(path)
-            .into(holder.binding.imageDeco)
+        val context = holder.itemView.context
+
+        val baseId = DecoImages.getBase(deco.slot)
+        val base = AppCompatResources.getDrawable(context, baseId)
+            ?.constantState?.newDrawable()?.mutate()
+
+        val innerId = DecoImages.getInner(deco.slot)
+        val inner = AppCompatResources.getDrawable(context, innerId)
+            ?.constantState?.newDrawable()?.mutate()
+
+        val colorRes = DecoColorMapper.getColor(context, deco.colour)
+        val tintColor = ContextCompat.getColor(context, colorRes)
+        inner?.setTint(tintColor)
+
+        val layers = arrayOf(base, inner)
+        val layerDrawable = LayerDrawable(layers)
+
+        holder.binding.imageDeco.setImageDrawable(layerDrawable)
+
+
 
         holder.itemView.setOnClickListener {
             onItemClick(deco)
