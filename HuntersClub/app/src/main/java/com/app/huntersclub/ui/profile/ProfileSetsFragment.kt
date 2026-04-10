@@ -8,14 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.app.huntersclub.data.dao.ArmorDAO
-import com.app.huntersclub.data.dao.CharmDAO
-import com.app.huntersclub.data.dao.DecoDAO
-import com.app.huntersclub.data.dao.WeaponDAO
-import com.app.huntersclub.data.database.MyDatabaseHelper
-import com.app.huntersclub.data.repository.SetRepository
+import com.app.huntersclub.HuntersClubApp
 import com.app.huntersclub.databinding.FragmentProfilesetsBinding
-import com.app.huntersclub.model.Set
 import com.app.huntersclub.utils.ItemDecoration
 
 class ProfileSetsFragment : Fragment() {
@@ -34,12 +28,8 @@ class ProfileSetsFragment : Fragment() {
         val root = binding.root
 
         //Initialize DAOs and repository
-        val dbHelper = MyDatabaseHelper(requireContext())
-        val weaponDao = WeaponDAO(dbHelper)
-        val armorDao = ArmorDAO(dbHelper)
-        val charmDao = CharmDAO(dbHelper)
-        val decoDao = DecoDAO(dbHelper)
-        val setRepository = SetRepository(weaponDao, armorDao, charmDao, decoDao)
+        val app = requireActivity().application as HuntersClubApp
+        val setRepository = app.setRepository
 
         //ViewModel creation of the set repo
         val viewModel = ViewModelProvider(
@@ -48,7 +38,7 @@ class ProfileSetsFragment : Fragment() {
         )[ProfileSetsViewModel::class.java]
 
         adapter = ProfileSetsAdapter { set ->
-            showDeleteConfirmation(set) {
+            showDeleteConfirmation {
                 viewModel.deleteSet(set)
             }
         }
@@ -74,7 +64,7 @@ class ProfileSetsFragment : Fragment() {
         _binding = null
     }
     //Dialog to confirm delete of a set
-    private fun showDeleteConfirmation(set: Set, onConfirm: () -> Unit) {
+    private fun showDeleteConfirmation(onConfirm: () -> Unit) {
         androidx.appcompat.app.AlertDialog.Builder(requireContext())
             .setTitle("Eliminar set")
             .setMessage("¿Seguro que quieres borrar este set?")
@@ -82,5 +72,6 @@ class ProfileSetsFragment : Fragment() {
             .setNegativeButton("Cancelar", null)
             .show()
     }
+
 
 }

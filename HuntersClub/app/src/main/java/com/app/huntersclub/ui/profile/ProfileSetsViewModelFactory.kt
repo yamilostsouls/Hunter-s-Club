@@ -9,7 +9,8 @@ class ProfileSetsViewModelFactory(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ProfileSetsViewModel::class.java)) {
+        if (modelClass == ProfileSetsViewModel::class.java) {
+            @Suppress("UNCHECKED_CAST")
             return ProfileSetsViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

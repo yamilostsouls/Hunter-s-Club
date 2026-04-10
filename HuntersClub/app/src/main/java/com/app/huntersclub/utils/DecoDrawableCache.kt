@@ -9,7 +9,7 @@ object DecoDrawableCache {
     private val cache = mutableMapOf<String, LayerDrawable>()
 
     fun get(key: String): LayerDrawable? = cache[key]
-    fun put(key: String, drawable: LayerDrawable) { cache[key] = drawable }
+    private fun put(key: String, drawable: LayerDrawable) { cache[key] = drawable }
 
     fun preloadAllDecorations(context: Context) {
         val colors = listOf(

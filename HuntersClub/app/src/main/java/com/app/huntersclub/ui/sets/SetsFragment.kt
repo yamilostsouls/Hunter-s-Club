@@ -8,14 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.findNavController
+import com.app.huntersclub.HuntersClubApp
 import com.app.huntersclub.R
 import com.app.huntersclub.databinding.FragmentSetsBinding
-import com.app.huntersclub.data.dao.ArmorDAO
-import com.app.huntersclub.data.dao.WeaponDAO
-import com.app.huntersclub.data.dao.CharmDAO
-import com.app.huntersclub.data.dao.DecoDAO
-import com.app.huntersclub.data.database.MyDatabaseHelper
-import com.app.huntersclub.data.repository.SetRepository
 import com.app.huntersclub.utils.ItemDecoration
 import com.google.firebase.auth.FirebaseAuth
 
@@ -33,12 +28,9 @@ class SetsFragment : Fragment() {
         val root: View = binding.root
 
         //Initialize DAOs and SetRepository
-        val dbHelper = MyDatabaseHelper(requireContext())
-        val weaponDao = WeaponDAO(dbHelper)
-        val armorDao = ArmorDAO(dbHelper)
-        val charmDao = CharmDAO(dbHelper)
-        val decoDao = DecoDAO(dbHelper)
-        val setRepository = SetRepository(weaponDao, armorDao, charmDao, decoDao)
+        val app = requireActivity().application as HuntersClubApp
+        val setRepository = app.setRepository
+
 
         //ViewModel creation of the set repo
         val setsViewModel = ViewModelProvider(
