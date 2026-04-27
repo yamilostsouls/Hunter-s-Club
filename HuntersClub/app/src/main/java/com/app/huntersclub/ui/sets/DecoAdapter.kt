@@ -55,7 +55,7 @@ class DecoAdapter(
         val inner = AppCompatResources.getDrawable(context, innerId)
             ?.constantState?.newDrawable()?.mutate()
 
-        val colorRes = DecoColorMapper.getColor(context, deco.colour)
+        val colorRes = DecoColorMapper.getColor(deco.colour)
         val tintColor = ContextCompat.getColor(context, colorRes)
         inner?.setTint(tintColor)
 

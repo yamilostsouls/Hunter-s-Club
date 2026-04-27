@@ -8,7 +8,8 @@ import java.io.FileOutputStream
 import androidx.core.content.edit
 
 /**
- * Class to manage the local SQL database of the app
+ * Class to manage the local SQL database of the app.
+ * Now we can update the database in case we modify it
  *
  */
 class MyDatabaseHelper(private val context: Context) {

@@ -9,8 +9,7 @@ object ImagePath {
     val profileAvatars = listOf(1, 2, 3, 4, 5)
     /**
      * Function to obtain the image path from assets and load them
-     * We have to work with decorations so when selecting a decoration
-     * changes the image to a full color decoration
+     *
      */
     fun getAssetPath(type: String, rarity: Int? = null, subtype: String? = null, id: Int? = null, name: String? = null, slot: Int? = null): String {
 

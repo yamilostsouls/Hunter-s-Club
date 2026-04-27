@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.navigation.fragment.navArgs
+import com.app.huntersclub.HuntersClubApp
 import com.app.huntersclub.data.dao.MonsterDAO
-import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.FragmentMonsterDataBinding
 import com.app.huntersclub.model.MonsterData
+import com.app.huntersclub.utils.ImagePath.getAssetPath
 import com.bumptech.glide.Glide
 
 class MonsterDetailFragment : Fragment() {
@@ -29,13 +30,16 @@ class MonsterDetailFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     *
+     *
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val monsterId = args.monsterId
 
-        val dbHelper = MyDatabaseHelper(requireContext())
-        dbHelper.createDatabase()
+        val dbHelper = (requireActivity().application as HuntersClubApp).dbHelper
         val dao = MonsterDAO(dbHelper)
         //We get the specific monster data selected in the previous view
         val monster: MonsterData? = dao.getMonsterById(monsterId)
@@ -45,8 +49,8 @@ class MonsterDetailFragment : Fragment() {
             binding.monsterEcology.text = it.monCategory
             binding.monsterDescription.text = it.description
 
-            //Load image from app\src\main\assets\monsters using Glide to
-            val imagePath = "file:///android_asset/monsters/${it.id}.png"
+
+            val imagePath = getAssetPath("monsters", id = it.id)
 
             Glide.with(requireContext())
                 .load(imagePath)

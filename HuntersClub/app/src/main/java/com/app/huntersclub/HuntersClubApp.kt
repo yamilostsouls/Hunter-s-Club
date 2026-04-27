@@ -10,12 +10,21 @@ import com.app.huntersclub.data.repository.SetRepository
 import com.app.huntersclub.utils.DecoDrawableCache.preloadAllDecorations
 import com.google.firebase.auth.FirebaseAuth
 
+/**
+ * This class is to preload the data so we can cache it
+ * We preload the databases (local and online)
+ * With the DAOs to reduce loading time
+ */
+
 class HuntersClubApp : Application() {
 
     lateinit var setRepository: SetRepository
         private set
 
     lateinit var auth: FirebaseAuth
+        private set
+
+    lateinit var dbHelper: MyDatabaseHelper
         private set
 
 
@@ -26,7 +35,9 @@ class HuntersClubApp : Application() {
 
         auth = FirebaseAuth.getInstance()
 
-        val dbHelper = MyDatabaseHelper(this)
+        dbHelper = MyDatabaseHelper(this)
+        dbHelper.createDatabase()
+
         val weaponDao = WeaponDAO(dbHelper)
         val armorDao = ArmorDAO(dbHelper)
         val charmDao = CharmDAO(dbHelper)

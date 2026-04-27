@@ -9,8 +9,8 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.appcompat.widget.SearchView
+import com.app.huntersclub.HuntersClubApp
 import com.app.huntersclub.data.dao.DecoDAO
-import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.SelectDecorationBinding
 
 class SelectDecoFragment : Fragment() {
@@ -36,8 +36,7 @@ class SelectDecoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val dbHelper = MyDatabaseHelper(requireContext())
-        dbHelper.createDatabase()
+        val dbHelper = (requireActivity().application as HuntersClubApp).dbHelper
         decoDao = DecoDAO(dbHelper)
 
 

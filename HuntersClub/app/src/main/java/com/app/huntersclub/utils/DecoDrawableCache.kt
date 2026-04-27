@@ -39,7 +39,7 @@ object DecoDrawableCache {
         val inner = AppCompatResources.getDrawable(context, innerId)
             ?.constantState?.newDrawable()?.mutate()
 
-        val colorRes = DecoColorMapper.getColor(context, colorName)
+        val colorRes = DecoColorMapper.getColor(colorName)
         val tintColor = ContextCompat.getColor(context, colorRes)
         inner?.setTint(tintColor)
 

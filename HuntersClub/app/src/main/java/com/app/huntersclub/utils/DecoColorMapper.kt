@@ -1,11 +1,17 @@
 package com.app.huntersclub.utils
 
-import android.content.Context
 import com.app.huntersclub.R
 
+/**
+ * Mapper class for conversion
+ * from the colours of the database
+ * to the colours of colors.xml
+ *
+ * These colours are exclusive to the decorations
+ */
 object DecoColorMapper {
 
-    fun getColor(context: Context, name: String): Int {
+    fun getColor(name: String): Int {
         return when (name.lowercase()) {
             "violet" -> R.color.violet
             "lightbeige" -> R.color.light_beige
