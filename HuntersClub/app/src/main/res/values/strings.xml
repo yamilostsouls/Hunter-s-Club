@@ -35,5 +35,15 @@
     <string name="resumen">Resumen</string>
     <string name="clave">Recuperación de contraseña</string>
     <string name="mail">Enviar correo</string>
+    <string name="seleccionar_arma">Seleccionar Arma</string>
+    <string name="seleccionar_cabeza">Seleccionar Cabeza</string>
+    <string name="seleccionar_torso">Seleccionar Torso</string>
+    <string name="seleccionar_brazos">Seleccionar Brazos</string>
+    <string name="seleccionar_cintura">Seleccionar Cintura</string>
+    <string name="seleccionar_piernas">Seleccionar Piernas</string>
+    <string name="seleccionar_cigua">Seleccionar Cigua</string>
+    <string name="set_name">Nombre del set</string>
+    <string name="administrar_sets">Administrar sets</string>
+    <string name="borrar">Borrar</string>
 
 </resources>

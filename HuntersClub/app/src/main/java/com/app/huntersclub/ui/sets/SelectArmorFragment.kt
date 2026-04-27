@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.huntersclub.data.dao.ArmorDAO
-import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.SelectArmorBinding
 import androidx.appcompat.widget.SearchView
+import com.app.huntersclub.HuntersClubApp
 
 class SelectArmorFragment : Fragment() {
 
@@ -30,8 +30,7 @@ class SelectArmorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dbHelper = MyDatabaseHelper(requireContext())
-        dbHelper.createDatabase()
+        val dbHelper = (requireActivity().application as HuntersClubApp).dbHelper
         val armorDao = ArmorDAO(dbHelper)
 
         val armorType = arguments?.getString("armorType") ?: "unknown"

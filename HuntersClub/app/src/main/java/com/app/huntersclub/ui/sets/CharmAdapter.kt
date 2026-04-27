@@ -70,7 +70,8 @@ class CharmAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val newList = (results?.values as? List<Charm>).orEmpty()
+                val newList = (results?.values as? List<*>)
+                    ?.filterIsInstance<Charm>() .orEmpty()
                 submitList(newList)
             }
         }

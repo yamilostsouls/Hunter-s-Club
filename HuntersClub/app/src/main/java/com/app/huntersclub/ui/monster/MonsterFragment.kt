@@ -8,9 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.app.huntersclub.HuntersClubApp
 import com.app.huntersclub.data.dao.MonsterDAO
-import com.app.huntersclub.data.database.MyDatabaseHelper
 import com.app.huntersclub.databinding.FragmentMonsterBinding
+
+/**
+ * Monster Fragment: List of the monsters with it's searchable
+ *
+ */
 
 class MonsterFragment : Fragment() {
 
@@ -26,19 +31,23 @@ class MonsterFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * Here we initialize the DB and DAO
+     * Retrieve the monster list
+     * Use the MonsterAdapter to configure the monster list
+     * A separator for clarity
+     * And the searcher configuration
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
 
-        //Initialize DB and DAO
-        val dbHelper = MyDatabaseHelper(requireContext())
-        dbHelper.createDatabase()
+        val dbHelper = (requireActivity().application as HuntersClubApp).dbHelper
         val dao = MonsterDAO(dbHelper)
 
-        //Get monster list
         val monsters = dao.getAllMonsters()
 
-        //Adapter configuration for monster list
+
         adapter = MonsterAdapter { monster ->
             val action = MonsterFragmentDirections.actionNavHomeToMonsterDetailFragment(monster.id)
             findNavController().navigate(action)
@@ -47,20 +56,18 @@ class MonsterFragment : Fragment() {
         adapter.setData(monsters)
 
 
-        //Separator line between list elements for clarity
         val dividerItemDecoration = DividerItemDecoration(
             binding.recyclerView.context,
             LinearLayoutManager.VERTICAL
         )
         binding.recyclerView.addItemDecoration(dividerItemDecoration)
 
-        //Searcher configuration
+
         binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 adapter.filter.filter(query)
                 return true
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 adapter.filter.filter(newText)
                 return true

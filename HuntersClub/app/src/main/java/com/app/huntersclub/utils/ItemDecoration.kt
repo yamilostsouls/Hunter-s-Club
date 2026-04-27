@@ -3,7 +3,11 @@ package com.app.huntersclub.utils
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-
+/**
+ * Class to add spaces between items (this case decorations)
+ * in our RecyclerView.
+ *
+ */
 class ItemDecoration (private val space: Int) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,

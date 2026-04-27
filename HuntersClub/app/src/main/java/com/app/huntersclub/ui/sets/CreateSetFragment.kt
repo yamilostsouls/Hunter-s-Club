@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.BundleCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -15,6 +16,7 @@ import com.app.huntersclub.model.Armor
 import com.app.huntersclub.model.Charm
 import com.app.huntersclub.model.Weapon
 import com.app.huntersclub.model.Decoration
+import com.app.huntersclub.utils.DecoDrawableCache.loadDecorationDrawable
 import com.app.huntersclub.utils.ImagePath
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -49,7 +51,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("weapons", it.rarity, it.weaponType))
                 .placeholder(R.drawable.gs)
                 .into(binding.imgWeapon)
-        } ?: run { binding.txtWeapon.text = "Seleccionar Arma" }
+        } ?: run { binding.txtWeapon.text = getString(R.string.seleccionar_arma) }
 
         viewModel.selectedHead?.let {
             binding.txtHead.text = viewModel.selectedHead?.name
@@ -57,7 +59,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "head"))
                 .placeholder(R.drawable.head)
                 .into(binding.imgHead)
-        } ?: run { binding.txtHead.text = "Seleccionar Cabeza" }
+        } ?: run { binding.txtHead.text = getString(R.string.seleccionar_cabeza) }
 
         viewModel.selectedChest?.let {
             binding.txtChest.text = viewModel.selectedChest?.name
@@ -65,7 +67,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "chest"))
                 .placeholder(R.drawable.chest)
                 .into(binding.imgChest)
-        } ?: run { binding.txtChest.text = "Seleccionar Torso" }
+        } ?: run { binding.txtChest.text = getString(R.string.seleccionar_torso) }
 
         viewModel.selectedArms?.let {
             binding.txtArms.text = viewModel.selectedArms?.name
@@ -73,7 +75,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "arms"))
                 .placeholder(R.drawable.arms)
                 .into(binding.imgArms)
-        } ?: run { binding.txtArms.text = "Seleccionar Brazos" }
+        } ?: run { binding.txtArms.text = getString(R.string.seleccionar_brazos) }
 
         viewModel.selectedWaist?.let {
             binding.txtWaist.text = viewModel.selectedWaist?.name
@@ -81,7 +83,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "waist"))
                 .placeholder(R.drawable.waist)
                 .into(binding.imgWaist)
-        } ?: run { binding.txtWaist.text = "Seleccionar Cintura" }
+        } ?: run { binding.txtWaist.text = getString(R.string.seleccionar_cintura) }
 
         viewModel.selectedLegs?.let {
             binding.txtLegs.text = viewModel.selectedLegs?.name
@@ -89,7 +91,7 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("armor", it.rarity, "legs"))
                 .placeholder(R.drawable.legs)
                 .into(binding.imgLegs)
-        } ?: run { binding.txtLegs.text = "Seleccionar Piernas" }
+        } ?: run { binding.txtLegs.text = getString(R.string.seleccionar_piernas) }
 
         viewModel.selectedCharm?.let {
             binding.txtCharm.text = viewModel.selectedCharm?.name
@@ -97,14 +99,12 @@ class CreateSetFragment : Fragment() {
                 .load(ImagePath.getAssetPath("charms", it.rarity))
                 .placeholder(R.drawable.charm)
                 .into(binding.imgCharm)
-        } ?: run { binding.txtCharm.text = "Seleccionar Cigua" }
+        } ?: run { binding.txtCharm.text = getString(R.string.seleccionar_cigua) }
 
-        //getParcelable is depreciated but we need it since minimum API is 23.
-        //Originally, minimum API was 21 but we increase it to 23
-        //To work properly with Firebase
+
         //Now we manage the buttons of the decorations in the listeners
         setFragmentResultListener("weaponSelection") { _, bundle ->
-            val weapon: Weapon? = bundle.getParcelable("selectedWeapon")
+            val weapon = BundleCompat.getParcelable(bundle, "selectedWeapon", Weapon::class.java)
             viewModel.clearDecorationsForPiece("weapon")
             viewModel.selectedWeapon = weapon
             binding.txtWeapon.text = weapon?.name ?: "Seleccionar Arma"
@@ -120,7 +120,7 @@ class CreateSetFragment : Fragment() {
 
         setFragmentResultListener("armorSelection") { _, bundle ->
             val armorType = bundle.getString("armorType")
-            val armor: Armor? = bundle.getParcelable("selectedArmor")
+            val armor = BundleCompat.getParcelable(bundle, "selectedArmor", Armor::class.java)
 
             when (armorType) {
                 "head" -> {
@@ -187,7 +187,7 @@ class CreateSetFragment : Fragment() {
         }
 
         setFragmentResultListener("charmSelection") { _, bundle ->
-            val charm: Charm? = bundle.getParcelable("selectedCharm")
+            val charm = BundleCompat.getParcelable(bundle, "selectedCharm", Charm::class.java)
             viewModel.selectedCharm = charm
             binding.txtCharm.text = charm?.name ?: "Seleccionar Cigua"
             charm?.let {
@@ -199,11 +199,29 @@ class CreateSetFragment : Fragment() {
         }
 
         setFragmentResultListener("decoSelection") { _, bundle ->
-            val deco: Decoration? = bundle.getParcelable("selectedDeco")
+            val deco = BundleCompat.getParcelable(bundle, "selectedDeco", Decoration::class.java)
             val piece = bundle.getString("piece")!!
             val slotIndex = bundle.getInt("slotIndex")
+
             viewModel.setDecoration(piece, slotIndex, deco)
+
+            // Update ONLY this slot
+            if (piece == "weapon") {
+                updateWeaponSlotsUI(viewModel.selectedWeapon!!)
+            } else {
+                val armor = when(piece) {
+                    "head" -> viewModel.selectedHead
+                    "chest" -> viewModel.selectedChest
+                    "arms" -> viewModel.selectedArms
+                    "waist" -> viewModel.selectedWaist
+                    "legs" -> viewModel.selectedLegs
+                    else -> null
+                }
+                armor?.let { updateArmorSlotsUI(it, piece) }
+            }
         }
+
+
 
         //Buttons for the set
         binding.btnSelectedWeapon.setOnClickListener {
@@ -249,33 +267,44 @@ class CreateSetFragment : Fragment() {
         }
 
         //Save button
+        //We add a condition to prevent names like
+        //" "
+        //" a"
+        //" a "
+        //"a "
         binding.btnSaveSet.setOnClickListener {
             val db = FirebaseFirestore.getInstance()
             val userId = FirebaseAuth.getInstance().currentUser!!.uid
-
-            //Create Set as HashMap, saving the userId on the set
-            val newSet = hashMapOf(
-                "weapon" to viewModel.selectedWeapon?.id,
-                "head" to viewModel.selectedHead?.id,
-                "torso" to viewModel.selectedChest?.id,
-                "arms" to viewModel.selectedArms?.id,
-                "waist" to viewModel.selectedWaist?.id,
-                "legs" to viewModel.selectedLegs?.id,
-                "charm" to viewModel.selectedCharm?.id,
-                "decorations" to viewModel.selectedDecorations.mapValues {
-                    it.value?.id },
-                "userId" to userId
-            )
-
-            //Save and store the set in sets collection of Firebase
-            db.collection("sets")
-                .add(newSet)
-                .addOnSuccessListener {
-                    Toast.makeText(requireContext(), "Set guardado correctamente", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(requireContext(), "Error al guardar el set", Toast.LENGTH_SHORT).show()
-                }
+            viewModel.setName = binding.txtName.text.toString()
+            val name = viewModel.setName.trim()
+            //Now sets will have a name
+            if (name.isEmpty()){
+                Toast.makeText(context, "El set debe tener un nombre.", Toast.LENGTH_SHORT).show()
+            }else{
+                //Create Set as HashMap, saving the userId on the set
+                val newSet = hashMapOf(
+                    "name" to viewModel.setName,
+                    "weapon" to viewModel.selectedWeapon?.id,
+                    "head" to viewModel.selectedHead?.id,
+                    "torso" to viewModel.selectedChest?.id,
+                    "arms" to viewModel.selectedArms?.id,
+                    "waist" to viewModel.selectedWaist?.id,
+                    "legs" to viewModel.selectedLegs?.id,
+                    "charm" to viewModel.selectedCharm?.id,
+                    "decorations" to viewModel.selectedDecorations.mapValues {
+                        it.value?.id },
+                    "userId" to userId
+                )
+                //Save and store the set in sets collection of Firebase
+                db.collection("sets")
+                    .add(newSet)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Set guardado correctamente", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "Error al guardar el set", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
 
         viewModel.selectedWeapon?.let {
@@ -344,21 +373,23 @@ class CreateSetFragment : Fragment() {
     private fun updateWeaponSlotsUI(weapon: Weapon) {
         val buttons = listOf(binding.btnWeapon1, binding.btnWeapon2)
         val slots = listOf(weapon.slot1, weapon.slot2, weapon.slot3)
-        buttons.forEach {
-            it.visibility = View.GONE
-        }
+
+        buttons.forEach { it.visibility = View.GONE }
+
         slots.forEachIndexed { index, slotSize ->
             if (slotSize > 0) {
                 val button = buttons[index]
                 button.visibility = View.VISIBLE
 
-                val path = ImagePath.getAssetPath(
-                    type = "decorations",
-                    slot = slotSize
-                )
-                Glide.with(this)
-                    .load(path)
-                    .into(button)
+                val deco = viewModel.getDecoration("weapon", index +1)
+
+                val drawable =
+                    if (deco != null)
+                        loadDecorationDrawable(requireContext(), deco.slot, deco.colour)
+                    else
+                        loadDecorationDrawable(requireContext(), slotSize, "black")
+
+                button.setImageDrawable(drawable)
 
                 setupDecoButton(button, "weapon", index + 1, slotSize)
             }
@@ -374,25 +405,29 @@ class CreateSetFragment : Fragment() {
             "legs" -> listOf(binding.btnLegs1, binding.btnLegs2, binding.btnLegs3)
             else -> return
         }
+
         val slots = listOf(armor.slot1, armor.slot2, armor.slot3)
-        buttons.forEach {
-            it.visibility = View.GONE
-        }
+
+        buttons.forEach { it.visibility = View.GONE }
+
         slots.forEachIndexed { index, slotSize ->
             if (slotSize > 0) {
                 val button = buttons[index]
                 button.visibility = View.VISIBLE
 
-                val path = ImagePath.getAssetPath(
-                    type = "decorations",
-                    slot = slotSize
-                )
+                val deco = viewModel.getDecoration(piece, index +1)
 
-                Glide.with(this)
-                    .load(path)
-                    .into(button)
+                val drawable =
+                    if (deco != null)
+                        loadDecorationDrawable(requireContext(), deco.slot, deco.colour)
+                    else
+                        loadDecorationDrawable(requireContext(), slotSize, "black")
+
+                button.setImageDrawable(drawable)
+
                 setupDecoButton(button, piece, index + 1, slotSize)
             }
         }
     }
+
 }

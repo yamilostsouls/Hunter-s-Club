@@ -28,19 +28,34 @@
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="com.app.huntersclub.ui.profile.LoginFragment"
+        android:name="com.app.huntersclub.ui.profile.SplashFragment"
         android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_splash" >
+        <action
+            android:id="@+id/action_splashFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.app.huntersclub.ui.profile.LoginFragment"
+        android:label="Login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_nav_slideshow_to_registerFragment"
+            android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_nav_slideshow_to_profileFragment"
+            android:id="@+id/action_loginFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_nav_slideshow_to_passwordFragment"
+            android:id="@+id/action_loginFragment_to_passwordFragment"
             app:destination="@id/passwordFragment" />
     </fragment>
+
 
     <fragment
         android:id="@+id/monsterDetailFragment"
@@ -151,6 +166,9 @@
         <action
             android:id="@+id/action_profileFragment_to_nav_slideshow"
             app:destination="@id/nav_slideshow" />
+        <action
+            android:id="@+id/action_profileFragment_to_profileSetsFragment"
+            app:destination="@id/profileSetsFragment" />
     </fragment>
 
     <fragment
@@ -161,5 +179,15 @@
         <action
             android:id="@+id/action_passwordFragment_to_nav_slideshow"
             app:destination="@id/nav_slideshow" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileSetsFragment"
+        android:name="com.app.huntersclub.ui.profile.ProfileSetsFragment"
+        android:label="Gestión de sets"
+        tools:layout="@layout/fragment_profilesets">
+        <action
+            android:id="@+id/action_profileSetsFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

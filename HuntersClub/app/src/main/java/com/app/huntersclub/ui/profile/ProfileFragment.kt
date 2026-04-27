@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.huntersclub.R
 import com.app.huntersclub.utils.ImagePath
+import com.app.huntersclub.utils.UserSession
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
@@ -26,7 +27,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
 
@@ -39,42 +40,34 @@ class ProfileFragment : Fragment() {
         val profileImage = view.findViewById<ImageView>(R.id.profileImage)
         val btnLogout = view.findViewById<Button>(R.id.btnLogout)
         val btnEditProfile = view.findViewById<Button>(R.id.btnEditProfile)
+        val btnSets = view.findViewById<Button>(R.id.btnSets)
 
-        // Observers
-        viewModel.userName.observe(viewLifecycleOwner) { name ->
-            profileName.text = name
+        // Load cached data instantly
+        profileName.text = UserSession.userName
+
+        val avatarId = UserSession.profileImage.toIntOrNull()
+        if (avatarId != null) {
+            val assetPath = ImagePath.getAssetPath("profile", id = avatarId)
+            Glide.with(this)
+                .load(assetPath)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(profileImage)
         }
 
-        viewModel.profileImage.observe(viewLifecycleOwner) { fileName ->
-            if (!fileName.isNullOrEmpty()) {
-                val avatarId = fileName.toIntOrNull()
-                if (avatarId != null){
-                    val assetPath = ImagePath.getAssetPath("profile", id = avatarId)
-                    Glide.with(this)
-                        .load(assetPath)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(profileImage)
-                }
-            }
-        }
-
-        //Logout
         btnLogout.setOnClickListener {
             viewModel.logout()
         }
 
-        //After logging out, returns to login screen
         viewModel.logoutResult.observe(viewLifecycleOwner) { loggedOut ->
             if (loggedOut) {
                 findNavController().navigate(R.id.action_profileFragment_to_nav_slideshow)
             }
         }
 
-        //Edit profile
         btnEditProfile.setOnClickListener {
             showEditProfileDialog()
         }
-        //Fixed bug using SingleLiveEvent on the updater on ProfileViewModel
+
         viewModel.updateResult.observe(viewLifecycleOwner) { success ->
             Toast.makeText(
                 context,
@@ -82,20 +75,24 @@ class ProfileFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        btnSets.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_profileSetsFragment)
+        }
     }
 
-    //Refactored to increase performance (still with dialog box)
     private fun showEditProfileDialog() {
         val dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_edit_profile, null)
         val edNewName = dialogView.findViewById<EditText>(R.id.edNewName)
 
         val avatarViews = listOf(
-            dialogView.findViewById<ImageView>(R.id.avatar1),
-            dialogView.findViewById<ImageView>(R.id.avatar2),
-            dialogView.findViewById<ImageView>(R.id.avatar3),
-            dialogView.findViewById<ImageView>(R.id.avatar4),
-            dialogView.findViewById<ImageView>(R.id.avatar5)
-        )
+            R.id.avatar1,
+            R.id.avatar2,
+            R.id.avatar3,
+            R.id.avatar4,
+            R.id.avatar5
+        ).map { dialogView.findViewById<ImageView>(it) }
+
 
         var selectedAvatarKey: Int? = null
 
@@ -119,7 +116,7 @@ class ProfileFragment : Fragment() {
             .setView(dialogView)
             .setPositiveButton("Guardar") { _, _ ->
                 val newName = edNewName.text.toString()
-                val avatar = selectedAvatarKey?.toString() ?: viewModel.profileImage.value ?: ""
+                val avatar = selectedAvatarKey?.toString() ?: UserSession.profileImage
                 viewModel.updateProfile(newName, avatar)
             }
             .setNegativeButton("Cancelar", null)

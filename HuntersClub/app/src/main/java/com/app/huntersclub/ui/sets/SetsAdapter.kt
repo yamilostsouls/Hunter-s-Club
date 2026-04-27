@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.app.huntersclub.R
 import com.app.huntersclub.model.Set
+import com.app.huntersclub.utils.DecoDrawableCache.loadDecorationDrawable
 import com.app.huntersclub.utils.ImagePath.getAssetPath
 import com.bumptech.glide.Glide
 
@@ -16,6 +17,7 @@ class SetsAdapter(private val sets: List<Set>) :
     RecyclerView.Adapter<SetsAdapter.SetViewHolder>() {
 
     class SetViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val textName: TextView = view.findViewById(R.id.txtName)
         val textWeapon: TextView = view.findViewById(R.id.txtWeapon)
         val imageWeapon: ImageView = view.findViewById(R.id.imgWeapon)
         val textHead: TextView = view.findViewById(R.id.txtHead)
@@ -47,6 +49,7 @@ class SetsAdapter(private val sets: List<Set>) :
 
     override fun onBindViewHolder(holder: SetViewHolder, position: Int) {
         val set = sets[position]
+        holder.textName.text = set.setName
         holder.textWeapon.text = set.weaponName
         holder.textHead.text = set.armorHead
         holder.textChest.text = set.armorChest
@@ -81,167 +84,54 @@ class SetsAdapter(private val sets: List<Set>) :
             .load(getAssetPath("charms", set.charmRarity))
             .into(holder.imageCharm)
 
-        //Section to load the decorations
-        //At the right of the weapon or piece of armor
-        //Containing the proper decoration image
-        //And the name of the decoration
-        //For older sets, it's fine since it doesn't show decorations
-        holder.layoutWeaponDecos.removeAllViews()
-        val weaponDecos = set.decorations.filterKeys { it.startsWith("weapon") }
-        weaponDecos.forEach { (_, deco) ->
-            val row = LinearLayout(holder.itemView.context).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { bottomMargin = 4 }
-            }
-            val img = ImageView(holder.itemView.context)
-            val size = holder.textWeapon.textSize.toInt()
-            img.layoutParams = LinearLayout.LayoutParams(size, size)
-            Glide.with(holder.itemView)
-                .load(getAssetPath("decorations", slot = deco.slot))
-                .into(img)
-            val txt = TextView(holder.itemView.context).apply {
-                text = deco.name
-                setPadding(8, 0, 0, 0)
-                textSize = 12f
-            }
-            row.addView(img)
-            row.addView(txt)
-            holder.layoutWeaponDecos.addView(row)
-        }
+        loadDecoList(holder.layoutWeaponDecos, "weapon", set, holder)
+        loadDecoList(holder.layoutHeadDecos, "head", set, holder)
+        loadDecoList(holder.layoutChestDecos, "chest", set, holder)
+        loadDecoList(holder.layoutArmsDecos, "arms", set, holder)
+        loadDecoList(holder.layoutWaistDecos, "waist", set, holder)
+        loadDecoList(holder.layoutLegsDecos, "legs", set, holder)
 
-        holder.layoutHeadDecos.removeAllViews()
-        val headDecos = set.decorations.filterKeys { it.startsWith("head") }
-        headDecos.forEach { (_, deco) ->
-            val row = LinearLayout(holder.itemView.context).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { bottomMargin = 4 }
-            }
-            val img = ImageView(holder.itemView.context)
-            val size = holder.textWeapon.textSize.toInt()
-            img.layoutParams = LinearLayout.LayoutParams(size, size)
-            Glide.with(holder.itemView)
-                .load(getAssetPath("decorations", slot = deco.slot))
-                .into(img)
-            val txt = TextView(holder.itemView.context).apply {
-                text = deco.name
-                setPadding(8, 0, 0, 0)
-                textSize = 12f
-            }
-            row.addView(img)
-            row.addView(txt)
-            holder.layoutHeadDecos.addView(row)
-        }
-
-        holder.layoutChestDecos.removeAllViews()
-        val chestDecos = set.decorations.filterKeys { it.startsWith("chest") }
-        chestDecos.forEach { (_, deco) ->
-            val row = LinearLayout(holder.itemView.context).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { bottomMargin = 4 }
-            }
-            val img = ImageView(holder.itemView.context)
-            val size = holder.textWeapon.textSize.toInt()
-            img.layoutParams = LinearLayout.LayoutParams(size, size)
-            Glide.with(holder.itemView)
-                .load(getAssetPath("decorations", slot = deco.slot))
-                .into(img)
-            val txt = TextView(holder.itemView.context).apply {
-                text = deco.name
-                setPadding(8, 0, 0, 0)
-                textSize = 12f
-            }
-            row.addView(img)
-            row.addView(txt)
-            holder.layoutChestDecos.addView(row)
-        }
-
-        holder.layoutArmsDecos.removeAllViews()
-        val armsDecos = set.decorations.filterKeys { it.startsWith("arms") }
-        armsDecos.forEach { (_, deco) ->
-            val row = LinearLayout(holder.itemView.context).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { bottomMargin = 4 }
-            }
-            val img = ImageView(holder.itemView.context)
-            val size = holder.textWeapon.textSize.toInt()
-            img.layoutParams = LinearLayout.LayoutParams(size, size)
-            Glide.with(holder.itemView)
-                .load(getAssetPath("decorations", slot = deco.slot))
-                .into(img)
-            val txt = TextView(holder.itemView.context).apply {
-                text = deco.name
-                setPadding(8, 0, 0, 0)
-                textSize = 12f
-            }
-            row.addView(img)
-            row.addView(txt)
-            holder.layoutArmsDecos.addView(row)
-        }
-
-        holder.layoutWaistDecos.removeAllViews()
-        val waistDecos = set.decorations.filterKeys { it.startsWith("waist") }
-        waistDecos.forEach { (_, deco) ->
-            val row = LinearLayout(holder.itemView.context).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { bottomMargin = 4 }
-            }
-            val img = ImageView(holder.itemView.context)
-            val size = holder.textWeapon.textSize.toInt()
-            img.layoutParams = LinearLayout.LayoutParams(size, size)
-            Glide.with(holder.itemView)
-                .load(getAssetPath("decorations", slot = deco.slot))
-                .into(img)
-            val txt = TextView(holder.itemView.context).apply {
-                text = deco.name
-                setPadding(8, 0, 0, 0)
-                textSize = 12f
-            }
-            row.addView(img)
-            row.addView(txt)
-            holder.layoutWaistDecos.addView(row)
-        }
-
-        holder.layoutLegsDecos.removeAllViews()
-        val legsDecos = set.decorations.filterKeys { it.startsWith("legs") }
-        legsDecos.forEach { (_, deco) ->
-            val row = LinearLayout(holder.itemView.context).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                ).apply { bottomMargin = 4 }
-            }
-            val img = ImageView(holder.itemView.context)
-            val size = holder.textWeapon.textSize.toInt()
-            img.layoutParams = LinearLayout.LayoutParams(size, size)
-            Glide.with(holder.itemView)
-                .load(getAssetPath("decorations", slot = deco.slot))
-                .into(img)
-            val txt = TextView(holder.itemView.context).apply {
-                text = deco.name
-                setPadding(8, 0, 0, 0)
-                textSize = 12f
-            }
-            row.addView(img)
-            row.addView(txt)
-            holder.layoutLegsDecos.addView(row)
-        }
     }
 
     override fun getItemCount() = sets.size
+
+    private fun loadDecoList(
+        container: LinearLayout,
+        prefix: String,
+        set: Set,
+        holder: SetViewHolder
+    ) {
+        container.removeAllViews()
+        val context = holder.itemView.context
+
+        val decos = set.decorations.filterKeys { it.startsWith(prefix) }
+
+        decos.forEach { (_, deco) ->
+            val row = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply { bottomMargin = 4 }
+            }
+
+            val img = ImageView(context)
+            val size = holder.textWeapon.textSize.toInt()
+            img.layoutParams = LinearLayout.LayoutParams(size, size)
+
+            val drawable = loadDecorationDrawable(context, deco.slot, deco.colour)
+            img.setImageDrawable(drawable)
+
+            val txt = TextView(context).apply {
+                text = deco.name
+                setPadding(8, 0, 0, 0)
+                textSize = 12f
+            }
+
+            row.addView(img)
+            row.addView(txt)
+            container.addView(row)
+        }
+    }
+
 }

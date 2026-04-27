@@ -1,6 +1,8 @@
 package com.app.huntersclub.model
 
 data class Set(
+    val id: String="",
+    val setName: String = "",
     val weaponName: String = "",
     val weaponRarity: Int,
     val weaponType: String = "",
@@ -22,5 +24,6 @@ data class Set(
     val charm: String = "",
     val charmRarity: Int,
     val decorations: Map<String, Decoration> = emptyMap(),
-    val createdBy: String = ""
+    val createdBy: String = "",
+    val createdById: String = ""
 )

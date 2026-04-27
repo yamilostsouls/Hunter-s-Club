@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.app.huntersclub.R
-import com.google.firebase.auth.FirebaseAuth
 
 
 class LoginFragment : Fragment() {
@@ -23,7 +22,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
@@ -31,12 +30,6 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[LoginViewModel::class.java]
-        //We check if user is logged in to skip log in
-        val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
-            findNavController().navigate(R.id.action_nav_slideshow_to_profileFragment)
-            return
-        }
 
         val btnLogin = view.findViewById<Button>(R.id.btnLogin)
         val edUserName = view.findViewById<EditText>(R.id.edUserName)
@@ -44,15 +37,14 @@ class LoginFragment : Fragment() {
         val btnRegister = view.findViewById<Button>(R.id.btnRegister)
         val forgotPassword = view.findViewById<TextView>(R.id.forgotPassword)
 
-        //Button for the user to register in case it doesn't have an account
         btnRegister.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_slideshow_to_registerFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
-        //Clickable text to recover password
+
         forgotPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_nav_slideshow_to_passwordFragment)
+            findNavController().navigate(R.id.action_loginFragment_to_passwordFragment)
         }
-        //Login check handled in SlideshowViewModel
+
         btnLogin.setOnClickListener {
             val email = edUserName.text.toString().trim()
             val password = edPasswd.text.toString().trim()
@@ -64,19 +56,22 @@ class LoginFragment : Fragment() {
             }
         }
 
-        //Login result
         viewModel.loginResult.observe(viewLifecycleOwner) { success ->
             if (success) {
-                findNavController().navigate(R.id.action_nav_slideshow_to_profileFragment)
+                viewModel.preloadUserData()
             } else {
                 Toast.makeText(context, "Login fallido", Toast.LENGTH_SHORT).show()
             }
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner) { msg ->
-            msg?.let {
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+            if (message != null) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
+        }
+
+        viewModel.userDataLoaded.observe(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_loginFragment_to_profileFragment)
         }
     }
 }

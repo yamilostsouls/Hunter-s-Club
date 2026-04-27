@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.app.huntersclub.utils.SingleLiveEvent
+import com.app.huntersclub.utils.UserSession
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -13,10 +14,8 @@ class ProfileViewModel : ViewModel() {
     private val db = FirebaseFirestore.getInstance()
 
     private val _userName = MutableLiveData("Cargando...")
-    val userName: LiveData<String> = _userName
 
     private val _profileImage = MutableLiveData("")
-    val profileImage: LiveData<String> = _profileImage
 
     private val _updateResult = SingleLiveEvent<Boolean>()
     val updateResult: LiveData<Boolean> = _updateResult
@@ -40,7 +39,7 @@ class ProfileViewModel : ViewModel() {
             .addSnapshotListener { snapshot, _ ->
                 if (snapshot != null && snapshot.exists()) {
                     _userName.value = snapshot.getString("name") ?: "Usuario"
-                    val normalized = when (val rawValue = snapshot.get("profileImage")) {
+                    val normalized = when (val rawValue = snapshot["profileImage"]) {
                         null -> ""
                         is Number -> rawValue.toInt().toString()
                         else -> ""
@@ -90,6 +89,8 @@ class ProfileViewModel : ViewModel() {
 
     fun logout() {
         auth.signOut()
+        UserSession.clear()
         _logoutResult.value = true
     }
+
 }

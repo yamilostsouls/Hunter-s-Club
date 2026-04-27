@@ -75,7 +75,8 @@ class ArmorAdapter(
             }
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                val newList = (results?.values as? List<Armor>).orEmpty()
+                val newList = (results?.values as? List<*>)
+                    ?.filterIsInstance<Armor>() .orEmpty()
                 submitList(newList)
             }
         }
