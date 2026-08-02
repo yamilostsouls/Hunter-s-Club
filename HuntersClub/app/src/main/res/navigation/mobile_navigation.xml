@@ -190,4 +190,45 @@
             android:id="@+id/action_profileSetsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/lobbyListFragment"
+        android:name="com.app.huntersclub.ui.lobbies.LobbyListFragment"
+        android:label="Salas"
+        tools:layout="@layout/fragment_lobby_list">
+        <action
+            android:id="@+id/action_lobbyListFragment_to_createLobbyFragment"
+            app:destination="@id/createLobbyFragment" />
+        <action
+            android:id="@+id/action_lobbyListFragment_to_lobbyDetailFragment"
+            app:destination="@id/lobbyDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/lobbyDetailFragment"
+        android:name="com.app.huntersclub.ui.lobbies.LobbyDetailFragment"
+        android:label="Detalles de la sala"
+        tools:layout="@layout/fragment_lobby_detail">
+
+        <argument
+            android:name="sessionId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_lobbyDetailFragment_to_lobbyListFragment"
+            app:destination="@id/lobbyListFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createLobbyFragment"
+        android:name="com.app.huntersclub.ui.lobbies.CreateLobbyFragment"
+        android:label="Crear sala"
+        tools:layout="@layout/fragment_create_lobby">
+        <action
+            android:id="@+id/action_createLobbyFragment_to_lobbyDetailFragment"
+            app:destination="@id/lobbyDetailFragment"
+            app:popUpTo="@id/createLobbyFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+
 </navigation>

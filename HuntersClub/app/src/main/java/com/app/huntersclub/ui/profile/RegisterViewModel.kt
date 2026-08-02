@@ -35,14 +35,34 @@ class RegisterViewModel (
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val email = user?.email ?: ""
+
+                    val allowed = email.endsWith("@gmail.com") ||
+                            email.endsWith("@outlook.com") ||
+                            email.endsWith("@hotmail.com")
+
+                    if(!allowed){
+                        user?.delete()?.addOnCompleteListener {
+                            _registerResult.value = false
+                            _errorMessage.value = "Solo se permiten correos de Google o Microsoft."
+                        }
+                        return@addOnCompleteListener
+                    }
+
                     val userId = auth.currentUser?.uid
+                    if (userId == null){
+                        _registerResult.value = false
+                        _errorMessage.value = "Error obteniendo la ID del usuario."
+                        return@addOnCompleteListener
+                    }
                     val userMap = hashMapOf(
                         "id" to userId,
                         "email" to email,
                         "name" to name,
                         "profileImage" to null
                     )
-                    db.collection("users").document(userId!!)
+                    db.collection("users").document(userId)
                         .set(userMap)
                         .addOnSuccessListener {
                             _registerResult.value = true
